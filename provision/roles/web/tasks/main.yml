@@ -1,0 +1,3 @@
+---
+
+- apt: name=nodejs update_cache=yes state=latest
