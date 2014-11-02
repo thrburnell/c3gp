@@ -14,3 +14,6 @@ npm install
 Run the server
 --------------
 npm start
+
+It will run on localhost:3000
+
