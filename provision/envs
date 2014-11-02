@@ -1,0 +1,5 @@
+[jenkins]
+localhost       ansible_connection=local
+
+[preprod]
+146.169.46.251  ansible_connection=ssh
