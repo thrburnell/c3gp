@@ -1,2 +1,5 @@
 # Ignore local vagrant files
 .vagrant/
+
+# Ignore Mac folder attributes files
+.DS_Store
