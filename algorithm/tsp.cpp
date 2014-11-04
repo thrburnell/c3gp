@@ -1,30 +1,8 @@
 #include <iostream>
-#include <fstream>
-#include <map>
-#include <string>
-#include <algorithm>
-#include <iomanip>
 #include <vector>
-#include <cmath>
-#include <bitset>
-#include <list>
+#include <memory>
 
 using namespace std;
-
-#define e '\n'
-#define INF 1023456789
-#define ll long long
-
-//#define FILE "data"
-
-#ifdef FILE
-ifstream f(string (string(FILE) + ".in").c_str());
-ofstream g(string (string(FILE) + ".out").c_str());
-#endif
-#ifndef FILE
-#define f cin
-#define g cout
-#endif
 
 /**
  * Input structure:
@@ -48,7 +26,7 @@ ofstream g(string (string(FILE) + ".out").c_str());
 
 
 /**
- * At the moment the algorithm is returning
+ * At the moment the algorithm is returning the identity permutation
  */
 
 struct Edge {
@@ -58,24 +36,26 @@ struct Edge {
 
 const int NMAX = 1000;
 int n, m, x, y, c;
-vector<Edge> distances[NMAX];
+vector<unique_ptr<Edge>> distances[NMAX];
 
 int main() {
 
-	f >> n >> m;
+	cin >> n >> m;
 
-	for (int i = 0; i <= n; ++i) {
-		f >> x >> y >> c;
-		Edge * edge = new Edge();
-		edge -> cost = c;
-		edge -> node = y;
-		distances[x].push_back(*edge);
+	for (int i = 0; i < n + 1; ++i) {
+		cin >> x >> y >> c;
+		unique_ptr<Edge> edge(new Edge);
+		edge->cost = c;
+		edge->node = y;
+		distances[x].push_back(move(edge));
 	}
 
 	for (int i = 0; i <= n; ++i) {
-		g << i << " ";
+		cout << i << " ";
 	}
 
-	g << 0 << e;
+	cout << 0 << "\n";
+
+	return 0;
 
 }
