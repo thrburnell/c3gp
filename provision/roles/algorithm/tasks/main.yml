@@ -1,3 +1,4 @@
 ---
 
-- apt: name=g++ update_cache=yes state=latest
+- name: be sure g++ is installed
+  apt: name=g++ update_cache=yes state=latest

@@ -1,3 +1,16 @@
 ---
 
-- apt: name=nodejs update_cache=yes state=latest
+- name: be sure nodejs is installed
+  apt: name=nodejs update_cache=yes state=latest
+
+- name: be sure node is configured to point to nodejs
+  alternatives: name=node link=/usr/bin/node path=/usr/bin/nodejs
+
+- name: be sure npm is installed
+  apt: name=npm update_cache=yes state=latest
+
+- name: be sure bower is installed
+  npm: name=bower global=yes
+
+- name: be sure grunt is installed
+  npm: name=grunt-cli global=yes
