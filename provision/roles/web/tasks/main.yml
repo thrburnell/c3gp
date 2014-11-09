@@ -14,3 +14,6 @@
 
 - name: be sure grunt is installed
   npm: name=grunt-cli global=yes
+
+- name: be sure forever is installed
+  npm: name=forever global=yes
