@@ -1,2 +1,12 @@
 # Ignore local vagrant files
 .vagrant/
+
+# Ignore npm local modules and debug files
+node_modules/
+npm-debug.log
+
+# Ignore public (compiled) files
+public/lib
+public/css
+public/html
+public/js
