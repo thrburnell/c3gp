@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>C3gp Map API test</title>
+
+	<meta name="author" content="C3gp">
+
+<!-- - - - - - - - - - - - - - - - - STYLES - - - - - - - - - - - - - - - - -->
+
+	<link href="styles/fontawesome/font-awesome.min.css" rel="stylesheet">
+	<link href="styles/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="styles/map.css" rel="stylesheet">
+	<link href="styles/index.css" rel="stylesheet">
+
+<!-- - - - - - - - - - - - - - - - - SCRIPTS - - - - - - - - - - - - - - - - -->
+
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=
+									AIzaSyBQcS5hXEN_eWDS2E5e40ORtJTdcB9aGwI">
+	</script>
+	<script type="text/javascript" src="scripts/map.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="scripts/bootstrap/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Brand</a>
+			<div class="dropdown navbar-form navbar-left">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+					I want to...
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">buy a shirt</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">grab a coffee</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">go to the museum</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">go to the dry cleaner (Sophia's example!)</a></li>
+				</ul>
+			</div>
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Go!</button>
+			</form>
+		</div>
+	</nav>
+
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="map-canvas">
+		<div class="row">
+			<div class="col-lg-6 col-lg-offset-3
+						col-md-6 col-md-offset-3
+						col-sm-6 col-sm-offset-3
+						col-xs-6 col-xs-offset-3" id="nav-bar">
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
