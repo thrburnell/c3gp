@@ -22,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provision/playbook.yml"
     ansible.verbose = "v"
+    ansible.vault_password_file = "~/.c3_vault_pass"
     ansible.extra_vars = {
       target: "all",
       user: "vagrant"
