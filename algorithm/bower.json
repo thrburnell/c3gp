@@ -1,0 +1,7 @@
+{
+  "name": "routing-app",
+  "version": "0.0.0",
+  "dependencies": {
+    "rapidjson": "https://github.com/miloyip/rapidjson.git"
+  }
+}
