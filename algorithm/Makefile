@@ -1,16 +1,17 @@
-CC = g++
-CFLAGS = -Wall -Wextra -pedantic -g -std=c++11
+CXX = g++
+CXXFLAGS = -g -std=c++11 -Wall -pedantic
+BIN = tsp.bin
 
-LINK = $(CC) $(CFLAGS) $^ -o $@
-COMP = $(CC) $(CFLAGS) -c -o $@ $<
-COMP_ONE = $(CC) $(CFLAGS) $^ -o $@
+SRC = $(shell find . -name "*.cpp")
+OBJ = $(SRC:%.cpp=%.o)
 
-all: tsp.bin
+all: $(OBJ)
+	$(CXX) -o $(BIN) $^
+
+%.o: %.c
+	$(CXX) $@ -c
 
 clean:
-	rm -f *.o *.bin
-
-.PHONY: all clean
-
-tsp.bin: tsp.cpp
-	$(COMP_ONE)
+	rm -f *.o
+	rm -f $(BIN)
+	rm -f lib/gason/*.o
