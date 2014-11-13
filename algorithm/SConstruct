@@ -1,0 +1,18 @@
+import os
+import fnmatch
+
+VariantDir('build', 'src', duplicate = 0)
+
+env = Environment(
+	CXXFLAGS = "-std=c++11"
+	)
+
+
+source = []
+for root, dirnames, filenames in os.walk('src'):
+  for filename in fnmatch.filter(filenames, '*.cpp'):
+      source.append(os.path.join(root, filename).replace('src/', 'build/'))
+
+target = "build/tsp.bin"
+
+env.Program(target = target, source = source)

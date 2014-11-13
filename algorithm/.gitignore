@@ -3,4 +3,7 @@
 *.o
 data.in
 
-/bin
+build/
+
+# SConstruct temporary files
+.sconsign.dblite
