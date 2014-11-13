@@ -35,10 +35,11 @@ struct Edge {
 };
 
 const int NMAX = 1000;
-int n, m, x, y, c;
-vector<unique_ptr<Edge>> distances[NMAX];
 
-int main() {
+int main2() {
+
+	int n, m, x, y, c;
+	vector<unique_ptr<Edge>> distances[NMAX];
 
 	cin >> n >> m;
 
