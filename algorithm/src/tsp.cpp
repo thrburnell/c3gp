@@ -18,7 +18,5 @@ int main() {
     mp = process_coordinates(move(mp));
     print_coordinates(move(mp));
 
-
     return EXIT_SUCCESS;
 }
-
