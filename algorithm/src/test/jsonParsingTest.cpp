@@ -1,63 +1,86 @@
+// rapidjson/example/simpledom/simpledom.cpp`
+#include "../rapidjson/document.h"
+#include "../rapidjson/writer.h"
+#include "../rapidjson/stringbuffer.h"
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <cstring>
+#include <vector>
+#include <memory>
 
-#include "lib/gason/gason.h"
-
+using namespace rapidjson;
 using namespace std;
 
 
-double sum_and_print(JsonValue o);
+struct Coordinate {
+    double lat;
+    double lng;
+};
+
+struct MapPoints {
+    unique_ptr<Coordinate> origin;
+    unique_ptr<Coordinate> destination;
+    unique_ptr<vector<unique_ptr<Coordinate>>> errands;
+};
+
+unique_ptr<MapPoints> parse_coordinates(char * json) {
+    Document document;
+    document.Parse(json);
+
+    unique_ptr<MapPoints> mapPoints(new MapPoints);
+
+    unique_ptr<Coordinate> origin(new Coordinate);
+    origin->lat = document["origin"]["lat"].GetDouble();
+    origin->lng = document["origin"]["lng"].GetDouble();
+
+    unique_ptr<Coordinate> destination(new Coordinate);
+    destination->lat = document["destination"]["lat"].GetDouble();
+    destination->lng = document["destination"]["lng"].GetDouble();
+
+    //TODO: This looks SOOOOO bad. Jeremy??
+    unique_ptr<vector<unique_ptr<Coordinate>>> errands(new vector<unique_ptr<Coordinate>>);
+
+    const Value & waypoints = document["waypoints"];
+    for (int i = 0; i < waypoints.Size(); i++) {
+        unique_ptr<Coordinate> newCoordinate(new Coordinate);
+        newCoordinate->lat = waypoints[i]["lat"].GetDouble();
+        newCoordinate->lng = waypoints[i]["lng"].GetDouble();
+        errands->push_back(move(newCoordinate));
+    }
+
+    mapPoints->origin = move(origin);
+    mapPoints->destination = move(destination);
+    mapPoints->errands = move(errands);
+
+    return mapPoints;
+}
+
+
+void process_coordinates(unique_ptr<MapPoints> map_points) {
+
+    for (auto it = map_points->errands->begin(); it != map_points->errands->end(); it++) {
+        cout << (*it)->lat << " " << (*it)->lng << endl;
+    }
+
+
+}
+
 
 int main() {
 
-    ifstream FILE_IN("sampleJson.in");
+    // Weird way of getting a file into a char*
     string ss;
-
-	getline(FILE_IN, ss);
-
-    char * source = (char*) ss.c_str();
-    // do not forget terminate source string with 0
-    char * endptr = source + ss.length();
-	JsonValue value;
-	JsonAllocator allocator;
-	int status = jsonParse(source, &endptr, &value, allocator);
-	if (status != JSON_OK) {
-		fprintf(stderr, "%s at %zd\n", jsonStrError(status), endptr - source);
-		exit(EXIT_FAILURE);
-	}
+    getline(cin, ss);
+    char * json = (char*) ss.c_str();
 
 
-	cout << sum_and_print(value) << endl;
+    unique_ptr<MapPoints> mp = parse_coordinates(json);
 
+    process_coordinates(move(mp));
+
+
+    return EXIT_SUCCESS;
 }
 
 
-double sum_and_print(JsonValue o) {
-    double sum = 0;
-    switch (o.getTag()) {
-    case JSON_NUMBER:
-        sum += o.toNumber();
-        break;
-    case JSON_STRING:
-        break;
-    case JSON_ARRAY:
-        for (auto i : o) {
-            sum += sum_and_print(i->value);
-        }
-        break;
-    case JSON_OBJECT:
-        for (auto i : o) {
-            sum += sum_and_print(i->value);
-        }
-        break;
-    case JSON_TRUE:
-        break;
-    case JSON_FALSE:
-        break;
-    case JSON_NULL:
-        break;
-    }
-    return sum;
-}
+
