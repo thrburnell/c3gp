@@ -54,4 +54,4 @@ app.use(function(err, req, res, next) {
     });
 });
 
-app.listen(3000);
+app.listen(process.env.C3GP_PORT || 3000);
