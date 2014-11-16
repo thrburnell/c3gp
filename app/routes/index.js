@@ -33,7 +33,10 @@ router.post('/cpp', function(req, res) {
   var json = JSON.stringify(x);
 
   //TODO: Change this once the final artifact place is known
-  var cppCommand = './algorithm/tsp.bin < algorithm/sampleData.in';
+  //TODO: Security flaw: Bash injection. We have to use files I guess?
+  var cppCommand = 'echo \'' + json + '\' | ./algorithm/build/tsp.bin';
+
+  console.log(cppCommand);
 
   var child = exec(cppCommand, function (error, stdout, stderr) {
     if (error !== null) {
