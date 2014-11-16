@@ -34,12 +34,19 @@ module.exports = function(grunt) {
         dest: 'public/css/',
         ext: '.min.css'
       }
+    },
+
+    jsonlint: {
+      jsonlint: {
+        src: ['*.json']
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-jsonlint');
 
   grunt.registerTask('static', ['concat', 'uglify', 'cssmin']);
 };
