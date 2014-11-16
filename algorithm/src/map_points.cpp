@@ -7,7 +7,7 @@
 #include "map_points.h"
 
 using namespace rapidjson;
-using namespace std;
+using std::unique_ptr;
 
 /**
  * For sample data, see testData/coordinates.json
@@ -26,7 +26,7 @@ unique_ptr<MapPoints> parse_coordinates(const char * const json) {
     destination->lat = document["destination"]["lat"].GetDouble();
     destination->lng = document["destination"]["lng"].GetDouble();
 
-    unique_ptr<vector<unique_ptr<Coordinate>>> errands(new vector<unique_ptr<Coordinate>>);
+    unique_ptr<std::vector<unique_ptr<Coordinate>>> errands(new std::vector<unique_ptr<Coordinate>>);
 
     const Value & waypoints = document["waypoints"];
     for (int i = 0; i < waypoints.Size(); i++) {
@@ -77,5 +77,5 @@ void print_coordinates(unique_ptr<MapPoints> map_points) {
 
     writer.EndArray();
 
-    cout << s.GetString() << endl;
+    std::cout << s.GetString() << std::endl;
 }

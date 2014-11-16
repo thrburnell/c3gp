@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-using namespace std;
+using std::unique_ptr;
 
 struct Coordinate {
     double lat;
@@ -14,7 +14,7 @@ struct Coordinate {
 struct MapPoints {
     unique_ptr<Coordinate> origin;
     unique_ptr<Coordinate> destination;
-    unique_ptr<vector<unique_ptr<Coordinate>>> errands;
+    unique_ptr<std::vector<unique_ptr<Coordinate>>> errands;
 };
 
 unique_ptr<MapPoints> parse_coordinates(const char * const json);
