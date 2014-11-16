@@ -1,5 +1,19 @@
 extends layout
 
+block head
+  link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
+  link(rel='stylesheet', href='/lib/components-font-awesome/css/font-awesome.min.css')
+  link(rel='stylesheet', href='/css/map.min.css')
+  script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBQcS5hXEN_eWDS2E5e40ORtJTdcB9aGwI')
+  script(type='text/javascript', src='/lib/jquery/dist/jquery.min.js')
+  script(type='text/javascript', src='/lib/bootstrap/dist/js/bootstrap.min.js')
+  script(type='text/javascript', src='/js/routing-app.min.js')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12#top-bar
+    #instructions
+      | Select your starting position
+    #button
+      a(href='#')
+        | Get My Route
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12#map-canvas

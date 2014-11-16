@@ -1,0 +1,9 @@
+{
+  "name": "routing-app",
+  "version": "0.0.0",
+  "dependencies": {
+    "components-font-awesome": "~4.2.0",
+    "bootstrap": "~3.3.0",
+    "jquery": "~2.1.1"
+  }
+}

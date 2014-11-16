@@ -6,7 +6,8 @@ node_modules/
 npm-debug.log
 
 # Ignore public (compiled) files
+# TODO: uncomment these; commented out temporarily for dev
 public/lib
 public/css
-public/html
+# public/html
 public/js
