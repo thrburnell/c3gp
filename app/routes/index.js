@@ -1,7 +1,6 @@
 var express = require('express');
 var directions = require('../directions/directions')
 var router = express.Router();
-var util = require('util');
 var exec = require('child_process').exec;
 
 /* GET home page. */
