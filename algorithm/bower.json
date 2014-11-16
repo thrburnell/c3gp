@@ -1,0 +1,20 @@
+{
+  "name": "algorithm",
+  "version": "0.0.0",
+  "homepage": "https://github.com/thrburnell/c3gp",
+  "authors": [
+    "aicioara <primulandrei@yahoo.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "rapidjson": "https://github.com/miloyip/rapidjson.git"
+  }
+}

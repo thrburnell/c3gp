@@ -1,9 +1,13 @@
 *~
 *.bin
 *.o
-data.in
 
+# Build components
 build/
+
+# Libraries have to be acquired by running ./install.py
+bower_components/
+src/lib
 
 # SConstruct temporary files
 .sconsign.dblite
