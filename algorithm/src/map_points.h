@@ -17,7 +17,7 @@ struct MapPoints {
     unique_ptr<vector<unique_ptr<Coordinate>>> errands;
 };
 
-unique_ptr<MapPoints> parse_coordinates(char * json);
+unique_ptr<MapPoints> parse_coordinates(const char * const json);
 unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points);
 void print_coordinates(unique_ptr<MapPoints> map_points);
 

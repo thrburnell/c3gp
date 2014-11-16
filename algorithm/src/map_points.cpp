@@ -12,7 +12,7 @@ using namespace std;
 /**
  * For sample data, see testData/coordinates.json
  */
-unique_ptr<MapPoints> parse_coordinates(char * json) {
+unique_ptr<MapPoints> parse_coordinates(const char * const json) {
     Document document;
     document.Parse(json);
 
@@ -47,7 +47,7 @@ unique_ptr<MapPoints> parse_coordinates(char * json) {
 /**
  * TODO: We should 1) Move this to a process file 2) implement
  * @param The given data points
- * @return Some processing on this data (possibly )
+ * @return Some processing on this data (possibly)
  */
 unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
     return move(map_points);
@@ -55,7 +55,7 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
 
 
 /**
- * @return JSON Encode of the given struct
+ * @return JSON encoding of the given struct
  */
 void print_coordinates(unique_ptr<MapPoints> map_points) {
     StringBuffer s;

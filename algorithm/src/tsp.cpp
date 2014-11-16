@@ -12,7 +12,7 @@ int main() {
     // Weird way of getting a file into a char*
     string ss;
     getline(cin, ss);
-    char * json = (char*) ss.c_str();
+    const char * const json = (const char * const) ss.c_str();
 
     unique_ptr<MapPoints> mp = parse_coordinates(json);
     mp = process_coordinates(move(mp));
