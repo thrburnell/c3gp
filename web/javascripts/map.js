@@ -12,6 +12,10 @@ $(document).ready(function() {
     var map = new google.maps.Map(document.getElementById('map-canvas'),
                                   mapOptions);
 
+    // Instruction messages to provide to the user.
+    var default_message = 'Select points of interest.';
+    var delete_origin_error_message = 'Cannot delete starting position!';
+
     // Listener to drop pin on mouse click
     google.maps.event.addListener(map, 'click', function(event) {
 
@@ -28,22 +32,26 @@ $(document).ready(function() {
       }
 
       markers[m_index] = marker;
-      $("#instructions").text("Select points of interest");
+      setInstruction(default_message);
       console.log(markers);
 
       // Listener to remove pin on click
       google.maps.event.addListener(marker, 'click', function(point) {
         if (marker.index == 0) {
           // give message
-          $("#instructions").text("Cannot delete starting position!");
+          setInstruction(delete_origin_error_message);
         } else {
           marker.setMap(null);
           delete markers[marker.index];
-          $("#instructions").text("Select points of interest");
+          setInstruction(default_message);
           console.log(markers);
         }
       });
     });
+  }
+
+  function setInstruction(message) {
+    $("#instructions").text(message);
   }
 
   function formRequest() {
@@ -62,6 +70,9 @@ $(document).ready(function() {
     var destination = origin;
     var waypoints = [];
 
+    // Temporary behaviour - to be replaced with system that maps errands
+    // to points. Currently, the user is required to click on the relevant
+    // points, which are used to form this array of waypoints.
     for (var i = 1; i < indexes.length; i++) {
       var position = markers[indexes[i]].getPosition();
       waypoints.push({
