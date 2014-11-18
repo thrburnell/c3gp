@@ -134,7 +134,7 @@ $(document).ready(function() {
       var pt = new google.maps.LatLng(route[i].lat, route[i].lng)
       waypoints.push({
         location: pt,
-        stopover:true
+        stopover: true
       });
     }
 
