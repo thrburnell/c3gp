@@ -19,23 +19,21 @@ router.get('/cpp', function(req, res) {
 router.post('/cpp', function(req, res) {
 
   //TODO: written this for when the JSON parsing C++ is ready
-  var x = {};
-  x.origin = {"lat":51.50055501480524,"lng":-0.17445087432861328};
-  x.destination = {"lat":51.50055501480524,"lng":-0.17445087432861328};
-  x.waypoints = [];
-  x.waypoints.push({"lat":51.497843351035144,"lng":-0.1702022552285598});
-  x.waypoints.push({"lat":51.497629616981214,"lng":-0.17346382139066918});
-  x.waypoints.push({"lat":51.49841775633878,"lng":-0.17533063886503442});
-  x.waypoints.push({"lat":51.497910142721445,"lng":-0.17936468122343285});
-  x.waypoints.push({"lat":51.495759401256,"lng":-0.1717901229653762});
-  x.waypoints.push({"lat":51.49644070301275,"lng":-0.17026662824491723});
-  var json = JSON.stringify(x);
+  var placeholderData = {};
+  placeholderData.origin = {"lat":51.50055501480524,"lng":-0.17445087432861328};
+  placeholderData.destination = {"lat":51.50055501480524,"lng":-0.17445087432861328};
+  placeholderData.waypoints = [];
+  placeholderData.waypoints.push({"lat":51.497843351035144,"lng":-0.1702022552285598});
+  placeholderData.waypoints.push({"lat":51.497629616981214,"lng":-0.17346382139066918});
+  placeholderData.waypoints.push({"lat":51.49841775633878,"lng":-0.17533063886503442});
+  placeholderData.waypoints.push({"lat":51.497910142721445,"lng":-0.17936468122343285});
+  placeholderData.waypoints.push({"lat":51.495759401256,"lng":-0.1717901229653762});
+  placeholderData.waypoints.push({"lat":51.49644070301275,"lng":-0.17026662824491723});
+  var dataInAsJson = JSON.stringify(placeholderData);
 
   //TODO: Change this once the final artifact place is known
   //TODO: Security flaw: Bash injection. We have to use files I guess?
-  var cppCommand = 'echo \'' + json + '\' | ./algorithm/build/tsp.bin';
-
-  console.log(cppCommand);
+  var cppCommand = 'echo \'' + dataInAsJson + '\' | ./algorithm/build/tsp.bin';
 
   var child = exec(cppCommand, function (error, stdout, stderr) {
     if (error !== null) {
