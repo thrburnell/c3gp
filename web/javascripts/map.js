@@ -127,10 +127,10 @@ $(document).ready(function() {
 
     console.log(n);
     var start = new google.maps.LatLng(route[0].lat, route[0].lng)
-    var end = new google.maps.LatLng(route[n-1].lat, route[n-1].lng)
+    var end = new google.maps.LatLng(route[0].lat, route[0].lng)
     var waypoints = [];
 
-    for (var i = 1; i < n - 1; i++) {
+    for (var i = 1; i < n; i++) {
       var pt = new google.maps.LatLng(route[i].lat, route[i].lng)
       waypoints.push({
         location: pt,
