@@ -29,7 +29,7 @@ router.post('/cpp', function(req, res) {
   placeholderData.waypoints.push({"lat":51.497910142721445,"lng":-0.17936468122343285});
   placeholderData.waypoints.push({"lat":51.495759401256,"lng":-0.1717901229653762});
   placeholderData.waypoints.push({"lat":51.49644070301275,"lng":-0.17026662824491723});
-  var dataInAsJson = JSON.stringify(placeholderData);
+  var dataInAsJson = JSON.stringify(placeholderData) + "asdsd";
 
   //TODO: Change this once the final artifact place is known
   //TODO: Security flaw: Bash injection. We have to use files I guess?
@@ -38,6 +38,8 @@ router.post('/cpp', function(req, res) {
   var child = exec(cppCommand, function (error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
+      res.send(500).end();
+      return;
     }
     res.send(stdout);
   });
