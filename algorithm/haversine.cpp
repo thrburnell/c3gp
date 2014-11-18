@@ -1,111 +1,116 @@
 #include <cmath>
 #include <iostream>
+#include <cassert>
 #include <tuple>
 
 using namespace std;
 
-static double calculate_distance(pair<double, double> origin,
-								 pair<double, double> destination);
-static double radians(double d);
-static bool valid_coordinates(pair<double, double> coordinate);								 
+static double calculate_distance(struct coordinates* origin,
+                                 struct coordinates* destination);
+static double to_radians(double d);
+static bool are_valid_coordinates(struct coordinates* c);      
 
-/*	
-	PRE:	Takes two points, represented by two pairs of coordinates
-			(latitude, longitude) - of type double - as input.
+struct coordinates {
+    double lat;
+    double lng;
+};                       
 
-	POST: 	If the provided coordinates are valid, returns the distance
-			- of type double - between the two points using the Haversine
-			Formula where:
-				distance = 2 * (earth radius)
-							 * arcsin (sqrt	(
-							 	 (sin((lat1 - lat2)/2))^2
-							 	+ cos(lat1) * cos(lat2)
-							 	  			* (sin((long1 - long2)/2))^2 
-							 				)
-							 		  )
-			Else, if at least one of the coordinates is invalid, returns -1.
+/*  
+    PRE:    Takes two points, represented by two pairs of coordinates
+            (latitude, longitude) - of type double - as input.
+
+    POST:   If the provided coordinates are valid, returns the distance
+            - of type double, in meters - between the two points using the
+            Haversine Formula where:
+                distance = 2 * (earth radius)
+                             * arcsin (sqrt (
+                                 (sin((lat1 - lat2)/2))^2
+                                + cos(lat1) * cos(lat2)
+                                            * (sin((lng1 - lng2)/2))^2 
+                                            )
+                                      )
+            Else, if at least one of the coordinates is invalid, returns -1.
 */
-static double calculate_distance(pair<double, double> origin,
-								 pair<double, double> destination) {
+static double calculate_distance(struct coordinates* origin,
+                                 struct coordinates* destination) {
 
-	/* 	Check that the provided coordinates are valid */
-	if(!valid_coordinates(origin)) {
-		cout << "ERROR: The coordinates of the origin are invalid!\n";
-		return -1;
-	}
+    /*  Check that the provided coordinates are valid */
+    assert(are_valid_coordinates(origin));
+    assert(are_valid_coordinates(destination));
 
-	if(!valid_coordinates(destination)) {
-		cout << "ERROR: The coordinates of the destination are invalid!\n";
-		return -1;
-	}
+    /* latitude and longitude of the origin in radians */
+    double lat1 = to_radians(origin->lat);       
+    double lng1 = to_radians(origin->lng);       
 
-	/* latitude and longitude of the origin in radians */
-	double lat1  = radians(origin.first);		
-	double long1 = radians(origin.second);		
+    /* latitude and longitude of the destination in radians */
+    double lat2 = to_radians(destination->lat);
+    double lng2 = to_radians(destination->lng);  
 
-	/* latitude and longitude of the destination in radians */
-	double lat2  = radians(destination.first);
-	double long2 = radians(destination.second);	
+    double dlat = lat1 - lat2;          /* difference of the two latitudes */
+    double dlng = lng1 - lng2;          /* difference of the two longitudes */
 
-	double dlat  = lat1 - lat2;			/* difference of the two latitudes */
-	double dlong = long1 - long2;		/* difference of the two longitudes */
+    double earth_radius = 6371*1000;    /* in metres */
 
-	double earth_radius = 6371;			/* in kilometres */
+    double distance = 2 * (earth_radius)
+                        * asin (sqrt( pow(sin((dlat)/2), 2)
+                            + cos(lat1) * cos(lat2) * pow(sin((dlng)/2), 2)));
 
-	double distance = 2 * (earth_radius)
-						* asin (sqrt( pow(sin((dlat)/2), 2)
-						  	+ cos(lat1) * cos(lat2) * pow(sin((dlong)/2), 2)));
-
-	return distance;					/* in kilometres */
+    return distance;                    /* in metres */
 }
 
 
 /*
-	PRE:	Takes a double as input.
-	POST:	Returns the input converted to radians.
+    PRE:    Takes a double as input.
+    POST:   Returns the input converted to radians.
 */
-static double radians(double d) {
-	return d * (M_PI/180);
+static inline double to_radians(double d) {
+    return d * (M_PI/180);
 }
 
 
 /*
-	PRE:	Takes a pair of double as input.
-	POST:	Returns TRUE if the input is a valid coordinate, i.e both its
-			latitude and longitude are comprised between -90 and +90 degrees,
-					FALSE otherwise.
+    PRE:    Takes a pair of double as input.
+    POST:   Returns TRUE if the input is a valid coordinate, i.e its
+            latitude is comprised between -90 and +90 degrees and its longitude
+            is comprised between -180 and +180 degress,
+                    FALSE otherwise.
 */
-static bool valid_coordinates(pair<double, double> coordinate) {
-	return coordinate.first >= -90 && coordinate.first <= 90
-		&& coordinate.second >= -90 && coordinate.second <= 90;
+static bool are_valid_coordinates(struct coordinates* c) {
+    return c->lat >= -90  && c->lat <= 90
+        && c->lng >= -180 && c->lng <= 180;
 }
 
 
 int main() {
-	double lat1;
-	double long1;
+    double lat1;
+    double lng1;
 
-	double lat2;
-	double long2;
+    double lat2;
+    double lng2;
 
-	cout << "Enter lat1:\n";
-	cin >> lat1;
-	cout << "Enter long1:\n";
-	cin >> long1;
-	cout << "Enter lat2:\n";
-	cin >> lat2;
-	cout << "Enter long2:\n";
-	cin >> long2;
-	cout << "\n";
+    cout << "Enter lat1:\n";
+    cin >> lat1;
+    cout << "Enter lng1:\n";
+    cin >> lng1;
+    cout << "Enter lat2:\n";
+    cin >> lat2;
+    cout << "Enter lng2:\n";
+    cin >> lng2;
+    cout << "\n";
 
-	pair<double, double> origin = make_pair(lat1, long1);
-	pair<double, double> destination = make_pair(lat2, long2);
+    struct coordinates* origin = new coordinates();
+    origin->lat = lat1;
+    origin->lng = lng1;
 
-	double distance = calculate_distance(origin, destination);
+    struct coordinates* destination = new coordinates();
+    origin->lat = lat2;
+    origin->lng = lng2;
 
-	if(distance >= 0) {
-		cout << "The distance is: " << distance << "\n";
-	}
+    double distance = calculate_distance(origin, destination);
 
-	return 0;
+    if(distance >= 0) {
+        cout << "The distance is: " << distance << "\n";
+    }
+
+    return 0;
 }
