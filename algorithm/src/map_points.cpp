@@ -63,6 +63,16 @@ void print_coordinates(unique_ptr<MapPoints> map_points) {
 
     writer.StartArray();
 
+    writer.StartObject();
+
+    writer.String("lat");
+    writer.Double(map_points->origin->lat);
+
+    writer.String("lng");
+    writer.Double(map_points->origin->lng);
+
+    writer.EndObject();
+
     for (auto it = map_points->errands->begin(); it != map_points->errands->end(); it++) {
         writer.StartObject();
 
