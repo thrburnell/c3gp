@@ -2,16 +2,8 @@
 #include <iostream>
 #include <cassert>
 #include <tuple>
-
-static double calculate_distance(const struct coordinates& origin,
-                                 const struct coordinates& destination);
-static inline double to_radians(double d);
-static inline bool are_valid_coordinates(const struct coordinates& c);      
-
-struct coordinates {
-    double lat;
-    double lng;
-};                       
+#include "map_points.h"
+#include "haversine.h"
 
 /*  
     PRE:    Takes two points, represented by two pairs of coordinates
@@ -29,8 +21,8 @@ struct coordinates {
                                       )
             Else, if at least one of the coordinates is invalid, returns -1.
 */
-static double calculate_distance(const struct coordinates& origin,
-                                 const struct coordinates& destination) {
+static double calculate_distance(const Coordinate& origin,
+                                 const Coordinate& destination) {
 
     /*  Check that the provided coordinates are valid */
     assert(are_valid_coordinates(origin));
@@ -73,12 +65,13 @@ static inline double to_radians(double d) {
             is comprised between -180 and +180 degrees,
                     FALSE otherwise.
 */
-static inline bool are_valid_coordinates(const struct coordinates& c) {
+static inline bool are_valid_coordinates(const Coordinate& c) {
     return c.lat >= -90  && c.lat <= 90
         && c.lng >= -180 && c.lng <= 180;
 }
 
-
+/* Commented out temporarily, for compatibility purposes with scons. Cannot
+ * have more than one main() method.
 int main() {
     double lat1;
     double lng1;
@@ -96,11 +89,11 @@ int main() {
     std::cin >> lng2;
     std::cout << "\n";
 
-    struct coordinates origin;
+    struct Coordinate origin;
     origin.lat = lat1;
     origin.lng = lng1;
 
-    struct coordinates destination;
+    struct Coordinate destination;
     destination.lat = lat2;
     destination.lng = lng2;
 
@@ -113,4 +106,4 @@ int main() {
 
     return 0;
 }
-
+*/
