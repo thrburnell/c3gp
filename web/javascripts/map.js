@@ -116,21 +116,15 @@ $(document).ready(function() {
         displayRoute(JSON.parse(ret));
       }
     });
-
-
-
   }
 
   function displayRoute(route) {
 
-    var n = route.length;
-
-    console.log(n);
     var start = new google.maps.LatLng(route[0].lat, route[0].lng)
     var end = new google.maps.LatLng(route[0].lat, route[0].lng)
     var waypoints = [];
 
-    for (var i = 1; i < n; i++) {
+    for (var i = 1; i < route.length; i++) {
       var pt = new google.maps.LatLng(route[i].lat, route[i].lng)
       waypoints.push({
         location: pt,
@@ -149,8 +143,5 @@ $(document).ready(function() {
         directionsDisplay.setDirections(response);
       }
     });
-
-
   }
 });
-

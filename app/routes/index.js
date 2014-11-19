@@ -8,37 +8,21 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/route', function(req, res) {
-  res.send("Need POST request");
-});
-
 router.get('/cpp', function(req, res) {
   res.send("Need POST request");
 });
 
 router.post('/cpp', function(req, res) {
 
-  var postReq;
+  var postReq = JSON.parse(Object.keys(req.body)[0]);
 
-  for (var p in req.body) {
-    postReq = p;
-  }
+  var jsonInformation = {};
+  jsonInformation.origin = postReq.origin;
+  jsonInformation.destination = postReq.destination;
+  jsonInformation.waypoints = postReq.waypoints;
 
-  postReq = JSON.parse(postReq);
-
-  //TODO: written this for when the JSON parsing C++ is ready
-  var placeholderData = {};
-  placeholderData.origin = postReq.origin;
-  placeholderData.destination = postReq.destination;
-  placeholderData.waypoints = postReq.waypoints;
-
-  var dataInAsJson = JSON.stringify(placeholderData);
-
-  console.log(dataInAsJson);
-
-  //TODO: Change this once the final artifact place is known
   //TODO: Security flaw: Bash injection. We have to use files I guess?
-  var cppCommand = 'echo \'' + dataInAsJson + '\' | ./algorithm/build/tsp.bin';
+  var cppCommand = 'echo \'' + JSON.stringify(jsonInformation) + '\' | ./algorithm/build/tsp.bin';
 
   var child = exec(cppCommand, function (error, stdout, stderr) {
     if (error !== null) {
@@ -51,8 +35,8 @@ router.post('/cpp', function(req, res) {
 
 });
 
-router.get('/cpptest', function(req, res) {
-  res.render('cpptest');
+router.get('/route', function(req, res) {
+  res.send("Need POST request");
 });
 
 router.post('/route', function(req, res) {
