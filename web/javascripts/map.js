@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var markers = {};
+  var markers = [];
   var directionsService = new google.maps.DirectionsService();
   var directionsDisplay;
 
@@ -141,7 +141,16 @@ $(document).ready(function() {
     directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
+        clearMarkers();
       }
     });
   }
+
+  function clearMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    markers = [];
+  }
+
 });
