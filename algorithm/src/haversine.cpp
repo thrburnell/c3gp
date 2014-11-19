@@ -22,7 +22,7 @@
             Else, if at least one of the coordinates is invalid, returns -1.
 */
 double calculate_distance(const Coordinate& origin,
-                                 const Coordinate& destination) {
+                          const Coordinate& destination) {
 
     /*  Check that the provided coordinates are valid */
     assert(are_valid_coordinates(origin));
@@ -70,40 +70,3 @@ static inline bool are_valid_coordinates(const Coordinate& c) {
         && c.lng >= -180 && c.lng <= 180;
 }
 
-/* Commented out temporarily, for compatibility purposes with scons. Cannot
- * have more than one main() method.
-int main() {
-    double lat1;
-    double lng1;
-
-    double lat2;
-    double lng2;
-
-    std::cout << "Enter lat1:\n";
-    std::cin >> lat1;
-    std::cout << "Enter lng1:\n";
-    std::cin >> lng1;
-    std::cout << "Enter lat2:\n";
-    std::cin >> lat2;
-    std::cout << "Enter lng2:\n";
-    std::cin >> lng2;
-    std::cout << "\n";
-
-    struct Coordinate origin;
-    origin.lat = lat1;
-    origin.lng = lng1;
-
-    struct Coordinate destination;
-    destination.lat = lat2;
-    destination.lng = lng2;
-
-    double distance = calculate_distance(origin, destination);
-    assert(distance >= 0);
-
-    if(distance >= 0) {
-        std::cout << "The distance is: " << distance << "\n";
-    }
-
-    return 0;
-}
-*/

@@ -3,16 +3,48 @@ import fnmatch
 
 VariantDir('build', 'src', duplicate = 0)
 
+# Build the main binary.
 env = Environment(
-    CXXFLAGS = "-std=c++11"
+    CXXFLAGS = ['-std=c++11']
     )
-
 
 source = []
 for root, dirnames, filenames in os.walk('src'):
-  for filename in fnmatch.filter(filenames, '*.cpp'):
-      source.append(os.path.join(root, filename).replace('src/', 'build/'))
+    for filename in fnmatch.filter(filenames, '*.cpp'):
+        if (not fnmatch.fnmatch(filename, '*_test.cpp')):
+            source.append(os.path.join(root, filename).replace('src/', 'build/'))
 
 target = "build/tsp.bin"
 
-env.Program(target = target, source = source)
+tsp_bin = env.Program(target = target, source = source)
+
+# Build unittests.
+test_env = Environment(
+    CXXFLAGS = ['-std=c++11'],
+    CPPPATH = ['bower_components/googletest/include']
+)
+
+# Subroutine, creates object files.
+def create_objs(srcs, path = ""):
+    return [test_env.Object(path + src + ".cpp") for src in srcs]
+
+test_env.VariantDir('test', 'src', duplicate = 0)
+
+# I think this is still explicitly needed, because tests may depend on files
+# other than just themselves.
+# Note that we *need* the googletest library to be compiled in here.
+haversineTest = test_env.Program('test/haversine_test',
+                                 create_objs(['haversine_test',
+                                              'haversine'],
+                                             "test/")
+                                 + ['test/libgtest.a'],
+                                 LIBS=['pthread'])
+
+tspTest = test_env.Program('test/map_points_test',
+                           create_objs(['map_points_test',
+                                        'map_points',
+                                        'haversine'],
+                                       "test/")
+                           + ['test/libgtest.a'],
+                           LIBS=['pthread'])
+

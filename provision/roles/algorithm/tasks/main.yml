@@ -2,3 +2,7 @@
 
 - name: be sure g++ is installed
   apt: name=g++ update_cache=yes state=latest
+
+- name: be sure scons is installed
+  apt: name=scons update_cache=yes state=latest
+
