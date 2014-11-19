@@ -3,12 +3,10 @@
 #include <cassert>
 #include <tuple>
 
-using namespace std;
-
-static double calculate_distance(struct coordinates* origin,
-                                 struct coordinates* destination);
-static double to_radians(double d);
-static bool are_valid_coordinates(struct coordinates* c);      
+static double calculate_distance(const struct coordinates& origin,
+                                 const struct coordinates& destination);
+static inline double to_radians(double d);
+static inline bool are_valid_coordinates(const struct coordinates& c);      
 
 struct coordinates {
     double lat;
@@ -31,25 +29,25 @@ struct coordinates {
                                       )
             Else, if at least one of the coordinates is invalid, returns -1.
 */
-static double calculate_distance(struct coordinates* origin,
-                                 struct coordinates* destination) {
+static double calculate_distance(const struct coordinates& origin,
+                                 const struct coordinates& destination) {
 
     /*  Check that the provided coordinates are valid */
     assert(are_valid_coordinates(origin));
     assert(are_valid_coordinates(destination));
 
     /* latitude and longitude of the origin in radians */
-    double lat1 = to_radians(origin->lat);       
-    double lng1 = to_radians(origin->lng);       
+    double lat1 = to_radians(origin.lat);       
+    double lng1 = to_radians(origin.lng);       
 
     /* latitude and longitude of the destination in radians */
-    double lat2 = to_radians(destination->lat);
-    double lng2 = to_radians(destination->lng);  
+    double lat2 = to_radians(destination.lat);
+    double lng2 = to_radians(destination.lng);  
 
     double dlat = lat1 - lat2;          /* difference of the two latitudes */
     double dlng = lng1 - lng2;          /* difference of the two longitudes */
 
-    double earth_radius = 6371*1000;    /* in metres */
+    static const double earth_radius = 6371*1000;    /* in metres */
 
     double distance = 2 * (earth_radius)
                         * asin (sqrt( pow(sin((dlat)/2), 2)
@@ -72,12 +70,12 @@ static inline double to_radians(double d) {
     PRE:    Takes a pair of double as input.
     POST:   Returns TRUE if the input is a valid coordinate, i.e its
             latitude is comprised between -90 and +90 degrees and its longitude
-            is comprised between -180 and +180 degress,
+            is comprised between -180 and +180 degrees,
                     FALSE otherwise.
 */
-static bool are_valid_coordinates(struct coordinates* c) {
-    return c->lat >= -90  && c->lat <= 90
-        && c->lng >= -180 && c->lng <= 180;
+static inline bool are_valid_coordinates(const struct coordinates& c) {
+    return c.lat >= -90  && c.lat <= 90
+        && c.lng >= -180 && c.lng <= 180;
 }
 
 
@@ -88,29 +86,31 @@ int main() {
     double lat2;
     double lng2;
 
-    cout << "Enter lat1:\n";
-    cin >> lat1;
-    cout << "Enter lng1:\n";
-    cin >> lng1;
-    cout << "Enter lat2:\n";
-    cin >> lat2;
-    cout << "Enter lng2:\n";
-    cin >> lng2;
-    cout << "\n";
+    std::cout << "Enter lat1:\n";
+    std::cin >> lat1;
+    std::cout << "Enter lng1:\n";
+    std::cin >> lng1;
+    std::cout << "Enter lat2:\n";
+    std::cin >> lat2;
+    std::cout << "Enter lng2:\n";
+    std::cin >> lng2;
+    std::cout << "\n";
 
-    struct coordinates* origin = new coordinates();
-    origin->lat = lat1;
-    origin->lng = lng1;
+    struct coordinates origin;
+    origin.lat = lat1;
+    origin.lng = lng1;
 
-    struct coordinates* destination = new coordinates();
-    origin->lat = lat2;
-    origin->lng = lng2;
+    struct coordinates destination;
+    destination.lat = lat2;
+    destination.lng = lng2;
 
     double distance = calculate_distance(origin, destination);
+    assert(distance >= 0);
 
     if(distance >= 0) {
-        cout << "The distance is: " << distance << "\n";
+        std::cout << "The distance is: " << distance << "\n";
     }
 
     return 0;
 }
+
