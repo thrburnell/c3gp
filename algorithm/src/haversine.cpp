@@ -5,7 +5,7 @@
 #include "map_points.h"
 #include "haversine.h"
 
-/*  
+/*
     PRE:    Takes two points, represented by two pairs of coordinates
             (latitude, longitude) - of type double - as input.
 
@@ -16,25 +16,28 @@
                              * arcsin (sqrt (
                                  (sin((lat1 - lat2)/2))^2
                                 + cos(lat1) * cos(lat2)
-                                            * (sin((lng1 - lng2)/2))^2 
+                                            * (sin((lng1 - lng2)/2))^2
                                             )
                                       )
             Else, if at least one of the coordinates is invalid, returns -1.
 */
-static double calculate_distance(const Coordinate& origin,
+double calculate_distance(const Coordinate& origin,
                                  const Coordinate& destination) {
 
     /*  Check that the provided coordinates are valid */
+
+    // std::cout << origin.lat << std::endl;
+    // std::cout << origin.lng << std::endl;
     assert(are_valid_coordinates(origin));
     assert(are_valid_coordinates(destination));
 
     /* latitude and longitude of the origin in radians */
-    double lat1 = to_radians(origin.lat);       
-    double lng1 = to_radians(origin.lng);       
+    double lat1 = to_radians(origin.lat);
+    double lng1 = to_radians(origin.lng);
 
     /* latitude and longitude of the destination in radians */
     double lat2 = to_radians(destination.lat);
-    double lng2 = to_radians(destination.lng);  
+    double lng2 = to_radians(destination.lng);
 
     double dlat = lat1 - lat2;          /* difference of the two latitudes */
     double dlng = lng1 - lng2;          /* difference of the two longitudes */
