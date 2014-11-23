@@ -15,6 +15,9 @@
 - name: be sure bower is installed
   npm: name=bower global=yes
 
+- name: be sure jasmine is installed
+  npm: name=jasmine-node global=yes
+
 - name: be sure grunt is installed
   npm: name=grunt-cli global=yes
 
