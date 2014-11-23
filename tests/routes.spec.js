@@ -11,7 +11,7 @@ describe("Accessibility to all routes", function() {
         .get('/')
         .expect(200)
         .end(function(err, res) {
-            expect(err).toEqual(null);
+            expect(err).toBe(null);
             done();
         });
     });
@@ -25,7 +25,7 @@ describe("Accessibility to all routes", function() {
         .send(data)
         .expect(200)
         .end(function(err) {
-            expect(err).toEqual(null);
+            expect(err).toBe(null);
             done();
         });
     });
