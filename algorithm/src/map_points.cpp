@@ -45,16 +45,14 @@ unique_ptr<MapPoints> parse_coordinates(const char * const json) {
 }
 
 
+//TODO: Use unique_ptr properly in this function
 /**
- * TODO: We should 1) Move this to a process file 2) implement
  * @param The given data points
  * @return Some processing on this data (possibly)
  */
 unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
 
-
     unique_ptr<std::vector<unique_ptr<Coordinate>>> r_errands(new std::vector<unique_ptr<Coordinate>>);
-
 
     std::vector<Coordinate *> v;
 
@@ -113,7 +111,6 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
     result->errands = move(r_errands);
 
     return move(result);
-
 }
 
 
