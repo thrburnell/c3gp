@@ -81,15 +81,11 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
         std::vector<Coordinate *>::iterator min_dist_iterator;
         for (std::vector<Coordinate *>::iterator it = v.begin(); it != v.end(); it++) {
             double curr_dist = calculate_distance((const Coordinate&) (*iterator), (const Coordinate&) (*(*it)));
-            // std::cout << curr_dist << std::endl;
-            // std::cout << ((const Coordinate&) (*(*it))).lng << std::endl;
             if (curr_dist < min_dist) {
                 min_dist = curr_dist;
                 min_dist_iterator = it;
             }
         }
-
-        // std::cout << std::endl;
 
         unique_ptr<Coordinate> temp_coordinate(new Coordinate);
         temp_coordinate->lat = (*min_dist_iterator)->lat;

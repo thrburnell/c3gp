@@ -26,8 +26,6 @@ double calculate_distance(const Coordinate& origin,
 
     /*  Check that the provided coordinates are valid */
 
-    // std::cout << origin.lat << std::endl;
-    // std::cout << origin.lng << std::endl;
     assert(are_valid_coordinates(origin));
     assert(are_valid_coordinates(destination));
 
