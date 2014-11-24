@@ -25,7 +25,6 @@ double calculate_distance(const Coordinate& origin,
                                  const Coordinate& destination) {
 
     /*  Check that the provided coordinates are valid */
-
     assert(are_valid_coordinates(origin));
     assert(are_valid_coordinates(destination));
 
