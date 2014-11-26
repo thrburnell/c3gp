@@ -48,6 +48,15 @@ module.exports = function(grunt) {
       }
     },
 
+    copy: {
+      js: {
+        expand: true,
+        cwd: 'web/javascripts',
+        src: '*.js',
+        dest: 'public/js/',
+      }
+    },
+
     jshint: {
       all: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js']
     },
@@ -66,6 +75,11 @@ module.exports = function(grunt) {
       jshint: {
         files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
         tasks: ['jshint']
+      },
+      // This task is temporary until we start minifying-concat the js
+      clientjs: {
+        files: ['web/javascripts/**/*.js'],
+        tasks: ['copy']
       }
     }
   });
@@ -75,6 +89,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+
   grunt.loadNpmTasks('grunt-jsonlint');
   grunt.loadNpmTasks('grunt-sass');
 
