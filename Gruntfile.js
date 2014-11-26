@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-  
+
     concat: {
       options: {
         separator: ';'
@@ -36,9 +36,36 @@ module.exports = function(grunt) {
       }
     },
 
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'web/stylesheets',
+          src: ['*.scss'],
+          dest: 'public/css',
+          ext: '.css'
+        }]
+      }
+    },
+
+    jshint: {
+      all: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js']
+    },
+
     jsonlint: {
       jsonlint: {
         src: ['*.json']
+      }
+    },
+
+    watch: {
+      sass: {
+        files: ['web/stylesheets/*.scss'],
+        tasks: ['sass']
+      },
+      jshint: {
+        files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
+        tasks: ['jshint']
       }
     }
   });
@@ -46,7 +73,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jsonlint');
+  grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('static', ['concat', 'uglify', 'cssmin']);
 };
