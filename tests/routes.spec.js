@@ -1,8 +1,8 @@
-var request = require('supertest');
+var supertest = require('supertest');
 var express = require('express');
 var app = require('../app');
 
-request = request(app);
+var request = supertest(app);
 
 describe("Accessibility to all routes", function() {
 
