@@ -3,6 +3,7 @@
 #include "lib/rapidjson/stringbuffer.h"
 
 #include <iostream>
+#include <limits>
 
 #include "map_points.h"
 #include "haversine.h"
@@ -64,7 +65,10 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
     destination->lat = map_points->destination->lat;
     destination->lng = map_points->destination->lng;
 
-    for (std::vector<unique_ptr<Coordinate>>::iterator it = map_points->errands->begin(); it != map_points->errands->end(); it++) {
+    for (
+            std::vector<unique_ptr<Coordinate>>::iterator it = map_points->errands->begin();
+            it != map_points->errands->end();
+            it++) {
         Coordinate * newCoord = new Coordinate();
         newCoord->lat = (*it)->lat;
         newCoord->lng = (*it)->lng;
@@ -75,7 +79,7 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
     Coordinate * iterator = origin;
 
     while (! v.empty()) {
-        double min_dist = 1023456789.0;
+        double min_dist = std::numeric_limits<double>::max();
         std::vector<Coordinate *>::iterator min_dist_iterator;
         for (std::vector<Coordinate *>::iterator it = v.begin(); it != v.end(); it++) {
             double curr_dist = calculate_distance((const Coordinate&) (*iterator), (const Coordinate&) (*(*it)));
@@ -88,7 +92,6 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
         unique_ptr<Coordinate> temp_coordinate(new Coordinate);
         temp_coordinate->lat = (*min_dist_iterator)->lat;
         temp_coordinate->lng = (*min_dist_iterator)->lng;
-
 
         r_errands->push_back(move(temp_coordinate));
 
