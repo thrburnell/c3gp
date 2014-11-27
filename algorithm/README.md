@@ -3,16 +3,7 @@ Algorithm
 
 TSP implementation goes here
 
-Build
------
+Documentation
+-------------
 
-run scons in the root folder
-
-The main artifact is going to be in the ./build folder
-
-
-Libraries
----------
-
-C++ Json
-https://github.com/vivkin/gason/
+Please refer to the documentation/algorithm.md file
