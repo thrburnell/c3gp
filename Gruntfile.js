@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         expand: true,
         cwd: 'web/javascripts',
         src: '*.js',
-        dest: 'public/js/',
+        dest: 'public/js',
       }
     },
 
@@ -67,6 +67,21 @@ module.exports = function(grunt) {
       }
     },
 
+    nodemon: {
+      dev: {
+        script: 'bin/www'
+      }
+    },
+
+    concurrent: {
+      target: {
+        tasks: ['nodemon', 'watch'],
+        options: {
+          logConcurrentOutput: true
+        }
+      }
+    },
+
     watch: {
       sass: {
         files: ['web/stylesheets/*.scss'],
@@ -75,6 +90,10 @@ module.exports = function(grunt) {
       jshint: {
         files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
         tasks: ['jshint']
+      },
+      jsonlint: {
+        files: ['*.json'],
+        tasks: ['jsonlint']
       },
       // This task is temporary until we start minifying-concat the js
       clientjs: {
@@ -90,6 +109,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-jsonlint');
   grunt.loadNpmTasks('grunt-sass');
 
