@@ -49,7 +49,7 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      js: {
+      clientjs: {
         expand: true,
         cwd: 'web/javascripts',
         src: '*.js',
