@@ -29,6 +29,14 @@ test_env.VariantDir('test', 'src', duplicate = 0)
 # I think this is still explicitly needed, because tests may depend on files
 # other than just themselves.
 # Note that we *need* the googletest library to be compiled in here.
-haversineTest = test_env.Program('test/haversine_test', ['test/haversine_test.cpp', 'test/haversine.cpp', 'test/libgtest.a'], LIBS=['pthread'])
-tspTest = test_env.Program('test/map_points_test', ['test/map_points_test.cpp', 'test/map_points.cpp', 'test/libgtest.a'], LIBS=['pthread'])
+haversineTest = test_env.Program('test/haversine_test',
+                                 ['test/haversine_test.cpp',
+                                  'test/haversine.cpp',
+                                  'test/libgtest.a'],
+                                 LIBS=['pthread'])
+tspTest = test_env.Program('test/map_points_test',
+                           ['test/map_points_test.cpp',
+                            'test/map_points.cpp',
+                            'test/libgtest.a'],
+                           LIBS=['pthread'])
 

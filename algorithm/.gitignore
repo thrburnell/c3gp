@@ -12,3 +12,5 @@ src/lib
 # SConstruct temporary files
 .sconsign.dblite
 
+# Test binaries
+test/
