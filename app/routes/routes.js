@@ -6,8 +6,8 @@ var IndexController = require('../controllers/IndexController');
 var StatusController = require('../controllers/StatusController');
 
 router.get('/', IndexController.controller);
+router.get('/status', StatusController.controller);
 
 router.post('/cpp', CppController.controller);
-router.get('/status', StatusController.controller);
 
 module.exports = router;
