@@ -40,6 +40,14 @@ haversineTest = test_env.Program('test/haversine_test',
                                  + ['test/libgtest.a'],
                                  LIBS=['pthread'])
 
+distanceQueueTest = test_env.Program('test/distance_queue_test',
+                                     create_objs(['distance_queue_test',
+                                                  'map_points',
+                                                  'haversine'],
+                                                 "test/")
+                                                 + ['test/libgtest.a'],
+                                                 LIBS=['pthread'])
+
 tspTest = test_env.Program('test/map_points_test',
                            create_objs(['map_points_test',
                                         'map_points',
