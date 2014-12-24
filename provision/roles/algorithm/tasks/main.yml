@@ -6,3 +6,5 @@
 - name: be sure scons is installed
   apt: name=scons update_cache=yes state=latest
 
+- name: be sure git is installed
+  apt: name=git update_cache=yes state=latest
