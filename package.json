@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "grunt-jsonlint": "~1.0.4"
+    "grunt-jsonlint": "~1.0.4",
+    "shelljs": "~0.3.0"
   }
 }
