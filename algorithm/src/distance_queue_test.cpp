@@ -8,7 +8,7 @@ TEST(DistanceQueueTest, KeepsCorrectPoints) {
     Coordinate c1;
     c1.lat = 0.3;
     c1.lng = 0.3;
-    distance_queue dq(c1);
+    DistanceQueue dq(c1);
 
     Coordinate c2;
     c2.lat = 0.4;
@@ -39,7 +39,7 @@ TEST(DistanceQueueTest, KeepsAllPointsUpToThree) {
     Coordinate c1;
     c1.lat = 0.3;
     c1.lng = 0.3;
-    distance_queue dq(c1);
+    DistanceQueue dq(c1);
 
     Coordinate c2;
     c2.lat = 0.4;
@@ -66,7 +66,7 @@ TEST(DistanceQueueTest, KeepsOnePoint) {
     Coordinate c1;
     c1.lat = 0.3;
     c1.lng = 0.3;
-    distance_queue dq(c1);
+    DistanceQueue dq(c1);
 
     Coordinate c2;
     c2.lat = 0.4;

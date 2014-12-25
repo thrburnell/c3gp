@@ -7,23 +7,23 @@
 #include <vector>
 #include <memory>
 
-class distance_queue {
+class DistanceQueue {
 
 public:
-    distance_queue(Coordinate point) :
+    DistanceQueue(Coordinate point) :
     compare_with_target(point), queue(compare_with_target) {
     }
 
     void push(const Coordinate& point) {
         queue.push(point);
-        if(queue.size() > kPointLimit) {
+        if (queue.size() > kPointLimit) {
             queue.pop();
         }
     }
 
     std::vector<Coordinate> finish() {
         std::vector<Coordinate> result(queue.size());
-        for(int i = result.size() - 1; i >= 0; --i) {
+        for (int i = result.size() - 1; i >= 0; --i) {
             result[i] = queue.top();
             queue.pop();
         }
@@ -34,11 +34,11 @@ private:
     // Number of points closest to the input point we wish to hold on to
     static const int kPointLimit = 3;
     
-    class dist_comp {
+    class DistComp {
         Coordinate point;
 
     public:
-        dist_comp(Coordinate target_point) : point(target_point) {
+        DistComp(Coordinate target_point) : point(target_point) {
         }
 
         bool operator() (const Coordinate& lhs, const Coordinate& rhs) {
@@ -47,8 +47,8 @@ private:
         }
     };
 
-    dist_comp compare_with_target;
-    std::priority_queue<Coordinate, std::vector<Coordinate>, dist_comp> queue;
+    DistComp compare_with_target;
+    std::priority_queue<Coordinate, std::vector<Coordinate>, DistComp> queue;
 
 };
 
