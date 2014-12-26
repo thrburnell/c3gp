@@ -20,7 +20,7 @@ body {
   left: 50%;
   width: 500px;
   margin-left: -250px;
-  background: rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.5);
   padding: 10px;
   color: white;
   z-index: 100;
