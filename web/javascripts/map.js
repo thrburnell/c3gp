@@ -105,6 +105,11 @@ $(document).ready(function() {
 
     });
 
+    $("#b-start").click(function() {
+        var welcomeSplash = $("#d-welcome");
+        welcomeSplash.hide();
+    });
+
     function calcRoute(routeRequest) {
 
         jsonData = JSON.stringify(routeRequest);
