@@ -14,6 +14,11 @@ require('shelljs/global');
 // the server process. If additional jobs need to be carried out before 
 // starting the server, one should add the necessary code to the 'prepare'
 // task.
+//
+// During development, developers will often want to make use of `grunt dev`.
+// This task moves all public files into place, compiles all server code, and 
+// starts the server, after which making sure all files are watched for 
+// changes.
 
 module.exports = function(grunt) {
 
