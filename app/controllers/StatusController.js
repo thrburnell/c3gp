@@ -12,4 +12,4 @@ exports.controller = function(req, res) {
         }
         res.send(stdout.replace("\n", "<br />"));
     });
-}
+};

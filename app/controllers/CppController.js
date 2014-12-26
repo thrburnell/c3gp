@@ -20,4 +20,4 @@ exports.controller = function(req, res) {
         }
         res.send(stdout);
     });
-}
+};
