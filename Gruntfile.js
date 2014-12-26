@@ -1,30 +1,30 @@
 require('shelljs/global');
 
-// We use Grunt as a task runner. All tasks, such as compilation or test 
+// We use Grunt as a task runner. All tasks, such as compilation or test
 // running, should be achieved by running one of these tasks.
 //
-// For a list of available tasks, run `grunt -h`. For example, running 
-// `grunt dev` compiles all code, moves all public files into place, 
+// For a list of available tasks, run `grunt -h`. For example, running
+// `grunt dev` compiles all code, moves all public files into place,
 // starts the server, and watches for all file changes (restarting the
 // server when necessary, and moving public files across when modified).
 //
 // Additionally, all our production and demo environments run `grunt prepare`
-// before `grunt forever-start`. The first compiles all code and moves 
+// before `grunt forever-start`. The first compiles all code and moves
 // everything into place for server start, and the second starts/restarts
-// the server process. If additional jobs need to be carried out before 
+// the server process. If additional jobs need to be carried out before
 // starting the server, one should add the necessary code to the 'prepare'
 // task.
 //
 // During development, developers will often want to make use of `grunt dev`.
-// This task moves all public files into place, compiles all server code, and 
-// starts the server, after which making sure all files are watched for 
+// This task moves all public files into place, compiles all server code, and
+// starts the server, after which making sure all files are watched for
 // changes.
 
 module.exports = function(grunt) {
 
   // Configuration for grunt tasks
   grunt.initConfig({
-   
+
     // Location of server script
     serverScript: 'bin/www',
 
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['web/javascripts/**/*.js'],
-        tasks: ['copy:js']
+        tasks: ['browserify']
       },
       css: {
         files: ['web/stylesheets/**/*.css'],
@@ -72,14 +72,16 @@ module.exports = function(grunt) {
       }
     },
 
+    browserify: {
+      dist: {
+        files: {
+          'public/js/web.js': ['web/javascripts/*.js']
+        }
+      }
+    },
+
     // Config for copying js/css files from web to public
     copy: {
-      js: {
-        expand: true,
-        cwd: 'web/javascripts',
-        src: '*.js',
-        dest: 'public/js'
-      },
       css: {
         expand: true,
         cwd: 'web/stylesheets',
@@ -134,7 +136,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('algorithm', 
+  grunt.registerTask('algorithm',
       'Installs all libraries and compiles algorithm code.',
       function() {
         // Execute install script in algorithm dir
@@ -151,7 +153,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('public',
       'Generates public static files.',
-      ['copy']);
+      ['copy', 'browserify']);
 
   grunt.registerTask('dev',
       'Compiles all code, starts server, watches for all file changes.',
@@ -187,7 +189,7 @@ module.exports = function(grunt) {
 
         // Attempt to restart process
         if (exec('forever restart ' + script).code !== 0) {
-          
+
           // Restart failed (i.e. it was never started to begin with)
           if (exec('forever start ' + script).code !== 0) {
             // Start failed unexpectedly
@@ -217,6 +219,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jsonlint');
+  grunt.loadNpmTasks('grunt-browserify');
 
 };
 
