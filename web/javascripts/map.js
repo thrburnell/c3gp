@@ -29,7 +29,7 @@ $(document).ready(function() {
                 index: m_index
             });
 
-            if (marker.index == 0) {
+            if (marker.index === 0) {
                 marker.setAnimation(google.maps.Animation.BOUNCE);
             }
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
             // Listener to remove pin on click
             google.maps.event.addListener(marker, 'click', function(point) {
-                if (marker.index == 0) {
+                if (marker.index === 0) {
             // give message
             setInstruction(delete_origin_error_message);
             } else {
@@ -126,12 +126,12 @@ $(document).ready(function() {
 
     function displayRoute(route) {
 
-        var start = new google.maps.LatLng(route[0].lat, route[0].lng)
-        var end = new google.maps.LatLng(route[0].lat, route[0].lng)
+        var start = new google.maps.LatLng(route[0].lat, route[0].lng);
+        var end = new google.maps.LatLng(route[0].lat, route[0].lng);
         var waypoints = [];
 
         for (var i = 1; i < route.length; i++) {
-            var pt = new google.maps.LatLng(route[i].lat, route[i].lng)
+            var pt = new google.maps.LatLng(route[i].lat, route[i].lng);
             waypoints.push({
                 location: pt,
                 stopover: true
