@@ -108,6 +108,9 @@ $(document).ready(function() {
     $("#b-start").click(function() {
         var welcomeSplash = $("#d-welcome");
         welcomeSplash.hide();
+
+        var topBar = $("#top-bar");
+        topBar.show();
     });
 
     function calcRoute(routeRequest) {
