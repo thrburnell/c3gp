@@ -1,5 +1,20 @@
 require('shelljs/global');
 
+// We use Grunt as a task runner. All tasks, such as compilation or test 
+// running, should be achieved by running one of these tasks.
+//
+// For a list of available tasks, run `grunt -h`. For example, running 
+// `grunt dev` compiles all code, moves all public files into place, 
+// starts the server, and watches for all file changes (restarting the
+// server when necessary, and moving public files across when modified).
+//
+// Additionally, all our production and demo environments run `grunt prepare`
+// before `grunt forever-start`. The first compiles all code and moves 
+// everything into place for server start, and the second starts/restarts
+// the server process. If additional jobs need to be carried out before 
+// starting the server, one should add the necessary code to the 'prepare'
+// task.
+
 module.exports = function(grunt) {
 
   // Configuration for grunt tasks
