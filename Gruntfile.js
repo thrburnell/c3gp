@@ -119,6 +119,12 @@ module.exports = function(grunt) {
         dir: '.',
         script: 'runTests.py'
       }
+    },
+
+    // Config specifying tasks to run for validating different file types
+    validate: {
+      json: 'jsonlint',
+      js: 'jshint'
     }
 
   });
@@ -190,6 +196,12 @@ module.exports = function(grunt) {
       'Stops all forever processes running the server.',
       function() {
         exec('forever stop ' + grunt.config('serverScript'));
+      });
+
+  grunt.registerMultiTask('validate',
+      'Runs validation checks over all registered file types.',
+      function() {
+        grunt.task.run(this.data);
       });
 
   // Load npm tasks
