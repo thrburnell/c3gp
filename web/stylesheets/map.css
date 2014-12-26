@@ -20,7 +20,7 @@ body {
   left: 50%;
   width: 500px;
   margin-left: -250px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 1);
   padding: 10px;
   color: white;
   z-index: 100;
@@ -38,3 +38,104 @@ body {
   color: white;
 }
 
+.fullheight {
+  height: 100%;
+}
+
+.nopadding {
+  padding: 0;
+}
+
+
+.menu {
+  background-color: #354458;
+  padding-top: 30px;
+}
+
+.menu img {
+  display: block;
+  width: 50px;
+  margin: 0 auto;
+}
+
+.menu button {
+  margin: 0 auto;
+  display: block;
+
+  background-color: #EA7260;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+
+  border: solid 2px #EA7260;
+  color: #354458;
+
+  width: 150px;
+  height: 45px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.menu input {
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
+.menu .group {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.welcome {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 5;
+  left: 0;
+
+
+  background: -webkit-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* Standard syntax */
+}
+
+.welcome .mid {
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.welcome h1 {
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.welcome h2 {
+  color: white;
+}
+
+.welcome img {
+  width: 500px;
+}
+
+.welcome button {
+  background-color: Transparent;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+
+  border: solid 2px #EB7260;
+  color: #EB7260;
+
+  width: 200px;
+  height: 75px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
