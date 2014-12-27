@@ -4,6 +4,7 @@
   "dependencies": {
     "components-font-awesome": "~4.2.0",
     "bootstrap": "~3.3.0",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "jquery-cookie": "~1.4.1"
   }
 }

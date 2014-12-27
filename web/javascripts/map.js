@@ -106,12 +106,39 @@ $(document).ready(function() {
     });
 
     $("#b-start").click(function() {
+        hideSplash();
+        splashAddCookie();
+    });
+
+    var splashHasCookie = function() {
+        var cookie = $.cookie('splash');
+        return cookie === 'true';
+    };
+
+    // This will be nicely squashed when Browserify will be implemented
+    var checkForSplash = (function() {
+        if (splashHasCookie()) {
+            return;
+        }
+
+        var welcomeSplash = $("#d-welcome");
+        welcomeSplash.show();
+
+        var topBar = $("#top-bar");
+        topBar.hide();
+    })();
+
+    var hideSplash = function() {
         var welcomeSplash = $("#d-welcome");
         welcomeSplash.hide();
 
         var topBar = $("#top-bar");
         topBar.show();
-    });
+    };
+
+    var splashAddCookie = function() {
+        $.cookie("splash", "true");
+    };
 
     function calcRoute(routeRequest) {
 
