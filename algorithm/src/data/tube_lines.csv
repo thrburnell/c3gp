@@ -219,171 +219,89 @@ Jubilee,Westminster,Waterloo,1.75,1.5
 Jubilee,Green Park,Westminster,2,2.25
 Jubilee,Bond Street,Green Park,2,2
 Jubilee,Baker Street,Bond Street,2.25,2.5
-Metropolitan,Great Portland Street,Baker Street
-Metropolitan,Ruislip,Ickenham
-Metropolitan,Aldgate,Liverpool Street
-Metropolitan,Liverpool Street,Moorgate
-Metropolitan,Moorgate,Barbican
-Metropolitan,Ickenham,Hillingdon
-Metropolitan,Ruislip Manor,Ruislip
-Metropolitan,Eastcote,Ruislip Manor
-Metropolitan,West Harrow,Eastcote
-Metropolitan,Harrow-on-the-Hill,West Harrow
-Metropolitan,Farringdon,Kings Cross St. Pancras
-Metropolitan,Northwick Park,Harrow-on-the-Hill
-Metropolitan,Preston Road,Northwick Park
-Metropolitan,Wembley Park,Preston Road
-Metropolitan,Finchley Road,Wembley Park
-Metropolitan,Baker Street,Finchley Road
-Metropolitan,Euston Square,Great Portland Street
-Metropolitan,Hillingdon,Uxbridge
-Metropolitan,Harrow-on-the-Hill,North Harrow
-Metropolitan,North Harrow,Pinner
-Metropolitan,Barbican,Farringdon
-Metropolitan,Chalfont And Latimer,Amersham
-Metropolitan,Chalfont And Latimer,Chesham
-Metropolitan,Chorleywood,Chalfont And Latimer
-Metropolitan,Rickmansworth,Chorleywood
-Metropolitan,Moor Park,Rickmansworth
-Metropolitan,Kings Cross St. Pancras,Euston Square
-Metropolitan,Croxley,Watford
-Metropolitan,Pinner,Northwood Hills
-Metropolitan,Moor Park,Croxley
-Metropolitan,Northwood Hills,Moor Park
-Northern,Clapham Common,Clapham North
-Northern,Clapham North,Stockwell
-Northern,Stockwell,Oval
-Northern,Goodge Street,Warren Street
-Northern,Oval,Kennington
-Northern,Clapham South,Clapham Common
-Northern,Tooting Bec,Balham
-Northern,Tooting Broadway,Tooting Bec
-Northern,Colliers Wood,Tooting Broadway
-Northern,South Wimbledon,Colliers Wood
-Northern,Morden,South Wimbledon
-Northern,Tufnell Park,Archway
-Northern,Totteridge And Whetstone,High Barnet
-Northern,Kennington,Elephant And Castle
-Northern,Camden Town,Chalk Farm
-Northern,Chalk Farm,Belsize Park
-Northern,Belsize Park,Hampstead
-Northern,Hampstead,Golders Green
-Northern,Brent Cross,Hendon Central
-Northern,Colindale,Burnt Oak
-Northern,Burnt Oak,Edgware
-Northern,Camden Town,Kentish Town
-Northern,Kentish Town,Tufnell Park
-Northern,Archway,Highgate
-Northern,Highgate,East Finchley
-Northern,East Finchley,Mill Hill East
-Northern,East Finchley,Finchley Central
-Northern,Finchley Central,West Finchley
-Northern,West Finchley,Woodside Park
-Northern,Euston,Camden Town
-Northern,Mornington Crescent,Camden Town
-Northern,Euston,Mornington Crescent
-Northern,Elephant And Castle,Borough
-Northern,Borough,London Bridge
-Northern,London Bridge,Bank
-Northern,Bank,Moorgate
-Northern,Moorgate,Old Street
-Northern,Old Street,Angel
-Northern,Angel,Kings Cross St. Pancras
-Northern,Kings Cross St. Pancras,Euston
-Northern,Kennington,Waterloo
-Northern,Waterloo,Embankment
-Northern,Embankment,Charing Cross
-Northern,Charing Cross,Leicester Square
-Northern,Leicester Square,Tottenham Court Road
-Northern,Tottenham Court Road,Goodge Street
-Northern,Warren Street,Euston
-Northern,Woodside Park,Totteridge And Whetstone
-Northern,Balham,Clapham South
-Northern,Hendon Central,Colindale
-Northern,Golders Green,Brent Cross
-Overground,Surrey Quays,New Cross Gate
-Overground,New Cross Gate,Brockley
-Overground,Brockley,Honor Oak Park
-Overground,Willesden Junction,Kensal Rise
-Overground,Honor Oak Park,Forest Hill
-Overground,Queens Park,Kilburn High Road
-Overground,Forest Hill,Sydenham
-Overground,Surrey Quays,New Cross
-Overground,Canada Water,Surrey Quays
-Overground,Rotherhithe,Canada Water
-Overground,Wapping,Rotherhithe
-Overground,Shadwell,Wapping
-Overground,Whitechapel,Shadwell
-Overground,Shoreditch High Street,Whitechapel
-Overground,Hoxton,Shoreditch High Street
-Overground,Haggerston,Hoxton
-Overground,Dalston Junction,Haggerston
-Overground,South Kenton,North Wembley
-Overground,Penge West,Anerley
-Overground,North Wembley,Wembley Central
-Overground,Wembley Central,Stonebridge Park
-Overground,Stonebridge Park,Harlesden
-Overground,Harlesden,Willesden Junction
-Overground,Willesden Junction,Kensal Green
-Overground,Kensal Green,Queens Park
-Overground,Wandsworth Road,Clapham Junction
-Overground,Clapham High Street,Wandsworth Road
-Overground,Sydenham,Penge West
-Overground,Denmark Hill,Clapham High Street
-Overground,Peckham Rye,Denmark Hill
-Overground,Queens Road Peckham,Peckham Rye
-Overground,Surrey Quays,Queens Road Peckham
-Overground,Sydenham,Crystal Palace
-Overground,Norwood Junction,West Croydon
-Overground,Anerley,Norwood Junction
-Overground,Canonbury,Dalston Junction
-Overground,Highbury and Islington,Canonbury
-Overground,Woodgrange Park,Barking
-Overground,Caledonian Road and Barnsbury,Highbury and Islington
-Overground,Camden Road,Caledonian Road and Barnsbury
-Overground,Kentish Town West,Camden Road
-Overground,Gospel Oak,Kentish Town West
-Overground,Hampstead Heath,Gospel Oak
-Overground,Finchley Road and Frognal,Hampstead Heath
-Overground,West Hampstead,Finchley Road and Frognal
-Overground,Brondesbury,West Hampstead
-Overground,Brondesbury Park,Brondesbury
-Overground,Kensal Rise,Brondesbury Park
-Overground,Gospel Oak,Upper Holloway
-Overground,Acton Central,Willesden Junction
-Overground,South Acton,Acton Central
-Overground,Gunnersbury,South Acton
-Overground,Kew Gardens,Gunnersbury
-Overground,Richmond,Kew Gardens
-Overground,Canonbury,Dalston Kingsland
-Overground,Dalston Kingsland,Hackney Central
-Overground,Hackney Central,Homerton
-Overground,Wanstead Park,Woodgrange Park
-Overground,Leytonstone High Road,Wanstead Park
-Overground,Leyton Midland Road,Leytonstone High Road
-Overground,Blackhorse Road,Walthamstow Queens Road
-Overground,South Tottenham,Blackhorse Road
-Overground,Harringay Green Lanes,South Tottenham
-Overground,Crouch Hill,Harringay Green Lanes
-Overground,Upper Holloway,Crouch Hill
-Overground,Imperial Wharf,Clapham Junction
-Overground,West Brompton,Imperial Wharf
-Overground,Kensington (Olympia),West Brompton
-Overground,Shepherds Bush,Kensington (Olympia)
-Overground,Willesden Junction,Shepherds Bush
-Overground,Kilburn High Road,South Hampstead
-Overground,Hackney Wick,Stratford
-Overground,Homerton,Hackney Wick
-Overground,South Hampstead,Euston
-Overground,Kenton,South Kenton
-Overground,Harrow And Wealdstone,Kenton
-Overground,Walthamstow Queens Road,Leyton Midland Road
-Overground,Watford Junction,Watford High Street
-Overground,Watford High Street,Bushey
-Overground,Bushey,Carpenders Park
-Overground,Carpenders Park,Hatch End
-Overground,Hatch End,Headstone Lane
-Overground,Headstone Lane,Harrow and Wealdstone
+Metropolitan,Great Portland Street,Baker Street,3,2
+Metropolitan,Ruislip,Ickenham,2.5,2.5
+Metropolitan,Aldgate,Liverpool Street,2,2.5
+Metropolitan,Liverpool Street,Moorgate,1.5,1.5
+Metropolitan,Moorgate,Barbican,1.5,2
+Metropolitan,Ickenham,Hillingdon,2,2
+Metropolitan,Ruislip Manor,Ruislip,1.5,1.5
+Metropolitan,Eastcote,Ruislip Manor,2,2
+Metropolitan,Rayners Lane,Eastcote,2.5,2.5
+Metropolitan,West Harrow, Rayners Lane,2.5,2.5
+Metropolitan,Harrow-on-the-Hill,West Harrow,2,2.5
+Metropolitan,Farringdon,Kings Cross St. Pancras,3.5,3.5
+Metropolitan,Northwick Park,Harrow-on-the-Hill,3,2
+Metropolitan,Preston Road,Northwick Park,2.5,2.5
+Metropolitan,Wembley Park,Preston Road,2,2.5
+Metropolitan,Finchley Road,Wembley Park,7,7.5
+Metropolitan,Baker Street,Finchley Road,5.5,6
+Metropolitan,Euston Square,Great Portland Street,1.5,1.5
+Metropolitan,Hillingdon,Uxbridge,3.5,3
+Metropolitan,Harrow-on-the-Hill,North Harrow,3,3.5
+Metropolitan,North Harrow,Pinner,2,2
+Metropolitan,Barbican,Farringdon,1.5,1.5
+Metropolitan,Chalfont And Latimer,Amersham,4,3.5
+Metropolitan,Chalfont And Latimer,Chesham,8.5,8.5
+Metropolitan,Chorleywood,Chalfont And Latimer,4,3.5
+Metropolitan,Rickmansworth,Chorleywood,4,4
+Metropolitan,Moor Park,Rickmansworth,4,3.5
+Metropolitan,Kings Cross St. Pancras,Euston Square,2,2
+Metropolitan,Croxley,Watford,3.5,3
+Metropolitan,Pinner,Northwood Hills,2.5,3
+Metropolitan,Moor Park,Croxley,4,4
+Metropolitan,Northwood Hills,Moor Park,3,3
+Northern,Clapham Common,Clapham North,1.5,1.5
+Northern,Clapham North,Stockwell,1.5,1.5
+Northern,Stockwell,Oval,2.25,2.5
+Northern,Goodge Street,Warren Street,1.25,1.25
+Northern,Oval,Kennington,1.75,1.5
+Northern,Clapham South,Clapham Common,2.25,2.25
+Northern,Tooting Bec,Balham,1.75,1.75
+Northern,Tooting Broadway,Tooting Bec,2,2
+Northern,Colliers Wood,Tooting Broadway,2,2.25
+Northern,South Wimbledon,Colliers Wood,1.75,2.25
+Northern,Morden,South Wimbledon,2.5,2.25
+Northern,Tufnell Park,Archway,1.75,1.75
+Northern,Totteridge And Whetstone,High Barnet,3.25,3
+Northern,Kennington,Elephant And Castle,2,1.75
+Northern,Camden Town,Chalk Farm,1.5,2
+Northern,Chalk Farm,Belsize Park,2,1.75
+Northern,Belsize Park,Hampstead,2,2
+Northern,Hampstead,Golders Green,4,3.5
+Northern,Brent Cross,Hendon Central,1.75,2
+Northern,Colindale,Burnt Oak,2,2.5
+Northern,Burnt Oak,Edgware,2.25,2.25
+Northern,Camden Town,Kentish Town,2,2.25
+Northern,Kentish Town,Tufnell Park,1.5,1.5
+Northern,Archway,Highgate,2.75,2.75
+Northern,Highgate,East Finchley,2.5,2.5
+Northern,Finchley Central,Mill Hill East,2.25,2.75
+Northern,East Finchley,Finchley Central,3.5,3
+Northern,Finchley Central,West Finchley,2.25,2.25
+Northern,West Finchley,Woodside Park,1.75,1.75
+Northern,Euston,Camden Town,3.25,3
+Northern,Mornington Crescent,Camden Town,1.75,1.5
+Northern,Euston,Mornington Crescent,2,2
+Northern,Elephant And Castle,Borough,1.75,2
+Northern,Borough,London Bridge,1.5,1.5
+Northern,London Bridge,Bank,1.75,1.75
+Northern,Bank,Moorgate,2,2
+Northern,Moorgate,Old Street,1.5,1.75
+Northern,Old Street,Angel,2.75,2.25
+Northern,Angel,Kings Cross St. Pancras,2.5,2.5
+Northern,Kings Cross St. Pancras,Euston,1.75,1.75
+Northern,Kennington,Waterloo,2.5,3
+Northern,Waterloo,Embankment,1.5,1.5
+Northern,Embankment,Charing Cross,1.25,1
+Northern,Charing Cross,Leicester Square,1.5,1.25
+Northern,Leicester Square,Tottenham Court Road,1.25,1.25
+Northern,Tottenham Court Road,Goodge Street,1.5,1.5
+Northern,Warren Street,Euston,1.5,1.25
+Northern,Woodside Park,Totteridge And Whetstone,2.25,2.25
+Northern,Balham,Clapham South,2,2
+Northern,Hendon Central,Colindale,2.75,2.75
+Northern,Golders Green,Brent Cross,2.25,2.5
 Piccadilly,Acton Town,South Ealing
 Piccadilly,South Ealing,Northfields
 Piccadilly,Northfields,Boston Manor
@@ -451,3 +369,4 @@ Victoria,Vauxhall,Stockwell
 Victoria,Stockwell,Brixton
 Victoria,Blackhorse Road,Tottenham Hale
 Waterloo and City,Waterloo,Bank
+
