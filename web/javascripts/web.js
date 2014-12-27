@@ -1,20 +1,15 @@
 var map = require('./map.js');
 var api = require('./api.js');
 var splash = require('./splash.js');
+var listeners = require('./listeners.js');
 
 $(document).ready(function() {
 
     google.maps.event.addDomListener(window, 'load', map.initialize);
+
+    // Presents a first-time user with an informative splash
     splash.checkForSplash();
-
-    $("#button a").click(function() {
-        console.log("Getting your route...");
-        api.calcRoute();
-    });
-
-    $("#b-start").click(function() {
-        splash.hideSplash();
-        splash.splashAddCookie();
-    });
+    // Activate listeners on the page
+    listeners.listen();
 
 });
