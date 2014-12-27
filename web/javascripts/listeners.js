@@ -1,3 +1,6 @@
+var api = require('./api.js');
+var splash = require('./splash.js');
+
 module.exports = (function() {
 
     // Add listeners to the page
