@@ -45,10 +45,11 @@
 
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <vector>
+#include <iomanip>
 #include <map>
 #include <queue>
+#include <string>
+#include <vector>
 
 using std::string;
 using std::vector;
@@ -117,7 +118,7 @@ struct ReversePairComparator {
 };
 
 int main(int argc, char** argv) {
-    std::ifstream ifs ("tube_stations.csv", std::ifstream::in);
+    std::ifstream ifs("tube_stations.csv", std::ifstream::in);
     string str;
     std::getline(ifs, str); // flush header line
 
@@ -223,21 +224,33 @@ int main(int argc, char** argv) {
     // stop from B on line J, could be reached more quickly.)
     static const double kMaxDetourEstimate = 20.0;
 
+    // Max number of characters to store timing data to.
+    // A little hacky, but because tube stops are generally within 999
+    // minutes of each other and our data has a precision of 2 decimal places
+    // this is reasonable to save on filesize.
+    static const int kTimingPrecision = 6;
+
     // This is NOT the most efficient algorithm (there are some overlapping
     // subproblems), but we don't expect to run this that often so it seems
     // fine to me. Output as an adjacency matrix (output graph is complete).
     // Output consists of: the number of stations,
-    //                     a list of stations alphabetically sorted,
+    //                     a list of stations alphabetically sorted with
+    //                     coordinates (lat, lng),
     //                     followed by the corresponding adjacency matrix.
 
     // Write the number of tube stations and their names to the output file.
-    std::ofstream ofs ("tube_matrix.csv", std::ofstream::out);
+    std::ofstream ofs("tube_matrix.csv", std::ofstream::out);
     ofs << valid_tube_stations.size() << std::endl;
+
+    // Used to preserve accuracy of latitudes and longitudes.
+    ofs << std::setprecision(12);
     for (const auto& iter : valid_tube_stations) {
-        // Write each tube station's name in order.
+        // Write each tube station's name in order, with its
+        // latitude and then longitude.
         // Remember that iterating through a map goes through it in sorted
         // order.
-        ofs << iter.second->name << std::endl;
+        ofs << iter.second->name << "," << iter.second->location.lat
+            << "," << iter.second->location.lng << std::endl;
     }
     int counter = 0;
     for (const auto& iter : valid_tube_stations) {
@@ -327,7 +340,7 @@ int main(int argc, char** argv) {
                               travel_overhead +
                           iter.second->travel_overhead;
             }
-            str += std::to_string(timing);
+            str += std::to_string(timing).substr(0, kTimingPrecision);
             str += ",";
         }
         // get rid of the last comma

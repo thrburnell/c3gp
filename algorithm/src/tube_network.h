@@ -5,8 +5,11 @@
 
 #include <stdexcept>
 #include <map>
+#include <iostream>
 
 // This implementation of the London tube network requires initialisation
+// from a file, data/tube_matrix.csv.
+
 enum TubeLine {
     BAKERLOO,
     CENTRAL,
@@ -26,25 +29,25 @@ class TubeStation : public TransportNode {
 public:
     std::string name; // Station name.
 
-    // Travel overhead if entering, changing or leaving here
+    // Travel overhead if entering, changing or leaving here.
+    // Do NOT use outside the Network Generator.
     double travel_overhead = -1;
 
     // Adjacency list of TubeStations that this station connects to.
+    // Do NOT use outside the Network Generator.
     std::vector<std::pair<std::pair<TubeStation*, TubeLine>, double>> edge_list;
 
-    TubeStation(std::string st_name) : name(st_name) {};
+    TubeStation() {};
+    TubeStation(std::string st_name) { name = st_name; };
 
     // Tests equality
-    bool operator=(const TubeStation& other) const {
-        return other.location.lat == this->location.lat &&
-               other.location.lng == this->location.lng;
+    virtual bool operator=(const TubeStation& other) const {
+        return this->name == other.name; // tube stations identifiable by name
     }
 
     // Tests less-than (needed for map data structure)
-    bool operator<(const TubeStation& other) const {
-        return other.location.lat < this->location.lat ||
-               (other.location.lat == this->location.lat &&
-                other.location.lng < this->location.lng);
+    virtual bool operator<(const TubeStation& other) const {
+        return this->name < other.name;
     }
 };
 
@@ -56,25 +59,10 @@ class TubeNetwork : public TransportNetwork {
  */
 
 public:
-    TubeNetwork() {
-        // TODO Jeremy: Implement this method
-    }
+    TubeNetwork();
 
     virtual double find_time_in_network(const TransportNode& origin,
-                                        const TransportNode& destination) {
-        const TubeStation origin_station =
-            static_cast<const TubeStation&>(origin);
-        const TubeStation dest_station =
-            static_cast<const TubeStation&>(destination);
-
-        // We can assume that both are tube stations from here on out.
-        std::map<std::pair<TubeStation, TubeStation>, double>::iterator it =
-            timings.find(std::make_pair(origin_station, dest_station));
-        if (it == timings.end()) {
-            throw std::domain_error("Tube stations can't be linked!");
-        }
-        return it->second;
-    }
+                                        const TransportNode& destination);
 
 private:
     std::map<std::pair<TubeStation, TubeStation>, double> timings;
