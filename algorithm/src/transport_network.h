@@ -10,8 +10,8 @@ public:
 
 class TransportNetwork {
 public:
-    double find_time_in_network(const TransportNode& origin,
-                                const TransportNode& destination) = 0;
+    virtual double find_time_in_network(const TransportNode& origin,
+                                        const TransportNode& destination) = 0;
 };
 
 #endif /* TRANSPORT_NETWORK_H */

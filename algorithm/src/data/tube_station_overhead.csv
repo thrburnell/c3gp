@@ -26,6 +26,7 @@ Becontree,2
 Belsize Park,5
 Bermondsey,3
 Bethnal Green,2
+Blackfriars,2
 Blackhorse Road,3
 Blackwall,2
 Bond Street,4
@@ -62,7 +63,12 @@ Chigwell,2
 Chiswick Park,3
 Chorleywood,2
 Clapham Common,3
+Clapham North,3
+Clapham South,3
 Clapham Junction,5
+Cockfosters,2
+Colindale,2
+Colliers Wood,3
 Covent Garden,4
 Crossharbour,2
 Crouch Hill,2
@@ -114,23 +120,26 @@ Goodge Street,5
 Grange Hill,2
 Great Portland Street,2
 Green Park,4
+Greenford,2
 Gunnersbury,2
 Hackney Central,2
 Hackney Wick,2
 Hainault,2
-Hammersmith,2
+Hammersmith (Met.),2
+Hammersmith (District),2
 Hampstead,5
 Hampstead Heath,2
 Hanger Lane,1.5
 Harlesden,1.5
 Harrow and Wealdstone,2
-Harrow-On-The-Hill,2
+Harrow-on-the-Hill,2
 Hatton Cross,2
 Hatch End,2
 Headstone Lane,2
 Heathrow Terminals 1 2 3,2
 Heathrow Terminal 4, 1
 Heathrow Terminal 5, 2
+Hendon Central,2
 Heron Quays,1
 High Barnet,2
 Highbury and Islington,2
@@ -324,4 +333,3 @@ Woodgrange Park,4
 Wood Green,2
 Wood Lane,2
 Woodside Park,3
-

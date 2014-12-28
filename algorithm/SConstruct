@@ -11,7 +11,8 @@ env = Environment(
 source = []
 for root, dirnames, filenames in os.walk('src'):
     for filename in fnmatch.filter(filenames, '*.cpp'):
-        if (not fnmatch.fnmatch(filename, '*_test.cpp')):
+        if (not fnmatch.fnmatch(filename, '*_test.cpp') and
+            not fnmatch.fnmatch(filename, '*_generator.cpp')):
             source.append(os.path.join(root, filename).replace('src/', 'build/'))
 
 target = "build/tsp.bin"

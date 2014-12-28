@@ -228,7 +228,7 @@ Metropolitan,Ickenham,Hillingdon,2,2
 Metropolitan,Ruislip Manor,Ruislip,1.5,1.5
 Metropolitan,Eastcote,Ruislip Manor,2,2
 Metropolitan,Rayners Lane,Eastcote,2.5,2.5
-Metropolitan,West Harrow, Rayners Lane,2.5,2.5
+Metropolitan,West Harrow,Rayners Lane,2.5,2.5
 Metropolitan,Harrow-on-the-Hill,West Harrow,2,2.5
 Metropolitan,Farringdon,Kings Cross St. Pancras,3.5,3.5
 Metropolitan,Northwick Park,Harrow-on-the-Hill,3,2
@@ -370,4 +370,3 @@ Victoria,Vauxhall,Stockwell,2.25,2.25
 Victoria,Stockwell,Brixton,2,1.75
 Victoria,Blackhorse Road,Tottenham Hale,2,2
 Waterloo and City,Waterloo,Bank,4,4
-
