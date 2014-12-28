@@ -1,3 +1,45 @@
+/* This program is used to simulate and process a graph of tube lines,
+ * thereby computing an estimate of the time required to travel from
+ * one stop to another.
+ *
+ * What it DOES factor in:
+ *  (+) Time from one station to another.
+ *  (+) An estimate of time spent waiting for trains.
+ *  (+) An estimate of time required to change platforms at a station.
+ *  (+) An estimate of time required to enter the first station and leave
+ *      the last station.
+ *
+ * What it DOESN'T:
+ *  (-) Variable train periods.
+ *  (-) Service delays / unexpected stuff happening.
+ * 
+ * This requires three data input files:
+ *
+ * tube_lines.csv, with schema (line, from, to, weight, rev_weight)
+ * where weight and rev_weight are the weight from station from to station to
+ * and from station to to station from respectively. (Not always symmetric!)
+ *
+ * tube_station_overhead.csv, with schema (station, overhead)
+ * where overhead is the amount of time required to walk from the platform
+ * to the station.
+ * (Data accessed on 28 December 2014 from
+ *  https://www.whatdotheyknow.com/request/gate_to_platform_and_interchange)
+ * 
+ * tube_stations.csv, schema (station, OSX, OSY, lat, lng, zone, postcode)
+ * where OSX and OSY are the Ordnance Survey coordinates (not used by this
+ * program), lat and lng are the latitude and longitude (again, not used by
+ * this program), and zone refers to the fare zone. We didn't actually use
+ * much of the data, but the information could be useful in the future
+ * if users wish to, e.g. avoid Zone 1, or remain in Zones 1 & 2 (due to the
+ * relevant Travelcard), etc.
+ *
+ * This produces one output file, tube_matrix.csv, which contains:
+ * - the number of tube stations processed, N
+ * - N lines - the name of each tube station, in alphabetical order
+ * - N lines - line i contains the time from the ith station to all
+ *             other stations (in the same order as above).
+ */
+
 #include "../tube_network.h"
 #include "../map_points.h"
 
