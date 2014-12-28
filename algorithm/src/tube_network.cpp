@@ -80,3 +80,34 @@ TubeNetwork::TubeNetwork() {
         }
     }
 }
+
+int main(void) {
+    TubeNetwork net;
+    TubeStation s1("Sloane Square");
+    s1.location.lat = 51.492359782932;
+    s1.location.lng = -0.1564744555002;
+
+    TubeStation s2("Knightsbridge");
+    s2.location.lat = 51.501354916808;
+    s2.location.lng = -0.16065008131194;
+
+    TubeStation s3("Gloucester Road");
+    s3.location.lat = 51.494499579725;
+    s3.location.lng = -0.18352915689619;
+
+    TubeStation s4("Heathrow Terminal 5");
+    s4.location.lat = 51.470025485584;
+    s4.location.lng = -0.49063310869077;
+
+    std::cout << s1.name << std::endl;
+    std::cout << s2.name << std::endl;
+    std::cout << s3.name << std::endl;
+    std::cout << s4.name << std::endl;
+
+    std::cout << "The time taken from " << s1.name << " to " << s2.name << " is " << net.find_time_in_network(s1, s2) << std::endl;
+    std::cout << "The time taken from " << s1.name << " to " << s3.name << " is " << net.find_time_in_network(s1, s3) << std::endl;
+    std::cout << "The time taken from " << s1.name << " to " << s4.name << " is " << net.find_time_in_network(s1, s4) << std::endl;
+    std::cout << "The time taken from " << s2.name << " to " << s3.name << " is " << net.find_time_in_network(s2, s3) << std::endl;
+    std::cout << "The time taken from " << s2.name << " to " << s4.name << " is " << net.find_time_in_network(s2, s4) << std::endl;
+    std::cout << "The time taken from " << s3.name << " to " << s4.name << " is " << net.find_time_in_network(s3, s4) << std::endl;
+}

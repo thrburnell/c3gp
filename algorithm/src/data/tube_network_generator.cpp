@@ -243,7 +243,7 @@ int main(int argc, char** argv) {
     ofs << valid_tube_stations.size() << std::endl;
 
     // Used to preserve accuracy of latitudes and longitudes.
-    ofs << std::setprecision(12);
+    ofs << std::fixed << std::setprecision(12);
     for (const auto& iter : valid_tube_stations) {
         // Write each tube station's name in order, with its
         // latitude and then longitude.
