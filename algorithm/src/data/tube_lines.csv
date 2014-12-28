@@ -1,5 +1,5 @@
 Tube Line,From Station,To Station,Weight,Rev_Weight
-Bakerloo,Harrow And Wealdstone,Kenton,2.5,2.5
+Bakerloo,Harrow and Wealdstone,Kenton,2.5,2.5
 Bakerloo,Paddington,Edgware Road (Bakerloo),2,1.5
 Bakerloo,Edgware Road (Bakerloo),Marylebone,1,1.5
 Bakerloo,Marylebone,Baker Street,1,1.5
@@ -10,7 +10,7 @@ Bakerloo,Piccadilly Circus,Charing Cross,2,1.5
 Bakerloo,Charing Cross,Embankment,1,1
 Bakerloo,Embankment,Waterloo,1.5,2
 Bakerloo,Waterloo,Lambeth North,2,1.5
-Bakerloo,Lambeth North,Elephant And Castle,2,3
+Bakerloo,Lambeth North,Elephant and Castle,2,3
 Bakerloo,Warwick Avenue,Paddington,2,2
 Bakerloo,Maida Vale,Warwick Avenue,1.5,1.5
 Bakerloo,Kenton,South Kenton,2,2
@@ -241,9 +241,9 @@ Metropolitan,Hillingdon,Uxbridge,3.5,3
 Metropolitan,Harrow-on-the-Hill,North Harrow,3,3.5
 Metropolitan,North Harrow,Pinner,2,2
 Metropolitan,Barbican,Farringdon,1.5,1.5
-Metropolitan,Chalfont And Latimer,Amersham,4,3.5
-Metropolitan,Chalfont And Latimer,Chesham,8.5,8.5
-Metropolitan,Chorleywood,Chalfont And Latimer,4,3.5
+Metropolitan,Chalfont and Latimer,Amersham,4,3.5
+Metropolitan,Chalfont and Latimer,Chesham,8.5,8.5
+Metropolitan,Chorleywood,Chalfont and Latimer,4,3.5
 Metropolitan,Rickmansworth,Chorleywood,4,4
 Metropolitan,Moor Park,Rickmansworth,4,3.5
 Metropolitan,Kings Cross St. Pancras,Euston Square,2,2
@@ -263,8 +263,8 @@ Northern,Colliers Wood,Tooting Broadway,2,2.25
 Northern,South Wimbledon,Colliers Wood,1.75,2.25
 Northern,Morden,South Wimbledon,2.5,2.25
 Northern,Tufnell Park,Archway,1.75,1.75
-Northern,Totteridge And Whetstone,High Barnet,3.25,3
-Northern,Kennington,Elephant And Castle,2,1.75
+Northern,Totteridge and Whetstone,High Barnet,3.25,3
+Northern,Kennington,Elephant and Castle,2,1.75
 Northern,Camden Town,Chalk Farm,1.5,2
 Northern,Chalk Farm,Belsize Park,2,1.75
 Northern,Belsize Park,Hampstead,2,2
@@ -283,7 +283,7 @@ Northern,West Finchley,Woodside Park,1.75,1.75
 Northern,Euston,Camden Town,3.25,3
 Northern,Mornington Crescent,Camden Town,1.75,1.5
 Northern,Euston,Mornington Crescent,2,2
-Northern,Elephant And Castle,Borough,1.75,2
+Northern,Elephant and Castle,Borough,1.75,2
 Northern,Borough,London Bridge,1.5,1.5
 Northern,London Bridge,Bank,1.75,1.75
 Northern,Bank,Moorgate,2,2
@@ -298,7 +298,7 @@ Northern,Charing Cross,Leicester Square,1.5,1.25
 Northern,Leicester Square,Tottenham Court Road,1.25,1.25
 Northern,Tottenham Court Road,Goodge Street,1.5,1.5
 Northern,Warren Street,Euston,1.5,1.25
-Northern,Woodside Park,Totteridge And Whetstone,2.25,2.25
+Northern,Woodside Park,Totteridge and Whetstone,2.25,2.25
 Northern,Balham,Clapham South,2,2
 Northern,Hendon Central,Colindale,2.75,2.75
 Northern,Golders Green,Brent Cross,2.25,2.5
@@ -356,8 +356,8 @@ Piccadilly,Holloway Road,Caledonian Road,1.5,1.5
 Piccadilly,Arsenal,Holloway Road,1.5,1.5
 Victoria,Kings Cross St. Pancras,Euston,1.5,1.5
 Victoria,Euston,Warren Street,1.5,1.5
-Victoria,Highbury And Islington,Kings Cross St. Pancras,2.75,3
-Victoria,Finsbury Park,Highbury And Islington,2.5,2.25
+Victoria,Highbury and Islington,Kings Cross St. Pancras,2.75,3
+Victoria,Finsbury Park,Highbury and Islington,2.5,2.25
 Victoria,Seven Sisters,Finsbury Park,3.5,3.25
 Victoria,Tottenham Hale,Seven Sisters,1.5,2
 Victoria,Warren Street,Oxford Circus,1.75,1.75
