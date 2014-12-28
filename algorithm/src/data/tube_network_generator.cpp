@@ -19,7 +19,7 @@ void split(const string& s, char delim, vector<string>* vec) {
 
     while (j != string::npos) {
         vec->push_back(s.substr(i, j-i));
-        i = j + 1;
+        i = j + 1; // Could be ++j but this is clearer I think.
         j++;
         j = s.find(delim, j);
 
@@ -61,11 +61,12 @@ TubeLine get_line_index(const string& str) {
     if (str == "Waterloo and City") {
         return TubeLine::WATERLOO_AND_CITY;
     }
-    // shouldn't happen actually.
+    // shouldn't happen actually, but the UNDEFINED is useful when checking
+    // whether we need to change trains or not, actually!
     return TubeLine::UNDEFINED;
 }
 
-// Used to have the priority queue explore edges in the right order.
+// Used to have the priority queue explore nodes in the right order.
 struct ReversePairComparator {
     bool operator() (const pair<double, pair<TubeStation*, TubeLine>>& lhs,
                      const pair<double, pair<TubeStation*, TubeLine>>& rhs){
@@ -162,26 +163,45 @@ int main(int argc, char** argv) {
         edge_counter++;
     }
     edge_counter *= 2;
+    ifs.close();
     std::cout << "Constructed graph with " << edge_counter << " edges.\n"
         << "Now running simulation..." << std::endl;
 
     // Build up the network.
 
-    // Constants - we can refine this later if necessary/desired
-    static const double kTrainOverhead = 5.0;
-    static const double kMaxDetourEstimate = 5.0;
+    // Constants - we can refine this later if necessary/desired.
+    // Models the overhead of waiting for a train.
+    // To improve this, we could set it to half the period of the trains
+    // on the given line at an average time interval.
+    static const double kTrainOverhead = 3.0;
+
+    // Estimate of the maximum amount of time you might save by making a
+    // detour (e.g. if you can get from A to B on line I, and from A to B
+    // in a longer time but on line J, it's possible that the C, the next
+    // stop from B on line J, could be reached more quickly.)
+    static const double kMaxDetourEstimate = 20.0;
 
     // This is NOT the most efficient algorithm (there are some overlapping
     // subproblems), but we don't expect to run this that often so it seems
     // fine to me. Output as an adjacency matrix (output graph is complete).
-    // Output consists of: a list of stations alphabetically sorted,
+    // Output consists of: the number of stations,
+    //                     a list of stations alphabetically sorted,
     //                     followed by the corresponding adjacency matrix.
+
+    // Write the number of tube stations and their names to the output file.
+    std::ofstream ofs ("tube_matrix.csv", std::ofstream::out);
+    ofs << valid_tube_stations.size() << std::endl;
+    for (const auto& iter : valid_tube_stations) {
+        // Write each tube station's name in order.
+        // Remember that iterating through a map goes through it in sorted
+        // order.
+        ofs << iter.second->name << std::endl;
+    }
     int counter = 0;
     for (const auto& iter : valid_tube_stations) {
         // We run a Dijkstra-esque simulation using a priority queue.
         // This looks awkward but makes comparison/ordering of the queue
         // easier.
-        std::cout << "Simulating " << iter.second->name << std::endl;
         std::priority_queue<pair<double, pair<TubeStation*, TubeLine>>,
                             vector<pair<double, 
                                         pair<TubeStation*, TubeLine>>>,
@@ -239,21 +259,40 @@ int main(int argc, char** argv) {
                 }
 
             }
-            // queue.push(std::make_pair(transit_time_to_adj, adj.first));
         }
+        // std::cout << "Done " << iter.second->name << ":" << best_time.size() << std::endl;
+        if (best_time.size() != valid_tube_stations.size()) {
+            std::cout << "WARNING: Tube graph was found to be unconnected! "
+            << std::endl;
+        }
+
         if (++counter % 50 == 0) {
             std::cout << "Simulated " << counter << " stations." << std::endl;
         }
 
-        if (counter == 247) {
-            for(const auto& m : best_time) {
-                std::cout << m.first << " " << m.second << std::endl;
+        // Write this row of the Adjacency Matrix to the file.
+        // Note that the graph is connected, so the adjacency matrix
+        // should be all defined (I hope!)
+        string str("");
+        for(const auto& inner_iter : best_time) {
+            double timing = inner_iter.second;
+            if(inner_iter.first != iter.second->name) {
+                // We actually need to wait for a train.
+                // Add the train waiting constant, plus the overheads
+                // of the starting *and* finishing station.
+                timing += kTrainOverhead + 
+                          valid_tube_stations[inner_iter.first]->
+                              travel_overhead +
+                          iter.second->travel_overhead;
             }
+            str += std::to_string(timing);
+            str += ",";
         }
+        // get rid of the last comma
+        str = str.substr(0, str.size() - 1);
+        ofs << str << std::endl;
     }
+    ofs.close();
 
-    // Debug sanity check
-    for (const auto& p : tube_stations) {
-//        std::cout << (p.second)->name << (p.second)->location.lat << (p.second)->location.lng << std::endl;
-    }
+    return 0;
 }
