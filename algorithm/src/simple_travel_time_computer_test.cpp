@@ -23,12 +23,12 @@ TEST(SimpleTravelTimeComputerTest, DoesntUseTubeUnlessUseful) {
     alpha.lat = 0;
     alpha.lng = 0;
     Coordinate beta;
-    beta.lng = 0.000001;
-    beta.lat = 0.000001;
+    beta.lng = 0.0001;
+    beta.lat = 0.0001;
 
     // There is a (useless) tube connection taking 10 minutes from alpha to
     // beta, which should not be used.
-    EXPECT_NEAR(0.681431, sttc.find_time(alpha, beta), 0.00001);
+    EXPECT_NEAR(0.23588, sttc.find_time(alpha, beta), 0.00001);
 }
 
 TEST(SimpleTravelTimeComputerTest, ConsidersNearbyTubeStops) {
@@ -37,25 +37,25 @@ TEST(SimpleTravelTimeComputerTest, ConsidersNearbyTubeStops) {
     alpha.lat = 0;
     alpha.lng = 0;
     Coordinate gamma;
-    gamma.lng = 0.5;
-    gamma.lat = 0.5;
+    gamma.lng = 5;
+    gamma.lat = 5;
 
-    // Walk to the station Beta (0.681431 min) and take the 4-minute train
+    // Walk to the station Beta (0.23588 min) and take the 4-minute train
     // from there instead of the 20-minute train from Alpha.
-    EXPECT_NEAR(4.68143, sttc.find_time(alpha, gamma), 0.00001);
+    EXPECT_NEAR(4.23588, sttc.find_time(alpha, gamma), 0.00001);
 }
 
 TEST(SimpleTravelTimeComputerTest, ChoosesCorrectStoppingPoint) {
     SimpleTravelTimeComputer sttc("testData/fake_tube_network.csv", 5.0);
     Coordinate ab_midpoint;
-    ab_midpoint.lat = 0.0000005;
-    ab_midpoint.lng = 0.0000005;
+    ab_midpoint.lat = 0.00005;
+    ab_midpoint.lng = 0.00005;
     Coordinate gamma;
-    gamma.lng = 0.5;
-    gamma.lat = 0.5;
+    gamma.lng = 5;
+    gamma.lat = 5;
 
     // It's faster to take the train back to alpha and walk than to beta.
-    EXPECT_NEAR(19.340715, sttc.find_time(gamma, ab_midpoint), 0.00001);
+    EXPECT_NEAR(19.11794, sttc.find_time(gamma, ab_midpoint), 0.00001);
 }
 
 TEST(EdgeFindingIntegrationTest, SloaneSquareToGloucesterRoad) {
@@ -72,7 +72,8 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToGloucesterRoad) {
 
 TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
     // This must be quite a bit worse than the Gloucester Road one, since
-    // we need to change trains.
+    // we need to change trains. In fact it's not recommended you take the
+    // tube at all, even.
     SimpleTravelTimeComputer sttc("src/data/tube_matrix.csv", 5.0);
     Coordinate sloane_square;
     sloane_square.lat = 51.492359782932;
@@ -81,7 +82,9 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
     knightsbridge.lat = 51.501354916808;
     knightsbridge.lng = -0.16065008131194;
 
-    EXPECT_NEAR(18, sttc.find_time(sloane_square, knightsbridge), 3);
+    std::cout << calculate_distance(sloane_square, knightsbridge) / (5 * 1000 / 60) * 1.4 << std::endl;
+
+    EXPECT_NEAR(16, sttc.find_time(sloane_square, knightsbridge), 3);
 }
 
 int main(int argc, char **argv) {

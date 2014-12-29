@@ -26,11 +26,11 @@ private:
 
     // Constant indicating fudge factor introduced due to being unable to
     // physically walk the straight line distance between 2 points
-    static constexpr double kFudge = 1.3;
+    static constexpr double kFudge = 1.25;
 
     inline double walk_time(const Coordinate& from, const Coordinate& to) {
         // Converting km per hour to metres per minute.
-        return calculate_distance(from, to) / (walk_speed / 1000 * 60) 
+        return calculate_distance(from, to) / (walk_speed * 1000 / 60) 
                * kFudge;
     };
 };
