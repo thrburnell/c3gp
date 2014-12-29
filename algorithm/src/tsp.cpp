@@ -1,11 +1,10 @@
 #include <iostream>
-#include <memory>
 #include <string>
 
 #include "tsp.h"
+#include "json_parse.h"
 #include "map_points.h"
 
-using std::unique_ptr;
 using std::string;
 
 int main() {
@@ -13,11 +12,13 @@ int main() {
     // Weird way of getting a file into a char*
     string ss;
     getline(std::cin, ss);
-    const char * const json = (const char * const) ss.c_str();
+    const char* const json = (const char* const) ss.c_str();
 
-    unique_ptr<MapPoints> mp = parse_coordinates(json);
-    mp = process_coordinates(move(mp));
-    print_coordinates(move(mp));
+    MapPoints* mp = parse_coordinates(json);
+    mp = process_coordinates(mp);
+    string result = print_coordinates(mp);
+
+    std::cout << result;
 
     return EXIT_SUCCESS;
 }
