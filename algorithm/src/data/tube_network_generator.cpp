@@ -3,7 +3,7 @@
  * one stop to another.
  *
  * What it DOES factor in:
- *  (+) Time from one station to another.
+ *  (+) Time from one station to another (on a train).
  *  (+) An estimate of time spent waiting for trains.
  *  (+) An estimate of time required to change platforms at a station.
  *  (+) An estimate of time required to enter the first station and leave
@@ -12,6 +12,7 @@
  * What it DOESN'T:
  *  (-) Variable train periods.
  *  (-) Service delays / unexpected stuff happening.
+ *  (-) If two tube stations ever have precisely the same name.
  * 
  * This requires three data input files:
  *
@@ -40,8 +41,9 @@
  *             other stations (in the same order as above).
  */
 
-#include "../tube_network.h"
+#include "../csv_parser.h"
 #include "../map_points.h"
+#include "../tube_network.h"
 
 #include <fstream>
 #include <iostream>
@@ -54,23 +56,6 @@
 using std::string;
 using std::vector;
 using std::pair;
-
-// Splits a string by delim, storing the results in vec.
-void split(const string& s, char delim, vector<string>* vec) {
-    int i = 0;
-    int j = s.find(delim);
-
-    while (j != string::npos) {
-        vec->push_back(s.substr(i, j-i));
-        i = j + 1; // Could be ++j but this is clearer I think.
-        j++;
-        j = s.find(delim, j);
-
-        if (j == string::npos) {
-            vec->push_back(s.substr(i, s.size()));
-        }
-    }
-}
 
 TubeLine get_line_index(const string& str) {
     // Note that switch-case doesn't work on strings.
@@ -104,8 +89,7 @@ TubeLine get_line_index(const string& str) {
     if (str == "Waterloo and City") {
         return TubeLine::WATERLOO_AND_CITY;
     }
-    // shouldn't happen actually, but the UNDEFINED is useful when checking
-    // whether we need to change trains or not, actually!
+    // Shouldn't happen.
     return TubeLine::UNDEFINED;
 }
 
@@ -113,6 +97,7 @@ TubeLine get_line_index(const string& str) {
 struct ReversePairComparator {
     bool operator() (const pair<double, pair<TubeStation*, TubeLine>>& lhs,
                      const pair<double, pair<TubeStation*, TubeLine>>& rhs){
+        // Recall that default less for pairs is a lexicographic comparison.
         return lhs > rhs;
     }
 };
@@ -273,16 +258,18 @@ int main(int argc, char** argv) {
                         std::make_pair(iter.second, TubeLine::UNDEFINED)));
 
         while (!queue.empty()) {
-            // std::cout << "Queue size: " << queue.size() << std::endl;
             pair<double, pair<TubeStation*, TubeLine>> curr = queue.top();
             queue.pop();
 
             TubeStation* curr_station = curr.second.first;
             TubeLine curr_line = curr.second.second;
             for (const auto& iter : curr_station->edge_list) {
-                // Is this the best way to get to this stop?
                 TubeStation* target_station = iter.first.first;
                 string target_name = target_station->name;
+
+                // Compute the time to reach this destination.
+                // We first compute it by adding the edge length, and then
+                // further adding overhead of changing, if necessary.
                 double dest_time = curr.first + iter.second;
                 bool changed_train = (iter.first.second != curr_line &&
                                       curr_line != TubeLine::UNDEFINED);
@@ -304,7 +291,7 @@ int main(int argc, char** argv) {
 
                 // Heuristic: If you didn't change then there's no way
                 // to do better. If you did change then maybe (we consider
-                // kMaxDetourEstimate the time we expect you might save)
+                // kMaxDetourEstimate the time we expect you might save).
                 if ((changed_train && dest_time - kMaxDetourEstimate 
                         <= best_time[target_name]) ||
                     (!changed_train && dest_time == best_time[target_name])) {
@@ -315,7 +302,7 @@ int main(int argc, char** argv) {
 
             }
         }
-        // std::cout << "Done " << iter.second->name << ":" << best_time.size() << std::endl;
+
         if (best_time.size() != valid_tube_stations.size()) {
             std::cout << "WARNING: Tube graph was found to be unconnected! "
             << std::endl;

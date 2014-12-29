@@ -8,7 +8,7 @@
 #include <iostream>
 
 // This implementation of the London tube network requires initialisation
-// from a file, data/tube_matrix.csv.
+// from a file which is specified in the constructor.
 
 enum TubeLine {
     BAKERLOO,
@@ -59,7 +59,8 @@ class TubeNetwork : public TransportNetwork {
  */
 
 public:
-    TubeNetwork();
+    // Path to a data file consisting of the network information.
+    TubeNetwork(const std::string& path);
 
     virtual double find_time_in_network(const TransportNode& origin,
                                         const TransportNode& destination);

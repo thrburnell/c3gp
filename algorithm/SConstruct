@@ -49,6 +49,19 @@ distanceQueueTest = test_env.Program('test/distance_queue_test',
                                                  + ['test/libgtest.a'],
                                                  LIBS=['pthread'])
 
+csvParserTest = test_env.Program('test/csv_parser_test',
+                                 create_objs(['csv_parser_test'],
+                                             "test/")
+                                             + ['test/libgtest.a'],
+                                             LIBS=['pthread'])
+
+tubeNetworkTest = test_env.Program('test/tube_network_test',
+                                   create_objs(['tube_network_test',
+                                                'tube_network'],
+                                               "test/")
+                                               + ['test/libgtest.a'],
+                                               LIBS=['pthread'])
+
 tspTest = test_env.Program('test/map_points_test',
                            create_objs(['map_points_test',
                                         'map_points',
