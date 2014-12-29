@@ -2,6 +2,7 @@
 #include <string>
 
 #include "tsp.h"
+#include "json_parse.h"
 #include "map_points.h"
 
 using std::string;
@@ -15,7 +16,9 @@ int main() {
 
     MapPoints * mp = parse_coordinates(json);
     mp = process_coordinates(mp);
-    print_coordinates(mp);
+    string result = print_coordinates(mp);
+
+    std::cout << result;
 
     return EXIT_SUCCESS;
 }

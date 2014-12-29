@@ -15,8 +15,6 @@ struct MapPoints {
     std::vector<Coordinate *> * errands;
 };
 
-MapPoints * parse_coordinates(const char * const json);
 MapPoints * process_coordinates(MapPoints * map_points);
-void print_coordinates(MapPoints * map_points);
 
 #endif /* MAP_POINTS_H */
