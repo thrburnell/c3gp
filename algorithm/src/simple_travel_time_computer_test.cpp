@@ -26,7 +26,7 @@ TEST(SimpleTravelTimeComputerTest, DoesntUseTubeUnlessUseful) {
     beta.lng = 0.0001;
     beta.lat = 0.0001;
 
-    // There is a (useless) tube connection taking 10 minutes from alpha to
+    // There is a (useless) tube connection taking 20 minutes from alpha to
     // beta, which should not be used.
     EXPECT_NEAR(0.23588, sttc.find_time(alpha, beta), 0.00001);
 }
