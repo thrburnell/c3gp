@@ -35,4 +35,4 @@ private:
     };
 };
 
-#endif /* TRAVEL_TIME_COMPUTER_H */
+#endif /* SIMPLE_TRAVEL_TIME_COMPUTER_H */

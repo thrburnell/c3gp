@@ -5,7 +5,7 @@
 #include "simple_travel_time_computer.h"
 
 TEST(SimpleTravelTimeComputerTest, IdentityTimeIsZero) {
-    SimpleTravelTimeComputer sttc("../testData/fake_tube_network.csv", 5.0);
+    SimpleTravelTimeComputer sttc("testData/fake_tube_network.csv", 5.0);
     Coordinate c1;
 
     c1.lat = 0.3;
@@ -82,9 +82,20 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
     knightsbridge.lat = 51.501354916808;
     knightsbridge.lng = -0.16065008131194;
 
-    std::cout << calculate_distance(sloane_square, knightsbridge) / (5 * 1000 / 60) * 1.4 << std::endl;
-
     EXPECT_NEAR(16, sttc.find_time(sloane_square, knightsbridge), 3);
+}
+
+TEST(EdgeFindingIntegrationTest, PiccadilyCircusToTottenhamCourtRoad) {
+    // Do not take the tube. It'll only slow you down.
+    SimpleTravelTimeComputer sttc("src/data/tube_matrix.csv", 5.0);
+    Coordinate pc;
+    pc.lat = 51.509696764476;
+    pc.lng = -0.13369718974012;
+    Coordinate tcr;
+    tcr.lat = 51.51621088565;
+    tcr.lng = -0.13109602942553;
+
+    EXPECT_NEAR(11, sttc.find_time(pc, tcr), 3);
 }
 
 int main(int argc, char **argv) {

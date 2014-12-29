@@ -17,9 +17,9 @@ TEST(CSVParserTest, SplitsString) {
 TEST(CSVParserTest, ParsesCSV) {
     std::ifstream ifs("testData/csv_test.csv", std::ifstream::in);
     std::vector<std::string> vec;
-    parse_csv(&ifs, &vec);
-    parse_csv(&ifs, &vec);
-    parse_csv(&ifs, &vec);
+    csv_parse_next_line(&ifs, &vec);
+    csv_parse_next_line(&ifs, &vec);
+    csv_parse_next_line(&ifs, &vec);
     ASSERT_EQ(vec.size(), 9);
     ASSERT_EQ(vec[0], "3");
     ASSERT_EQ(vec[1], "1");

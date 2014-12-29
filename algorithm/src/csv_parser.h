@@ -22,7 +22,7 @@ void split(const std::string& s, char delim, std::vector<std::string>* vec) {
     }
 }
 
-void parse_csv(std::ifstream* ifs, std::vector<std::string>* data) {
+void csv_parse_next_line(std::ifstream* ifs, std::vector<std::string>* data) {
     std::string str;
     std::getline(*ifs, str);
     split(str, ',', data);

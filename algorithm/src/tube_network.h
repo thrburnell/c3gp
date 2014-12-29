@@ -57,8 +57,9 @@ class TubeNetwork : public TransportNetwork {
  */
 
 public:
-    // Path to a data file consisting of the network information.
-    TubeNetwork(const std::string& path);
+    // The argument is a path to a data file consisting of the network 
+    // information (see data/tube_network_generator.cpp for details)
+    TubeNetwork(const std::string& file_path);
 
     virtual double find_time_in_network(const TransportNode& origin,
                                         const TransportNode& destination);

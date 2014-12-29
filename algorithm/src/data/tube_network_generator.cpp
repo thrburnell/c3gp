@@ -45,6 +45,7 @@
 #include "../map_points.h"
 #include "../tube_network.h"
 
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <iomanip>
@@ -116,15 +117,15 @@ int main(int argc, char** argv) {
 
     while (std::getline(ifs, str)) {
         // Read each line, and build the list of nodes.
-        vector<string> v;
-        split(str, ',', &v);
+        vector<string> line_data;
+        split(str, ',', &line_data);
 
         TubeStation *station = new TubeStation(v[0]);
 
-        station->location.lat = stod(v[3]);
-        station->location.lng = stod(v[4]);
+        station->location.lat = stod(line_data[3]);
+        station->location.lng = stod(line_data[4]);
 
-        tube_stations.insert(std::make_pair(v[0], station));
+        tube_stations.insert(std::make_pair(line_data[0], station));
     }
     std::cout << "Read in " << tube_stations.size() << " candidate stations." 
         << std::endl;
@@ -336,5 +337,5 @@ int main(int argc, char** argv) {
     }
     ofs.close();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
