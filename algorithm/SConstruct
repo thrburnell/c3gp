@@ -48,11 +48,17 @@ distanceQueueTest = test_env.Program('test/distance_queue_test',
                                                  + ['test/libgtest.a'],
                                                  LIBS=['pthread'])
 
-tspTest = test_env.Program('test/map_points_test',
-                           create_objs(['map_points_test',
-                                        'map_points',
-                                        'haversine'],
-                                       "test/")
-                           + ['test/libgtest.a'],
-                           LIBS=['pthread'])
+mapPointsTest = test_env.Program('test/map_points_test',
+                                 create_objs(['map_points_test',
+                                              'map_points',
+                                              'haversine'],
+                                             "test/")
+                                 + ['test/libgtest.a'],
+                                 LIBS=['pthread'])
 
+jsonParseTest = test_env.Program('test/json_parse_test',
+                                 create_objs(['json_parse_test',
+                                              'json_parse'],
+                                             "test/")
+                                 + ['test/libgtest.a'],
+                                 LIBS=['pthread'])
