@@ -12,13 +12,13 @@ struct Coordinate {
 };
 
 struct MapPoints {
-    unique_ptr<Coordinate> origin;
-    unique_ptr<Coordinate> destination;
-    unique_ptr<std::vector<unique_ptr<Coordinate>>> errands;
+    Coordinate * origin;
+    Coordinate * destination;
+    std::vector<Coordinate *> * errands;
 };
 
-unique_ptr<MapPoints> parse_coordinates(const char * const json);
-unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points);
-void print_coordinates(unique_ptr<MapPoints> map_points);
+MapPoints * parse_coordinates(const char * const json);
+MapPoints * process_coordinates(MapPoints * map_points);
+void print_coordinates(MapPoints * map_points);
 
 #endif /* MAP_POINTS_H */

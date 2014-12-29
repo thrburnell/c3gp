@@ -14,33 +14,33 @@ using std::unique_ptr;
 /**
  * For sample data, see testData/coordinates.json
  */
-unique_ptr<MapPoints> parse_coordinates(const char * const json) {
+MapPoints * parse_coordinates(const char * const json) {
     rj::Document document;
     document.Parse(json);
 
-    unique_ptr<MapPoints> mapPoints(new MapPoints);
+    MapPoints * mapPoints = new MapPoints();
 
-    unique_ptr<Coordinate> origin(new Coordinate);
+    Coordinate * origin = new Coordinate();
     origin->lat = document["origin"]["lat"].GetDouble();
     origin->lng = document["origin"]["lng"].GetDouble();
 
-    unique_ptr<Coordinate> destination(new Coordinate);
+    Coordinate * destination = new Coordinate();
     destination->lat = document["destination"]["lat"].GetDouble();
     destination->lng = document["destination"]["lng"].GetDouble();
 
-    unique_ptr<std::vector<unique_ptr<Coordinate>>> errands(new std::vector<unique_ptr<Coordinate>>);
+    std::vector<Coordinate *> * errands = new std::vector<Coordinate *>();
 
     const rj::Value & waypoints = document["waypoints"];
     for (int i = 0; i < waypoints.Size(); i++) {
-        unique_ptr<Coordinate> newCoordinate(new Coordinate);
+        Coordinate * newCoordinate = new Coordinate();
         newCoordinate->lat = waypoints[i]["lat"].GetDouble();
         newCoordinate->lng = waypoints[i]["lng"].GetDouble();
-        errands->push_back(move(newCoordinate));
+        errands->push_back(newCoordinate);
     }
 
-    mapPoints->origin = move(origin);
-    mapPoints->destination = move(destination);
-    mapPoints->errands = move(errands);
+    mapPoints->origin = origin;
+    mapPoints->destination = destination;
+    mapPoints->errands = errands;
 
     return mapPoints;
 }
@@ -51,9 +51,9 @@ unique_ptr<MapPoints> parse_coordinates(const char * const json) {
  * @param The given data points
  * @return Some processing on this data (possibly)
  */
-unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
+MapPoints * process_coordinates(MapPoints * map_points) {
 
-    unique_ptr<std::vector<unique_ptr<Coordinate>>> r_errands(new std::vector<unique_ptr<Coordinate>>);
+    std::vector<Coordinate *> * r_errands = new std::vector<Coordinate *>();
 
     std::vector<Coordinate *> v;
 
@@ -66,7 +66,7 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
     destination->lng = map_points->destination->lng;
 
     for (
-            std::vector<unique_ptr<Coordinate>>::iterator it = map_points->errands->begin();
+            std::vector<Coordinate *>::iterator it = map_points->errands->begin();
             it != map_points->errands->end();
             it++) {
         Coordinate * newCoord = new Coordinate();
@@ -89,38 +89,38 @@ unique_ptr<MapPoints> process_coordinates(unique_ptr<MapPoints> map_points) {
             }
         }
 
-        unique_ptr<Coordinate> temp_coordinate(new Coordinate);
+        Coordinate * temp_coordinate = new Coordinate();
         temp_coordinate->lat = (*min_dist_iterator)->lat;
         temp_coordinate->lng = (*min_dist_iterator)->lng;
 
-        r_errands->push_back(move(temp_coordinate));
+        r_errands->push_back(temp_coordinate);
 
         iterator = *min_dist_iterator;
         v.erase(min_dist_iterator);
     }
 
-    unique_ptr<MapPoints> result(new MapPoints);
+    MapPoints * result = new MapPoints();
 
-    unique_ptr<Coordinate> r_origin(new Coordinate);
+    Coordinate * r_origin = new Coordinate();
     r_origin->lat = origin->lat;
     r_origin->lng = origin->lng;
 
-    unique_ptr<Coordinate> r_destination(new Coordinate);
+    Coordinate * r_destination = new Coordinate();
     r_destination->lat = destination->lat;
     r_destination->lat = destination->lng;
 
-    result->origin = move(r_origin);
-    result->destination = move(r_destination);
-    result->errands = move(r_errands);
+    result->origin = r_origin;
+    result->destination = r_destination;
+    result->errands = r_errands;
 
-    return move(result);
+    return result;
 }
 
 
 /**
  * @return JSON encoding of the given struct
  */
-void print_coordinates(unique_ptr<MapPoints> map_points) {
+void print_coordinates(MapPoints * map_points) {
     rj::StringBuffer s;
     rj::Writer<rj::StringBuffer> writer(s);
 
