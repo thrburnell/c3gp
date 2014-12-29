@@ -140,7 +140,7 @@ int main(int argc, char** argv) {
         split(str, ',', &v);
 
         if (tube_stations.find(v[0]) != tube_stations.end()) {
-            tube_stations[v[0]]->travel_overhead = std::stoi(v[1]);            
+            tube_stations[v[0]]->travel_overhead = std::stod(v[1]);            
         }
     }
 
