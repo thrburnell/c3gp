@@ -105,6 +105,9 @@ module.exports = function(grunt) {
 
     // Config for hinting all js files
     jshint: {
+      options: {
+        browserify: true
+      },
       all: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js']
     },
 

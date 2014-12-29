@@ -3,13 +3,14 @@ var markers = require('./markers.js');
 
 module.exports = (function() {
     var directionsService = new google.maps.DirectionsService();
+    var startingLocation = new google.maps.LatLng(51.498800,-0.174877);
     var directionsDisplay;
     var map;
 
     var initialize = function() {
 
         var mapOptions = {
-            center: {lat: 51.498800, lng: -0.174877},
+            center: startingLocation,
             zoom: 16
         };
 
@@ -33,9 +34,10 @@ module.exports = (function() {
 
     return {
         initialize: initialize,
+        getMapCanvas: function() { return map; },
         getDirectionsDisplay: function() { return directionsDisplay; },
         getDirectionsService: function() { return directionsService; },
-        getMapCanvas: function() { return map; }
+        getStartingLocation: function() { return startingLocation; }
     };
 
 })();
