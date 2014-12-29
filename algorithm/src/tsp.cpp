@@ -1,11 +1,9 @@
 #include <iostream>
-#include <memory>
 #include <string>
 
 #include "tsp.h"
 #include "map_points.h"
 
-using std::unique_ptr;
 using std::string;
 
 int main() {

@@ -4,8 +4,6 @@
 #include <memory>
 #include <vector>
 
-using std::unique_ptr;
-
 struct Coordinate {
     double lat;
     double lng;

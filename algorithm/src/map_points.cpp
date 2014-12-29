@@ -9,7 +9,6 @@
 #include "haversine.h"
 
 namespace rj = rapidjson;
-using std::unique_ptr;
 
 /**
  * For sample data, see testData/coordinates.json
