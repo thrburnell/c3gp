@@ -1,5 +1,6 @@
 #include "tube_network.h"
 #include "csv_parser.h"
+#include "distance_queue.h"
 
 #include <iostream>
 #include <fstream>
@@ -40,14 +41,14 @@ TubeNetwork::TubeNetwork(const std::string& path) {
     std::getline(ifs, str);
 
     // Read N lines, for each station.
-    std::vector<TubeStation> tube_stations(N);
+    stations.resize(N);
     for (int i = 0; i < N; ++i) {
         std::vector<std::string> data;
         parse_csv(&ifs, &data);
 
-        tube_stations[i].name = data[0];
-        tube_stations[i].location.lat = stod(data[1]);
-        tube_stations[i].location.lng = stod(data[2]);
+        stations[i].name = data[0];
+        stations[i].location.lat = stod(data[1]);
+        stations[i].location.lng = stod(data[2]);
     }
 
     // Read N lines for the adjacency matrix.
@@ -56,8 +57,31 @@ TubeNetwork::TubeNetwork(const std::string& path) {
         parse_csv(&ifs, &data);
 
         for (int j = 0; j < N; ++j) {
-            timings[std::make_pair(tube_stations[i], 
-                                   tube_stations[j])] = stod(data[j]);
+            timings[std::make_pair(stations[i], 
+                                   stations[j])] = stod(data[j]);
         }
     }
+}
+
+// Finds the nearest stations (by Euclidean distance) to a given point.
+std::vector<TubeStation> TubeNetwork::find_nearest_stations
+    (const Coordinate& c,
+     int num_stations) {
+    DistanceQueue queue(c, num_stations);
+    for (const auto& station : stations) {
+        queue.push(station.location);
+    }
+    std::vector<Coordinate> coordinates = queue.finish();
+
+    std::vector<TubeStation> result;
+    // O(num_stations * |stations|). Definitely not optimal but for our
+    // purposes this is sufficient.
+    for (const auto& coord : coordinates) {
+        for (const auto& station : stations) {
+            if(station.location == coord) {
+                result.push_back(station);
+            }
+        }
+    }
+    return result;
 }

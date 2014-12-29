@@ -51,8 +51,6 @@ public:
     }
 };
 
-
-
 class TubeNetwork : public TransportNetwork {
 /* This implementation of the TubeNetwork assumes that all inter-station times
  * can be successfully cached and are loaded into the timings map.
@@ -65,8 +63,12 @@ public:
     virtual double find_time_in_network(const TransportNode& origin,
                                         const TransportNode& destination);
 
+    std::vector<TubeStation> find_nearest_stations(const Coordinate& c,
+        int num_stations);
+
 private:
     std::map<std::pair<TubeStation, TubeStation>, double> timings;
+    std::vector<TubeStation> stations;
 
     // No copy construction or assignment construction, this is expensive.
     TubeNetwork(TubeNetwork const&);

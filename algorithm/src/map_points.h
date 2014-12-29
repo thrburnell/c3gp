@@ -9,6 +9,10 @@ using std::unique_ptr;
 struct Coordinate {
     double lat;
     double lng;
+
+    bool operator==(const Coordinate& other) const {
+    	return other.lat == this->lat && other.lng == this->lng;
+    }
 };
 
 struct MapPoints {
