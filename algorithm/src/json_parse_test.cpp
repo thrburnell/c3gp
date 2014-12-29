@@ -6,8 +6,6 @@
 using std::string;
 
 TEST(MapPointsTest, CanParseJSONObjectsCorrectly) {
-    //TODO: Feed proper test data into this method.
-
 	string json = "{\"origin\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"destination\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"waypoints\":[{\"lat\":51.497843351035144,\"lng\":-0.1702022552285598},{\"lat\":51.497629616981214,\"lng\":-0.17346382139066918},{\"lat\":51.49841775633878,\"lng\":-0.17533063886503442},{\"lat\":51.497910142721445,\"lng\":-0.17936468122343285},{\"lat\":51.495759401256,\"lng\":-0.1717901229653762},{\"lat\":51.49644070301275,\"lng\":-0.17026662824491723}]}\n";
 	MapPoints * mp = parse_coordinates(json.c_str());
 
@@ -19,8 +17,6 @@ TEST(MapPointsTest, CanParseJSONObjectsCorrectly) {
 }
 
 TEST(MapPointsTest, CanParseErrandsCorrectly) {
-    //TODO: Feed proper test data into this method.
-
 	string json = "{\"origin\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"destination\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"waypoints\":[{\"lat\":51.497843351035144,\"lng\":-0.1702022552285598},{\"lat\":51.497629616981214,\"lng\":-0.17346382139066918},{\"lat\":51.49841775633878,\"lng\":-0.17533063886503442},{\"lat\":51.497910142721445,\"lng\":-0.17936468122343285},{\"lat\":51.495759401256,\"lng\":-0.1717901229653762},{\"lat\":51.49644070301275,\"lng\":-0.17026662824491723}]}\n";
 	MapPoints * mp = parse_coordinates(json.c_str());
 
