@@ -85,8 +85,8 @@ void TspSolver::tbBkt(int currNode) {
 	tbVisited[currNode] = 1;
 
 	if (tbTotalVisited == totalNodes) {
-		if (tbCurrent < tbMinimum) {
-			tbMinimum = tbCurrent;
+		if (tbCurrent + adjacencyMatrix[currNode][startingPoint] < tbMinimum) {
+			tbMinimum = tbCurrent + adjacencyMatrix[currNode][startingPoint];
 			tbOrderedResult.clear();
 			for (const auto& it : tbAccumulator) {
 				tbOrderedResult.push_back(it);
@@ -98,6 +98,7 @@ void TspSolver::tbBkt(int currNode) {
 		if (! tbVisited[i]) {
 			tbCurrent += adjacencyMatrix[currNode][i];
 			tbBkt(i);
+			tbCurrent -= adjacencyMatrix[currNode][i];
 		}
 	}
 
@@ -120,7 +121,7 @@ std::vector<int>* TspSolver::solveTspWithBacktracking() {
 	tbCurrent = 0;
 	tbTotalVisited = 0;
 
-	tbBkt(0);
+	tbBkt(startingPoint);
 
 	return &tbOrderedResult;
 }
