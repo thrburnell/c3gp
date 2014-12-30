@@ -9,25 +9,25 @@ namespace rj = rapidjson;
 /**
  * For sample data, see testData/coordinates.json
  */
-MapPoints * parse_coordinates(const char * const json) {
+MapPoints* parse_coordinates(const char* const json) {
     rj::Document document;
     document.Parse(json);
 
-    MapPoints * mapPoints = new MapPoints();
+    MapPoints* mapPoints = new MapPoints();
 
-    Coordinate * origin = new Coordinate();
+    Coordinate* origin = new Coordinate();
     origin->lat = document["origin"]["lat"].GetDouble();
     origin->lng = document["origin"]["lng"].GetDouble();
 
-    Coordinate * destination = new Coordinate();
+    Coordinate* destination = new Coordinate();
     destination->lat = document["destination"]["lat"].GetDouble();
     destination->lng = document["destination"]["lng"].GetDouble();
 
-    std::vector<Coordinate *> * errands = new std::vector<Coordinate *>();
+    std::vector<Coordinate*>* errands = new std::vector<Coordinate*>();
 
     const rj::Value & waypoints = document["waypoints"];
     for (int i = 0; i < waypoints.Size(); i++) {
-        Coordinate * newCoordinate = new Coordinate();
+        Coordinate* newCoordinate = new Coordinate();
         newCoordinate->lat = waypoints[i]["lat"].GetDouble();
         newCoordinate->lng = waypoints[i]["lng"].GetDouble();
         errands->push_back(newCoordinate);
@@ -44,7 +44,7 @@ MapPoints * parse_coordinates(const char * const json) {
 /**
  * @return JSON encoding of the given struct
  */
-std::string print_coordinates(MapPoints * map_points) {
+std::string print_coordinates(MapPoints* map_points) {
 
     rj::StringBuffer s;
     rj::Writer<rj::StringBuffer> writer(s);

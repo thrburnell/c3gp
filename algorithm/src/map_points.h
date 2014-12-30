@@ -10,11 +10,11 @@ struct Coordinate {
 };
 
 struct MapPoints {
-    Coordinate * origin;
-    Coordinate * destination;
-    std::vector<Coordinate *> * errands;
+    Coordinate* origin;
+    Coordinate* destination;
+    std::vector<Coordinate*>* errands;
 };
 
-MapPoints * process_coordinates(MapPoints * map_points);
+MapPoints* process_coordinates(MapPoints* map_points);
 
 #endif /* MAP_POINTS_H */

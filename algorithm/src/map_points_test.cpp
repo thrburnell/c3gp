@@ -4,10 +4,10 @@
 
 TEST(MapPointsTest, OrdersPointsAsExpected) {
 
-	MapPoints * mp = new MapPoints();
+	MapPoints* mp = new MapPoints();
 	mp->errands = new std::vector<Coordinate*>();
 
-	Coordinate * c;
+	Coordinate* c;
 
 	c = new Coordinate();
 	c->lat = 51.497843351035144;

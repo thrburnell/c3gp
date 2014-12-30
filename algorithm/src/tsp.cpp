@@ -12,9 +12,9 @@ int main() {
     // Weird way of getting a file into a char*
     string ss;
     getline(std::cin, ss);
-    const char * const json = (const char * const) ss.c_str();
+    const char* const json = (const char* const) ss.c_str();
 
-    MapPoints * mp = parse_coordinates(json);
+    MapPoints* mp = parse_coordinates(json);
     mp = process_coordinates(mp);
     string result = print_coordinates(mp);
 
