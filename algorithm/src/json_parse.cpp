@@ -43,6 +43,10 @@ MapPoints* parse_coordinates(const char* const json) {
 
 /**
  * @return JSON encoding of the given struct
+ * The JSON returned is of the form [{"lat": 123, "lng": 321}, ...]
+ * The first point is the origin
+ * The second point is the first errand to visit
+ * The destination is not represented because it is assumed to be the origin
  */
 std::string print_coordinates(MapPoints* map_points) {
 

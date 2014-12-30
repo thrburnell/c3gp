@@ -53,8 +53,7 @@ TEST(MapPointsTest, CanEncodeJSONCorrectly) {
 	string actual = print_coordinates(mp);
 	string expected = "[{\"lat\":51.50055501480524,\"lng\":-0.17445087432861329},{\"lat\":51.497843351035147,\"lng\":-0.1702022552285598},{\"lat\":51.497629616981217,\"lng\":-0.17346382139066919},{\"lat\":51.49841775633878,\"lng\":-0.17533063886503442},{\"lat\":51.497910142721448,\"lng\":-0.17936468122343286},{\"lat\":51.495759401256,\"lng\":-0.1717901229653762},{\"lat\":51.49644070301275,\"lng\":-0.17026662824491724}]";
 
-	EXPECT_EQ(actual.compare(expected), 0);
-	EXPECT_EQ(expected.compare(actual), 0);
+	EXPECT_EQ(expected, actual);
 }
 
 
