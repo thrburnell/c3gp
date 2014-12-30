@@ -34,6 +34,8 @@ private:
 	int totalNodes = -1;
 	int startingPoint = -1;
 
+	void tbBkt(int currNode);
+
 	void checkBuildReady() {
 		if (startingPoint == -1) {
 			throw std::runtime_error("Starting point not set");
