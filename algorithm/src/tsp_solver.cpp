@@ -5,9 +5,6 @@
 #include <unordered_set>
 #include <vector>
 
-//TODO: remove
-#include <iostream>
-
 void TspSolver::setNumberOfNodes(int nodes) {
 	totalNodes = nodes;
 	adjacencyMatrix = new double*[nodes];
