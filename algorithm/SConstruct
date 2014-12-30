@@ -82,14 +82,6 @@ simpleTravelTimeComputerTest = \
   + ['test/libgtest.a'],
   LIBS=['pthread'])
 
-tspTest = test_env.Program('test/map_points_test',
-                           create_objs(['map_points_test',
-                                        'map_points',
-                                        'haversine'],
-                                       "test/")
-                           + ['test/libgtest.a'],
-                           LIBS=['pthread'])
-
 mapPointsTest = test_env.Program('test/map_points_test',
                                  create_objs(['map_points_test',
                                               'map_points',
