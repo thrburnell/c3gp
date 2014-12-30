@@ -13,10 +13,10 @@ class SimpleTravelTimeComputer : public TravelTimeComputer {
  * walking speed, as well as walking to any of the three nearest tube stations,
  * taking the tube to one of the three nearest stations to the destination
  * and then walking to the destination.
- */ 
+ */
 public:
-    SimpleTravelTimeComputer(const std::string& tube_path, 
-        double walking_speed) : tube(tube_path), walk_speed(walking_speed) 
+    SimpleTravelTimeComputer(const std::string& tube_path,
+        double walking_speed) : tube(tube_path), walk_speed(walking_speed)
         {};
     virtual double find_time(const Coordinate& from,
                              const Coordinate& to);
@@ -30,7 +30,7 @@ private:
 
     inline double walk_time(const Coordinate& from, const Coordinate& to) {
         // Converting km per hour to metres per minute.
-        return calculate_distance(from, to) / (walk_speed * 1000 / 60) 
+        return calculate_distance(from, to) / (walk_speed * 1000 / 60)
                * kFudge;
     };
 };

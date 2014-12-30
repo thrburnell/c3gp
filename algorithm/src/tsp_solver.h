@@ -5,11 +5,12 @@
 
 
 class TspSolver {
+
 public:
 	virtual ~TspSolver() {};
 
 	void setNumberOfNodes(int nodes);
-	void addPoint(int firstNode, int secondNode, int cost);
+	void addPoint(int firstNode, int secondNode, double cost);
 	void setStartingPoint(int node);
 
 	std::vector<int>* solveTsp();
@@ -19,9 +20,9 @@ public:
 	std::vector<int>* solveTspWithGeneticAlgorithm();
 
 private:
-	int** adjacencyMatrix;
+	double** adjacencyMatrix;
+	int totalNodes = -1;
 	int startingPoint = -1;
-	bool init = false;
 
 };
 

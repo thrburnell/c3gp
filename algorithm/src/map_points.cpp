@@ -3,6 +3,8 @@
 
 #include "map_points.h"
 #include "haversine.h"
+#include "tsp_solver.h"
+
 
 /**
  * @param The given data points
@@ -10,31 +12,27 @@
  */
 MapPoints* process_coordinates(MapPoints* map_points) {
 
-    std::vector<Coordinate*>* unordered_errands = map_points->errands;
-    std::vector<Coordinate*>* ordered_errands = new std::vector<Coordinate*>();
-
-    Coordinate* pivot = map_points->origin;
-
-    while (! unordered_errands->empty()) {
-        double min_dist = std::numeric_limits<double>::max();
-        std::vector<Coordinate*>::iterator min_dist_iterator;
-
-        for (std::vector<Coordinate*>::iterator it = unordered_errands->begin();
-                it != unordered_errands->end();
-                it++) {
-            double curr_dist = calculate_distance(*pivot, **it);
-            if (curr_dist < min_dist) {
-                min_dist = curr_dist;
-                min_dist_iterator = it;
-            }
-        }
-
-        pivot = *min_dist_iterator;
-        ordered_errands->push_back(pivot);
-        unordered_errands->erase(min_dist_iterator);
+    std::vector<Coordinate*> points;
+    points.push_back(map_points->origin);
+    for (const auto& it : *map_points->errands) {
+        points.push_back(it);
     }
 
-    delete map_points->errands;
+    TspSolver * tspSolver = new TspSolver();
+    tspSolver->setNumberOfNodes(points.size());
+    for (int i = 0; i < points.size(); i++) {
+        for (int j = 0 ; j < points.size(); j++) {
+            double distance = calculate_distance(*points[i], *points[j]);
+            tspSolver->addPoint(i, j, distance);
+        }
+    }
+    tspSolver->setStartingPoint(0);
+    std::vector<int>* nodesOrder = tspSolver->solveTsp();
+
+    std::vector<Coordinate*>* ordered_errands = new std::vector<Coordinate*>();
+    for (int i = 1; i < points.size(); i++) {
+        ordered_errands->push_back(points[nodesOrder->at(i)]);
+    }
     map_points->errands = ordered_errands;
 
     return map_points;
