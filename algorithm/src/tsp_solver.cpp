@@ -31,7 +31,11 @@ void TspSolver::setStartingPoint(int node) {
 std::vector<int>* TspSolver::solveTsp() {
 	checkBuildReady();
 
-	return solveTspWithBacktracking();
+	if (totalNodes < 8) {
+		return solveTspWithBacktracking();
+	}
+
+	return solveTspWithNNGreedy();
 }
 
 std::vector<int>* TspSolver::solveTspWithNNGreedy() {
