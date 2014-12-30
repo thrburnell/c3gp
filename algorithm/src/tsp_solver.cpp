@@ -79,8 +79,6 @@ static int* tbVisited;
 
 void TspSolver::tbBkt(int currNode) {
 
-	// std::cout << "Curr Node: " << currNode << "\n";
-
 	tbTotalVisited ++;
 	tbAccumulator.push_back(currNode);
 	tbVisited[currNode] = 1;
@@ -109,7 +107,6 @@ void TspSolver::tbBkt(int currNode) {
 
 std::vector<int>* TspSolver::solveTspWithBacktracking() {
 
-
 	checkBuildReady();
 
 	tbMinimum = std::numeric_limits<double>::max();
@@ -122,32 +119,15 @@ std::vector<int>* TspSolver::solveTspWithBacktracking() {
 	tbCurrent = 0;
 	tbTotalVisited = 0;
 
-	// for (int i = 0; i < totalNodes; i++) {
-	// 	for (int j = 0; j < totalNodes; j++) {
-	// 		std::cout << adjacencyMatrix[i][j] << " ";
-	// 	}
-	// 	std::cout << "\n";
-	// }
-
-	// std::cout << "\n\n\n\n";
-	// for (int i = 0; i < totalNodes; i++) {
-	// 	std::cout << tbVisited[i] << " ";
-	// }
-	// std::cout << "\n\n";
-
 	tbBkt(0);
-
-	// std::cout << tbOrderedResult.size() << "\n";
-
-	// std::vector<int>* result = new std::vector<int>();
-	// for (int i = 0; i < totalNodes; i++) {
-	// 	result->push_back(i);
-	// }
-
-	// return result;
 
 	return &tbOrderedResult;
 }
+
+
+//GENETIC ALGORITHM CODE
+// TODO: inspired from here
+// https://github.com/parano/GeneticAlgorithm-TSP/blob/master/src/algorithm.js
 
 std::vector<int>* TspSolver::solveTspWithGeneticAlgorithm() {
 
