@@ -64,6 +64,13 @@ tubeNetworkTest = test_env.Program('test/tube_network_test',
                                                + ['test/libgtest.a'],
                                                LIBS=['pthread'])
 
+tspSolverTest = test_env.Program('test/tsp_solver_test',
+                                   create_objs(['tsp_solver_test',
+                                                'tsp_solver'],
+                                               "test/")
+                                               + ['test/libgtest.a'],
+                                               LIBS=['pthread'])
+
 simpleTravelTimeComputerTest = \
   test_env.Program('test/simple_travel_time_computer_test',
   create_objs(['simple_travel_time_computer_test',
