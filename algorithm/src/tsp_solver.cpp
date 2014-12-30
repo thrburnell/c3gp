@@ -27,10 +27,10 @@ std::vector<int>* TspSolver::solveTsp() {
 		throw "Starting point not set";
 	}
 
-	return solveTspWithGreedy();
+	return solveTspWithNNGreedy();
 }
 
-std::vector<int>* TspSolver::solveTspWithGreedy() {
+std::vector<int>* TspSolver::solveTspWithNNGreedy() {
 
 	if (startingPoint == -1) {
 		throw "Starting point not set";

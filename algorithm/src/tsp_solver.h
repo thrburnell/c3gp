@@ -14,7 +14,7 @@ public:
 
 	std::vector<int>* solveTsp();
 
-	std::vector<int>* solveTspWithGreedy();
+	std::vector<int>* solveTspWithNNGreedy();
 	std::vector<int>* solveTspWithBacktracking();
 	std::vector<int>* solveTspWithGeneticAlgorithm();
 
