@@ -1,10 +1,9 @@
 #include "tsp_solver.h"
 
-#include <vector>
+#include <limits>
 #include <stdexcept>
-
-//TODO: remove
-#include <iostream>
+#include <unordered_set>
+#include <vector>
 
 void TspSolver::setNumberOfNodes(int nodes) {
 	totalNodes = nodes;
@@ -26,35 +25,52 @@ void TspSolver::setStartingPoint(int node) {
 	startingPoint = node;
 }
 
+
+
+
 std::vector<int>* TspSolver::solveTsp() {
-	if (startingPoint == -1) {
-		throw std::runtime_error("Starting point not set");
-	}
+	checkBuildReady();
 
 	return solveTspWithNNGreedy();
 }
 
 std::vector<int>* TspSolver::solveTspWithNNGreedy() {
 
-	if (startingPoint == -1) {
-		throw std::runtime_error("Starting point not set");
-	}
+	checkBuildReady();
 
 	std::vector<int>* result = new std::vector<int>();
 
+	int pivot = 0;
+	bool visited[totalNodes];
 	for (int i = 0; i < totalNodes; i++) {
-		result->push_back(i);
+		visited[i] = 0;
+	}
+
+	result->push_back(0);
+	while (result->size() < totalNodes) {
+		visited[pivot] = 1;
+
+        double min_dist = std::numeric_limits<double>::max();
+        int next = 0;
+
+		for (int i = 0; i < totalNodes; i++) {
+			if (!visited[i] && adjacencyMatrix[pivot][i] < min_dist) {
+				min_dist = adjacencyMatrix[pivot][i];
+				next = i;
+			}
+		}
+
+		result->push_back(next);
+		pivot = next;
 	}
 
 	return result;
 }
 
 std::vector<int>* TspSolver::solveTspWithBacktracking() {
-	throw "TODO";
+	throw std::runtime_error("TODO");
 
-	if (startingPoint == -1) {
-		throw std::runtime_error("Starting point not set");
-	}
+	checkBuildReady();
 
 	std::vector<int>* result = new std::vector<int>();
 
@@ -65,10 +81,7 @@ std::vector<int>* TspSolver::solveTspWithGeneticAlgorithm() {
 
 	throw std::runtime_error("TODO");
 
-	if (startingPoint == -1) {
-		throw std::runtime_error("Starting point not set");
-	}
-
+	checkBuildReady();
 
 	std::vector<int>* result = new std::vector<int>();
 
