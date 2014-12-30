@@ -25,9 +25,6 @@ void TspSolver::setStartingPoint(int node) {
 	startingPoint = node;
 }
 
-
-
-
 std::vector<int>* TspSolver::solveTsp() {
 	checkBuildReady();
 
@@ -68,7 +65,6 @@ std::vector<int>* TspSolver::solveTspWithNNGreedy() {
 }
 
 std::vector<int>* TspSolver::solveTspWithBacktracking() {
-	throw std::runtime_error("TODO");
 
 	checkBuildReady();
 
@@ -79,7 +75,7 @@ std::vector<int>* TspSolver::solveTspWithBacktracking() {
 
 std::vector<int>* TspSolver::solveTspWithGeneticAlgorithm() {
 
-	throw std::runtime_error("TODO");
+	throw std::runtime_error("TODO solve TSP using Genetic Algorithms");
 
 	checkBuildReady();
 

@@ -4,14 +4,23 @@
 #include <stdexcept>
 #include <vector>
 
-
+/**
+ * Factory-ish pattern implemented here. The way you use this class is
+ * 	- Set the number of nodes on which you want to apply the TSP
+ * 	- add the points using addPoint method meaning there is a cost
+ * 		cost between fromNode to toNode
+ * 	- set the starting point (as an integer). Generally it will be node 0
+ * 	- call solveTsp.
+ * 	- The result is an ordered array of points, where the node on the
+ * 		first position (0) will be the starting point for the TSP
+ */
 class TspSolver {
 
 public:
 	virtual ~TspSolver() {};
 
 	void setNumberOfNodes(int nodes);
-	void addPoint(int firstNode, int secondNode, double cost);
+	void addPoint(int fromNode, int toNode, double cost);
 	void setStartingPoint(int node);
 
 	std::vector<int>* solveTsp();
