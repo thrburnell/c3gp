@@ -67,7 +67,7 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToGloucesterRoad) {
     gloucester_road.lat = 51.494499579725;
     gloucester_road.lng = -0.18352915689619;
 
-    EXPECT_NEAR(12, sttc.find_time(sloane_square, gloucester_road), 3);
+    EXPECT_NEAR(12, sttc.find_time(sloane_square, gloucester_road), 1);
 }
 
 TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
@@ -82,7 +82,7 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
     knightsbridge.lat = 51.501354916808;
     knightsbridge.lng = -0.16065008131194;
 
-    EXPECT_NEAR(16, sttc.find_time(sloane_square, knightsbridge), 3);
+    EXPECT_NEAR(16, sttc.find_time(sloane_square, knightsbridge), 1);
 }
 
 TEST(EdgeFindingIntegrationTest, PiccadilyCircusToTottenhamCourtRoad) {
@@ -95,7 +95,33 @@ TEST(EdgeFindingIntegrationTest, PiccadilyCircusToTottenhamCourtRoad) {
     tcr.lat = 51.51621088565;
     tcr.lng = -0.13109602942553;
 
-    EXPECT_NEAR(11, sttc.find_time(pc, tcr), 3);
+    EXPECT_NEAR(11.195, sttc.find_time(pc, tcr), 1);
+}
+
+TEST(EdgeFindingIntegrationTest, PiccadilyCircusToLeicesterSquare) {
+    // MUCH faster to walk than take the tube!
+    SimpleTravelTimeComputer sttc("src/data/tube_matrix.csv", 5.0);
+    Coordinate pc;
+    pc.lat = 51.509696764476;
+    pc.lng = -0.13369718974012;
+    Coordinate ls;
+    ls.lat = 51.511291196842;
+    ls.lng = -0.12822773962177;
+
+    EXPECT_NEAR(6.2696, sttc.find_time(pc, ls), 1);
+}
+
+TEST(EdgeFindingIntegrationTest, UxbridgeToCockfosters) {
+    // Definitely take the tube for this one.
+    SimpleTravelTimeComputer sttc("src/data/tube_matrix.csv", 5.0);
+    Coordinate ux;
+    ux.lat = 51.546454564696;
+    ux.lng = -0.47708714109832;
+    Coordinate cf;
+    cf.lat = 51.652024496788;
+    cf.lng = -0.14990225857042;
+
+    EXPECT_NEAR(87.25, sttc.find_time(ux, cf), 1);
 }
 
 int main(int argc, char **argv) {
