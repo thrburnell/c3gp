@@ -27,27 +27,34 @@ module.exports = (function() {
             travelMode: google.maps.TravelMode.WALKING
         };
 
-        map.getDirectionsService().route(request1, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                renderDirections(response);
-            }
-        });
+        markers.clear();
 
+        requestForRoute(request1);
         setTimeout(function() {
-            map.getDirectionsService().route(request2, function(response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    renderDirections(response);
-                }
-            });
+            requestForRoute(request2);
         }, 2000);
 
+    };
+
+    var requestForRoute = function(request) {
+        map.getDirectionsService().route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                renderDirections(response);
+                markers.add(map.getMapCanvas(), request.origin);
+            }
+        });
     };
 
     var renderDirections = function(result) {
         var directionsRenderer = new google.maps.DirectionsRenderer();
         directionsRenderer.setMap(map.getMapCanvas());
+        directionsRenderer.setOptions ({
+            suppressMarkers: true,
+            // polylineOptions: {
+                // strokeColor: "#000000"
+            // }
+        });
         directionsRenderer.setDirections(result);
-        markers.clear();
     };
 
     return {

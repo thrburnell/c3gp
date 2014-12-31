@@ -10,7 +10,8 @@ module.exports = (function() {
         var marker = new google.maps.Marker({
             position: position,
             map: map,
-            index: m_index
+            index: m_index,
+            title: "Hello"
         });
 
         // The starting point will bounce so it's easier to identify it
