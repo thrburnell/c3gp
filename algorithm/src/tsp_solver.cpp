@@ -6,66 +6,66 @@
 #include <vector>
 
 void TspSolver::setNumberOfNodes(int nodes) {
-	totalNodes = nodes;
-	adjacencyMatrix = new double*[nodes];
-	for (int i = 0; i < nodes; i++) {
-		adjacencyMatrix[i] = new double[nodes];
-	}
+    totalNodes = nodes;
+    adjacencyMatrix = new double*[nodes];
+    for (int i = 0; i < nodes; i++) {
+        adjacencyMatrix[i] = new double[nodes];
+    }
 }
 
 void TspSolver::addPoint(int firstNode, int secondNode, double cost) {
-	if (totalNodes < 0) {
-		throw std::runtime_error("The number of nodes in the graph has not been initialized!");
-	}
+    if (totalNodes < 0) {
+        throw std::runtime_error("The number of nodes in the graph has not been initialized!");
+    }
 
-	adjacencyMatrix[firstNode][secondNode] = cost;
+    adjacencyMatrix[firstNode][secondNode] = cost;
 }
 
 void TspSolver::setStartingPoint(int node) {
-	startingPoint = node;
+    startingPoint = node;
 }
 
 std::vector<int>* TspSolver::solveTsp() {
-	checkBuildReady();
+    checkBuildReady();
 
-	if (totalNodes < 8) {
-		return solveTspWithBacktracking();
-	}
+    if (totalNodes < 8) {
+        return solveTspWithBacktracking();
+    }
 
-	return solveTspWithNNGreedy();
+    return solveTspWithNNGreedy();
 }
 
 std::vector<int>* TspSolver::solveTspWithNNGreedy() {
 
-	checkBuildReady();
+    checkBuildReady();
 
-	std::vector<int>* result = new std::vector<int>();
+    std::vector<int>* result = new std::vector<int>();
 
-	int pivot = 0;
-	bool visited[totalNodes];
-	for (int i = 0; i < totalNodes; i++) {
-		visited[i] = 0;
-	}
+    int pivot = 0;
+    bool visited[totalNodes];
+    for (int i = 0; i < totalNodes; i++) {
+        visited[i] = 0;
+    }
 
-	result->push_back(0);
-	while (result->size() < totalNodes) {
-		visited[pivot] = 1;
+    result->push_back(0);
+    while (result->size() < totalNodes) {
+        visited[pivot] = 1;
 
         double min_dist = std::numeric_limits<double>::max();
         int next = 0;
 
-		for (int i = 0; i < totalNodes; i++) {
-			if (!visited[i] && adjacencyMatrix[pivot][i] < min_dist) {
-				min_dist = adjacencyMatrix[pivot][i];
-				next = i;
-			}
-		}
+        for (int i = 0; i < totalNodes; i++) {
+            if (!visited[i] && adjacencyMatrix[pivot][i] < min_dist) {
+                min_dist = adjacencyMatrix[pivot][i];
+                next = i;
+            }
+        }
 
-		result->push_back(next);
-		pivot = next;
-	}
+        result->push_back(next);
+        pivot = next;
+    }
 
-	return result;
+    return result;
 }
 
 // CODE FOR BACKTRACKING
@@ -80,50 +80,50 @@ static int* tbVisited;
 
 void TspSolver::tbBkt(int currNode) {
 
-	tbTotalVisited ++;
-	tbAccumulator.push_back(currNode);
-	tbVisited[currNode] = 1;
+    tbTotalVisited ++;
+    tbAccumulator.push_back(currNode);
+    tbVisited[currNode] = 1;
 
-	if (tbTotalVisited == totalNodes) {
-		if (tbCurrent + adjacencyMatrix[currNode][startingPoint] < tbMinimum) {
-			tbMinimum = tbCurrent + adjacencyMatrix[currNode][startingPoint];
-			tbOrderedResult.clear();
-			for (const auto& it : tbAccumulator) {
-				tbOrderedResult.push_back(it);
-			}
-		}
-	}
+    if (tbTotalVisited == totalNodes) {
+        if (tbCurrent + adjacencyMatrix[currNode][startingPoint] < tbMinimum) {
+        tbMinimum = tbCurrent + adjacencyMatrix[currNode][startingPoint];
+        tbOrderedResult.clear();
+        for (const auto& it : tbAccumulator) {
+            tbOrderedResult.push_back(it);
+        }
+        }
+    }
 
-	for (int i = 0; i < totalNodes; i++) {
-		if (! tbVisited[i]) {
-			tbCurrent += adjacencyMatrix[currNode][i];
-			tbBkt(i);
-			tbCurrent -= adjacencyMatrix[currNode][i];
-		}
-	}
+    for (int i = 0; i < totalNodes; i++) {
+        if (! tbVisited[i]) {
+            tbCurrent += adjacencyMatrix[currNode][i];
+            tbBkt(i);
+            tbCurrent -= adjacencyMatrix[currNode][i];
+        }
+    }
 
-	tbVisited[currNode] = 0;
-	tbAccumulator.pop_back();
-	tbTotalVisited --;
+    tbVisited[currNode] = 0;
+    tbAccumulator.pop_back();
+    tbTotalVisited --;
 }
 
 std::vector<int>* TspSolver::solveTspWithBacktracking() {
 
-	checkBuildReady();
+    checkBuildReady();
 
-	tbMinimum = std::numeric_limits<double>::max();
-	tbOrderedResult.clear();
-	tbAccumulator.clear();
-	tbVisited = new int[totalNodes];
-	for (int i = 0; i < totalNodes; i++) {
-		tbVisited[i] = 0;
-	}
-	tbCurrent = 0;
-	tbTotalVisited = 0;
+    tbMinimum = std::numeric_limits<double>::max();
+    tbOrderedResult.clear();
+    tbAccumulator.clear();
+    tbVisited = new int[totalNodes];
+    for (int i = 0; i < totalNodes; i++) {
+        tbVisited[i] = 0;
+    }
+    tbCurrent = 0;
+    tbTotalVisited = 0;
 
-	tbBkt(startingPoint);
+    tbBkt(startingPoint);
 
-	return &tbOrderedResult;
+    return &tbOrderedResult;
 }
 
 
@@ -133,11 +133,11 @@ std::vector<int>* TspSolver::solveTspWithBacktracking() {
 
 std::vector<int>* TspSolver::solveTspWithGeneticAlgorithm() {
 
-	throw std::runtime_error("TODO solve TSP using Genetic Algorithms");
+    throw std::runtime_error("TODO solve TSP using Genetic Algorithms");
 
-	checkBuildReady();
+    checkBuildReady();
 
-	std::vector<int>* result = new std::vector<int>();
+    std::vector<int>* result = new std::vector<int>();
 
-	return result;
+    return result;
 }
