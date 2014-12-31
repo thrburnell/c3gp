@@ -7,11 +7,14 @@ module.exports = (function() {
 
     var add = function(map, position) {
         var m_index = pin_index++;
+        var currLetter = String.fromCharCode('A'.charCodeAt(0) + m_index);
+        var markerUrl = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" + currLetter + "|00FF00|000000";
+        var myPin = new google.maps.MarkerImage(markerUrl);
         var marker = new google.maps.Marker({
             position: position,
             map: map,
             index: m_index,
-            title: "Hello"
+            icon: myPin
         });
 
         // The starting point will bounce so it's easier to identify it
