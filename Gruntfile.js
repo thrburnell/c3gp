@@ -163,7 +163,7 @@ module.exports = function(grunt) {
       'Runs all tasks (e.g. compilation) needed to start the server.',
       function() {
 
-        // If additional tasks need to be run before the server can be 
+        // If additional tasks need to be run before the server can be
         // started, they should be implemented here
 
         // npm install

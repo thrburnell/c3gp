@@ -14,7 +14,7 @@ module.exports = (function() {
             splash.hideSplash();
             splash.splashAddCookie();
         });
-    }
+    };
 
     return {
         listen: listen
