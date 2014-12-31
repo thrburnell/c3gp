@@ -64,6 +64,7 @@ module.exports = (function() {
         directionsRenderer.setMap(map.getMapCanvas());
         directionsRenderer.setOptions ({
             suppressMarkers: true,
+            preserveViewport: true,
             // polylineOptions: {
                 // strokeColor: "#000000"
             // }
