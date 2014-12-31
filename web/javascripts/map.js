@@ -4,6 +4,7 @@ var markers = require('./markers.js');
 module.exports = (function() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay;
+    var map;
 
     var initialize = function() {
 
@@ -12,7 +13,7 @@ module.exports = (function() {
             zoom: 16
         };
 
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
+        map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
         // Listener to drop pin on mouse click
@@ -33,7 +34,8 @@ module.exports = (function() {
     return {
         initialize: initialize,
         getDirectionsDisplay: function() { return directionsDisplay; },
-        getDirectionsService: function() { return directionsService; }
+        getDirectionsService: function() { return directionsService; },
+        getMap: function() { return map; }
     };
 
 })();

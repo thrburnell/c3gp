@@ -11,24 +11,42 @@ module.exports = (function() {
 
         for (var i = 1; i < route.length; i++) {
             waypoints.push({
-                location: new google.maps.LatLng(route[i].lat, route[i].lng),
-                stopover: true
+                location: new google.maps.LatLng(route[i].lat, route[i].lng)
             });
         }
 
-        var request = {
+        var request1 = {
             origin: start,
-            destination: end,
-            waypoints: waypoints,
+            destination: waypoints[0].location,
             travelMode: google.maps.TravelMode.WALKING
         };
 
-        map.getDirectionsService().route(request, function(response, status) {
+        var request2 = {
+            origin: waypoints[0].location,
+            destination: waypoints[1].location,
+            travelMode: google.maps.TravelMode.WALKING
+        };
+
+        map.getDirectionsService().route(request1, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-                map.getDirectionsDisplay().setDirections(response);
+                var directionsRenderer = new google.maps.DirectionsRenderer();
+                directionsRenderer.setMap(map.getMap());
+                directionsRenderer.setDirections(response);
                 markers.clear();
             }
         });
+
+        setTimeout(function() {
+            map.getDirectionsService().route(request2, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    var directionsRenderer = new google.maps.DirectionsRenderer();
+                    directionsRenderer.setMap(map.getMap());
+                    directionsRenderer.setDirections(response);
+                    markers.clear();
+                }
+            });
+        }, 2000);
+
     };
 
     return {
