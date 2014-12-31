@@ -3,6 +3,9 @@ var map = require('./map.js');
 
 module.exports = (function() {
 
+    var currRequest = 0;
+    var locations = [];
+
     var displayRoute = function(route) {
 
         var start = new google.maps.LatLng(route[0].lat, route[0].lng);
@@ -15,32 +18,43 @@ module.exports = (function() {
             });
         }
 
-        var request1 = {
-            origin: start,
-            destination: waypoints[0].location,
-            travelMode: google.maps.TravelMode.WALKING
-        };
-
-        var request2 = {
-            origin: waypoints[0].location,
-            destination: waypoints[1].location,
-            travelMode: google.maps.TravelMode.WALKING
-        };
+        locations.push(start);
+        for (i = 0; i < waypoints.length; i++) {
+            locations.push(waypoints[i].location);
+        }
+        locations.push(end);
 
         markers.clear();
 
-        requestForRoute(request1);
-        setTimeout(function() {
-            requestForRoute(request2);
-        }, 2000);
+        currRequest = 0;
+        nextRequest();
 
     };
 
-    var requestForRoute = function(request) {
+    /**
+     * Hack. Too lazy to see what a promise is.
+     */
+    var nextRequest = function() {
+        if (currRequest == locations.length - 1) {
+            return;
+        }
+
+        var request = {
+            origin: locations[currRequest],
+            destination: locations[currRequest+1],
+            travelMode: google.maps.TravelMode.WALKING
+        };
+
+        currRequest++;
+        requestForRoute(request);
+    };
+
+    var requestForRoute = function(request, index) {
         map.getDirectionsService().route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 renderDirections(response);
-                markers.add(map.getMapCanvas(), request.origin);
+                markers.add(map.getMapCanvas(), request.origin, index);
+                nextRequest();
             }
         });
     };
