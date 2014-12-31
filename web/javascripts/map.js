@@ -35,7 +35,7 @@ module.exports = (function() {
         initialize: initialize,
         getDirectionsDisplay: function() { return directionsDisplay; },
         getDirectionsService: function() { return directionsService; },
-        getMap: function() { return map; }
+        getMapCanvas: function() { return map; }
     };
 
 })();

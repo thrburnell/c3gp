@@ -29,24 +29,25 @@ module.exports = (function() {
 
         map.getDirectionsService().route(request1, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-                var directionsRenderer = new google.maps.DirectionsRenderer();
-                directionsRenderer.setMap(map.getMap());
-                directionsRenderer.setDirections(response);
-                markers.clear();
+                renderDirections(response);
             }
         });
 
         setTimeout(function() {
             map.getDirectionsService().route(request2, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
-                    var directionsRenderer = new google.maps.DirectionsRenderer();
-                    directionsRenderer.setMap(map.getMap());
-                    directionsRenderer.setDirections(response);
-                    markers.clear();
+                    renderDirections(response);
                 }
             });
         }, 2000);
 
+    };
+
+    var renderDirections = function(result) {
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map.getMapCanvas());
+        directionsRenderer.setDirections(result);
+        markers.clear();
     };
 
     return {
