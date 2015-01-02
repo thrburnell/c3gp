@@ -10,17 +10,10 @@ module.exports = (function() {
 
         var start = new google.maps.LatLng(route[0].lat, route[0].lng);
         var end = start;
-        var waypoints = [];
-
-        for (var i = 1; i < route.length; i++) {
-            waypoints.push({
-                location: new google.maps.LatLng(route[i].lat, route[i].lng)
-            });
-        }
 
         locations.push(start);
-        for (i = 0; i < waypoints.length; i++) {
-            locations.push(waypoints[i].location);
+        for (var i = 1; i < route.length; i++) {
+            locations.push(new google.maps.LatLng(route[i].lat, route[i].lng));
         }
         locations.push(end);
 
@@ -35,7 +28,7 @@ module.exports = (function() {
      * Hack. Too lazy to see what a promise is.
      */
     var nextRequest = function() {
-        if (currRequest == locations.length - 1) {
+        if (currRequest === locations.length - 1) {
             return;
         }
 
@@ -51,7 +44,7 @@ module.exports = (function() {
 
     var requestForRoute = function(request, index) {
         map.getDirectionsService().route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
+            if (status === google.maps.DirectionsStatus.OK) {
                 renderDirections(response);
                 markers.add(map.getMapCanvas(), request.origin, index);
                 nextRequest();
