@@ -7,12 +7,7 @@ module.exports = (function() {
 
     var add = function(map, position, letter) {
         var m_index = pin_index++;
-        var currLetter;
-        if (letter === undefined) {
-            currLetter = String.fromCharCode('A'.charCodeAt(0) + m_index);
-        } else {
-            currLetter = letter;
-        }
+        var currLetter = letter || String.fromCharCode('A'.charCodeAt(0) + m_index);
         var markerUrl = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" + currLetter + "|F7574C|000000";
         var myPin = new google.maps.MarkerImage(markerUrl);
         var marker = new google.maps.Marker({
