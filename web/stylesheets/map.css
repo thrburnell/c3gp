@@ -61,11 +61,11 @@ body {
   margin: 0 auto;
 }
 
-.menu #mini-logo {
+.menu .mini-logo {
   width: 50px;
 }
 
-.menu #full-logo {
+.menu .full-logo {
   width: 150px;
 }
 
@@ -90,12 +90,6 @@ body {
 .menu input {
   margin-bottom: 20px;
   padding: 5px;
-}
-
-.menu .group {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
 }
 
 .point-type {
