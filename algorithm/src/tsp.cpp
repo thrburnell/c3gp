@@ -10,7 +10,10 @@ using std::string;
 
 int main() {
 
-    SimpleTravelTimeComputer sttc("data/tube_matrix.csv", 5.0);
+    static const double kStandardWalkSpeed = 5.0; // In km/h
+
+    SimpleTravelTimeComputer sttc(
+        "/vagrant/algorithm/src/data/tube_matrix.csv", kStandardWalkSpeed);
 
     // Weird way of getting a file into a char*
     string ss;
