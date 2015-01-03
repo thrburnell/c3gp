@@ -34,7 +34,10 @@ module.exports = function(grunt) {
     // Config for nodemon server
     nodemon: {
       dev: {
-        script: 'bin/www'
+        script: 'bin/www',
+        options: {
+          watch: ['app']
+        }
       }
     },
 
@@ -180,7 +183,7 @@ module.exports = function(grunt) {
         }
 
         // Compile all algorithm code and generate public files
-        grunt.task.run(['algorithm', 'public']);
+        grunt.task.run(['algorithm', 'public', 'client-errands']);
 
       });
 
@@ -223,6 +226,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jsonlint');
   grunt.loadNpmTasks('grunt-browserify');
+
+  // Load custom tasks
+  grunt.loadTasks('grunt');
 
 };
 

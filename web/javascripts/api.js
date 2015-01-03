@@ -44,6 +44,7 @@ module.exports = (function() {
             url: "/cpp",
             method: "POST",
             data: JSON.stringify(formRequest()),
+            contentType: "application/json",
             success: function(ret) {
                 route.displayRoute(JSON.parse(ret));
             }

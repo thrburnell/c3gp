@@ -1,7 +1,7 @@
 var exec = require('child_process').exec;
 
 exports.controller = function(req, res) {
-    var postReq = JSON.parse(Object.keys(req.body)[0]);
+    var postReq = req.body;
 
     var jsonInformation = {
         origin : postReq.origin,

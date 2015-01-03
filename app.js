@@ -6,29 +6,34 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./app/routes/routes');
+var routes = require('./app/routes');
+var midware = require('./app/midware');
 
 var app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'web/views'));
 app.engine('handlebars', exphbs({
-    defaultLayout: 'mainLayout',
-    layoutsDir: "web/views/layouts/"
+  defaultLayout: 'mainLayout',
+  layoutsDir: path.join(app.get('views'), 'layouts')
 }));
 app.set('view engine', 'handlebars');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+// Uncomment after placing your favicon in /public
+// app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Configure middleware
+midware.configure(app);
+
+// Configure router
 app.use('/', routes);
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
@@ -36,7 +41,7 @@ app.use(function(req, res, next) {
 });
 
 
-// error handlers
+// Error handlers
 // development error handler will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
@@ -48,7 +53,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-// production error handler no stacktraces leaked to user
+// Production error handler no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
