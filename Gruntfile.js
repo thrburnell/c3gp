@@ -34,7 +34,10 @@ module.exports = function(grunt) {
     // Config for nodemon server
     nodemon: {
       dev: {
-        script: 'bin/www'
+        script: 'bin/www',
+        options: {
+          watch: ['app']
+        }
       }
     },
 
@@ -54,14 +57,14 @@ module.exports = function(grunt) {
         files: ['web/stylesheets/*.scss'],
         tasks: ['sass']
       },
-      jshint: {
-        files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
-        tasks: ['jshint']
-      },
-      jsonlint: {
-        files: ['*.json'],
-        tasks: ['jsonlint']
-      },
+      // jshint: {
+      //   files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
+      //   tasks: ['jshint']
+      // },
+      // jsonlint: {
+      //   files: ['*.json'],
+      //   tasks: ['jsonlint']
+      // },
       js: {
         files: ['web/javascripts/**/*.js'],
         tasks: ['browserify']

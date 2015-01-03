@@ -1,6 +1,6 @@
 ---
 
-- name: Copying environment variable file
+- name: be sure environment variables are set
   template: src=environment.j2 dest=/etc/profile.d/environment.sh
 
 - name: be sure nodejs is installed
