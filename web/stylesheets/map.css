@@ -98,6 +98,10 @@ body {
   margin: 10px auto;
 }
 
+.point-type input {
+  color: black;
+}
+
 .point-type hr {
   border-color: #EA7260;
   margin: 0 0 8px;
