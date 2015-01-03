@@ -48,6 +48,11 @@ module.exports = (function() {
                 renderDirections(response);
                 markers.add(map.getMapCanvas(), request.origin, index);
                 nextRequest();
+            } else if (status === google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+                currRequest--;
+                setTimeout(function() {
+                    nextRequest();
+                }, 1000);
             }
         });
     };
