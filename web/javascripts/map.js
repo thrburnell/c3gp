@@ -9,9 +9,17 @@ module.exports = (function() {
 
     var initialize = function() {
 
+        // This deactivates points of interest on the map.
+        var mapStyles = [{
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: "off" }]
+        }];
+
         var mapOptions = {
             center: startingLocation,
-            zoom: 16
+            zoom: 16,
+            styles: mapStyles
         };
 
         map = new google.maps.Map(document.getElementById('map-canvas'),
