@@ -4,14 +4,8 @@
 #include <memory>
 #include <vector>
 
-struct Coordinate {
-    double lat;
-    double lng;
-
-    bool operator==(const Coordinate& other) const {
-    	return other.lat == this->lat && other.lng == this->lng;
-    }
-};
+#include "coordinate.h"
+#include "travel_time_computer.h"
 
 struct MapPoints {
     Coordinate* origin;
@@ -19,6 +13,7 @@ struct MapPoints {
     std::vector<Coordinate*>* errands;
 };
 
-MapPoints* process_coordinates(MapPoints* map_points);
+MapPoints* process_coordinates(MapPoints* map_points,
+                               TravelTimeComputer* computer);
 
 #endif /* MAP_POINTS_H */

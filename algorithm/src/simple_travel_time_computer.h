@@ -1,7 +1,8 @@
 #ifndef SIMPLE_TRAVEL_TIME_COMPUTER_H
 #define SIMPLE_TRAVEL_TIME_COMPUTER_H
 
-#include "map_points.h"
+#include "coordinate.h"
+#include "haversine.h"
 #include "travel_time_computer.h"
 #include "tube_network.h"
 

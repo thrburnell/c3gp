@@ -1,7 +1,7 @@
 #ifndef TRAVEL_TIME_COMPUTER_H
 #define TRAVEL_TIME_COMPUTER_H
 
-#include "map_points.h"
+#include "coordinate.h"
 
 class TravelTimeComputer {
 public:

@@ -43,7 +43,6 @@ haversineTest = test_env.Program('test/haversine_test',
 
 distanceQueueTest = test_env.Program('test/distance_queue_test',
                                      create_objs(['distance_queue_test',
-                                                  'map_points',
                                                   'tsp_solver',
                                                   'haversine'],
                                                  "test/")
@@ -59,7 +58,6 @@ csvParserTest = test_env.Program('test/csv_parser_test',
 tubeNetworkTest = test_env.Program('test/tube_network_test',
                                    create_objs(['tube_network_test',
                                                 'tube_network',
-                                                'map_points',
                                                 'tsp_solver',
                                                 'haversine'],
                                                "test/")
@@ -78,7 +76,6 @@ simpleTravelTimeComputerTest = \
   create_objs(['simple_travel_time_computer_test',
   'simple_travel_time_computer',
   'tube_network',
-  'map_points',
   'tsp_solver',
   'haversine'],
   "test/")
