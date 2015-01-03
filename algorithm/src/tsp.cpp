@@ -12,8 +12,9 @@ int main() {
 
     static const double kStandardWalkSpeed = 5.0; // In km/h
 
+    // This program is called from the root of c3gp.
     SimpleTravelTimeComputer sttc(
-        "/vagrant/algorithm/src/data/tube_matrix.csv", kStandardWalkSpeed);
+        "./algorithm/src/data/tube_matrix.csv", kStandardWalkSpeed);
 
     // Weird way of getting a file into a char*
     string ss;
