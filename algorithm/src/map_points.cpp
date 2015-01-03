@@ -4,13 +4,14 @@
 #include "map_points.h"
 #include "haversine.h"
 #include "tsp_solver.h"
-
+#include "travel_time_computer.h"
 
 /**
  * @param The given data points
  * @return Some processing on this data (possibly)
  */
-MapPoints* process_coordinates(MapPoints* map_points) {
+MapPoints* process_coordinates(MapPoints* map_points,
+                               TravelTimeComputer* time_computer) {
 
     std::vector<Coordinate*> points;
     points.push_back(map_points->origin);
@@ -22,7 +23,7 @@ MapPoints* process_coordinates(MapPoints* map_points) {
     tspSolver->setNumberOfNodes(points.size());
     for (int i = 0; i < points.size(); i++) {
         for (int j = 0 ; j < points.size(); j++) {
-            double distance = calculate_distance(*points[i], *points[j]);
+            double distance = time_computer->find_time(*points[i], *points[j]);
             tspSolver->addPoint(i, j, distance);
         }
     }
