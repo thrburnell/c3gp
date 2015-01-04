@@ -1,11 +1,6 @@
+var errand = require('../errand');
+
 exports.controller = function(req, res) {
-
-  var response = {
-    foo: "hello",
-    bar: "world"
-  };
-
-  res.send(response);
-
+  res.status(200).send();
 };
 
