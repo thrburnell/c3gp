@@ -1,9 +1,11 @@
+var should = require('should');
+
 describe("My First Test", function() {
 	it("should be equal", function() {
-		expect(1 + 2).toEqual(3);
+    (1+2).should.equal(3);
 	});
 
 	it("should not be equal", function() {
-		expect(4 + 3).toEqual(7);
+		(4 + 3).should.not.equal(8);
 	});
 });
