@@ -1,3 +1,5 @@
+$stripe-width: 225px;
+
 html,
 body {
   height: 100%;
@@ -54,26 +56,55 @@ body {
   padding: 20px;
 }
 
-
 .menu {
-  background-color: #354458;
-  padding-top: 30px;
+  width: $stripe-width;
+  height: 100%;
+  float: left;
+  position: relative;
+  overflow: hidden;
 }
 
-.menu img {
+.main {
+  height: 100%;
+  margin-left: $stripe-width;
+  position: relative;
+}
+
+.stripe {
+  background-color: #354458;
+  padding-top: 30px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+  -webkit-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+
+}
+
+.stripe.stripe1 {
+  left: 0;
+}
+
+.stripe.stripe2 {
+  left: $stripe-width;
+}
+
+.stripe img {
   display: block;
   margin: 0 auto;
 }
 
-.menu .mini-logo {
+.stripe .mini-logo {
   width: 50px;
 }
 
-.menu .full-logo {
+.stripe .full-logo {
   width: 150px;
 }
 
-.menu button {
+.stripe button {
   margin: 0 auto;
   display: block;
 
@@ -91,7 +122,7 @@ body {
   font-weight: bold;
 }
 
-.menu input {
+.stripe input {
   margin-bottom: 20px;
   padding: 5px;
 }
