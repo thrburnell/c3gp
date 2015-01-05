@@ -17,14 +17,14 @@ module.exports = (function() {
     };
 
     var addTemporaries = function(map, results) {
-        for (var i = 0; i < results.length; i++) {
-            var place = results[i];
+        results.forEach(function(place) {
             var marker = createMarker(map, place.geometry.location,
                                     null, greenColour);
-            google.maps.event.addListener(marker, 'click',
-                displayInfoBox(map, place, marker));
+            google.maps.event.addListener(marker, 'click', function() {
+                displayInfoBox(map, place, marker);
+            });
             temporaryMarkers.push(marker);
-        }
+        });
     };
 
     var createMarker = function(map, position, letter, colour) {
@@ -43,22 +43,29 @@ module.exports = (function() {
     };
 
     var displayInfoBox = function(map, place, marker) {
-        var content = document.createElement('div');
-        var button;
-        content.innerHTML = 'Name: ' + place.name + '<br />' +
-                            'Rating: ' + place.rating + '<br />';
-        button = content.appendChild(document.createElement('input'));
-        button.type = 'button';
-        button.value = 'Add me';
-        google.maps.event.addDomListener(button, 'click', function() {
+
+        var content = $('<div>');
+
+        ["Name: " + place.name,
+        "Rating: " + (place.rating || "N/A")
+        ].forEach(function(line) {
+            content.append($("<div>", {
+                class: "nowrap"
+            }).html(line));
+        });
+
+        var button = $('<input>', {
+            type: 'button',
+            value: 'Add me'
+        });
+        content.append(button);
+        google.maps.event.addDomListener(button[0], 'click', function() {
             add(map, place.geometry.location);
             clearTemporaries();
         });
 
-        return function() {
-            infoWindow.setContent(content);
-            infoWindow.open(map, marker);
-        };
+        infoWindow.open(map, marker);
+        infoWindow.setContent(content[0]);
     };
 
     var remove = function(marker) {

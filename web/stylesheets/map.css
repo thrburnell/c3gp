@@ -42,6 +42,10 @@ body {
   height: 100%;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .nopadding {
   padding: 0;
 }
