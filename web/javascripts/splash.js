@@ -15,14 +15,21 @@ module.exports = (function() {
 
         var topBar = $("#top-bar");
         topBar.hide();
+
+        $("input").one("click", function() {
+            hideSplash();
+        });
     };
 
     var hideSplash = function() {
+
+        splashAddCookie();
+
         var welcomeSplash = $("#d-welcome");
-        welcomeSplash.hide();
+        welcomeSplash.hide(500);
 
         var topBar = $("#top-bar");
-        topBar.show();
+        topBar.show(500);
     };
 
     var splashAddCookie = function() {
