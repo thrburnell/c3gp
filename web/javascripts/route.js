@@ -5,12 +5,15 @@ module.exports = (function() {
 
     var currRequest = 0;
     var locations = [];
+    var directionsRenderers = [];
 
     var displayRoute = function(route) {
 
         var start = new google.maps.LatLng(route[0].lat, route[0].lng);
         var end = start;
 
+        clearRoute();
+        locations = [];
         locations.push(start);
         for (var i = 1; i < route.length; i++) {
             locations.push(new google.maps.LatLng(route[i].lat, route[i].lng));
@@ -68,6 +71,14 @@ module.exports = (function() {
             // }
         });
         directionsRenderer.setDirections(result);
+        directionsRenderers.push(directionsRenderer);
+    };
+
+    var clearRoute = function() {
+        directionsRenderers.forEach(function(renderer) {
+            renderer.setMap(null);
+        });
+        directionsRenderers = [];
     };
 
     return {
