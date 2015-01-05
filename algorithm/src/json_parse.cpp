@@ -18,10 +18,12 @@ MapPoints* parse_coordinates(const char* const json) {
     Coordinate* origin = new Coordinate();
     origin->lat = document["origin"]["lat"].GetDouble();
     origin->lng = document["origin"]["lng"].GetDouble();
+    origin->group = 0;
 
     Coordinate* destination = new Coordinate();
     destination->lat = document["destination"]["lat"].GetDouble();
     destination->lng = document["destination"]["lng"].GetDouble();
+    destination->group = 0;
 
     std::vector<Coordinate*>* errands = new std::vector<Coordinate*>();
 
@@ -30,6 +32,13 @@ MapPoints* parse_coordinates(const char* const json) {
         Coordinate* newCoordinate = new Coordinate();
         newCoordinate->lat = waypoints[i]["lat"].GetDouble();
         newCoordinate->lng = waypoints[i]["lng"].GetDouble();
+
+        if (waypoints[i].HasMember("group")) {
+            newCoordinate->group = waypoints[i]["group"].GetInt();
+        } else {
+            newCoordinate->group = 0;
+        }
+
         errands->push_back(newCoordinate);
     }
 

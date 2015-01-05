@@ -39,6 +39,36 @@ TEST(MapPointsTest, CanParseErrandsCorrectly) {
 	EXPECT_EQ(mp->errands->at(5)->lng, -0.17026662824491723);
 }
 
+TEST(MapPointsTest, ErrandsGroupDefaultsToZero) {
+	string json = "{\"origin\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"destination\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"waypoints\":[{\"lat\":51.497843351035144,\"lng\":-0.1702022552285598},{\"lat\":51.497629616981214,\"lng\":-0.17346382139066918},{\"lat\":51.49841775633878,\"lng\":-0.17533063886503442},{\"lat\":51.497910142721445,\"lng\":-0.17936468122343285},{\"lat\":51.495759401256,\"lng\":-0.1717901229653762},{\"lat\":51.49644070301275,\"lng\":-0.17026662824491723}]}\n";
+	MapPoints* mp = parse_coordinates(json.c_str());
+
+	EXPECT_EQ(mp->origin->group, 0);
+	EXPECT_EQ(mp->destination->group, 0);
+
+	EXPECT_EQ(mp->errands->at(0)->group, 0);
+	EXPECT_EQ(mp->errands->at(1)->group, 0);
+	EXPECT_EQ(mp->errands->at(2)->group, 0);
+	EXPECT_EQ(mp->errands->at(3)->group, 0);
+	EXPECT_EQ(mp->errands->at(4)->group, 0);
+	EXPECT_EQ(mp->errands->at(5)->group, 0);
+}
+
+TEST(MapPointsTest, CanReadErrandsGroup) {
+	string json = "{\"origin\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"destination\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"waypoints\":[{\"lat\":51.497843351035144,\"lng\":-0.1702022552285598,\"group\":1}, {\"lat\":51.497629616981214,\"lng\":-0.17346382139066918,\"group\":2}, {\"lat\":51.49841775633878,\"lng\":-0.17533063886503442,\"group\":1}, {\"lat\":51.497910142721445,\"lng\":-0.17936468122343285,\"group\":2}, {\"lat\":51.495759401256,\"lng\":-0.1717901229653762,\"group\":1}, {\"lat\":51.49644070301275,\"lng\":-0.17026662824491723,\"group\":3} ]}\n";
+	MapPoints* mp = parse_coordinates(json.c_str());
+
+	EXPECT_EQ(mp->origin->group, 0);
+	EXPECT_EQ(mp->destination->group, 0);
+
+	EXPECT_EQ(mp->errands->at(0)->group, 1);
+	EXPECT_EQ(mp->errands->at(1)->group, 2);
+	EXPECT_EQ(mp->errands->at(2)->group, 1);
+	EXPECT_EQ(mp->errands->at(3)->group, 2);
+	EXPECT_EQ(mp->errands->at(4)->group, 1);
+	EXPECT_EQ(mp->errands->at(5)->group, 3);
+}
+
 TEST(MapPointsTest, HasEnoughErrands) {
 	string json = "{\"origin\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"destination\":{\"lat\":51.50055501480524,\"lng\":-0.17445087432861328},\"waypoints\":[{\"lat\":51.497843351035144,\"lng\":-0.1702022552285598},{\"lat\":51.497629616981214,\"lng\":-0.17346382139066918},{\"lat\":51.49841775633878,\"lng\":-0.17533063886503442},{\"lat\":51.497910142721445,\"lng\":-0.17936468122343285},{\"lat\":51.495759401256,\"lng\":-0.1717901229653762},{\"lat\":51.49644070301275,\"lng\":-0.17026662824491723}]}\n";
 	MapPoints* mp = parse_coordinates(json.c_str());
