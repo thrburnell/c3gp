@@ -18,8 +18,10 @@ void TspSolver::addPoint(int firstNode, int secondNode, double cost) {
         throw std::runtime_error("Number of nodes in graph not initialized!");
     }
 
-    if (firstNode >= totalNodes || secondNode >= totalNodes ||
-        firstNode < 0 || secondNode < 0) {
+    if (firstNode >= totalNodes ||
+        secondNode >= totalNodes ||
+        firstNode < 0 ||
+        secondNode < 0) {
         throw std::out_of_range("Node indices out of range!");
     }
 

@@ -86,18 +86,18 @@ TEST(TspSolverTest, BacktrackingWorks) {
     EXPECT_TRUE(expected.find(*result) != expected.end());
 }
 
-TEST(TspSolverTest, ChoosesBacktrackingAlgorithmForSmallCase) {
+TEST(TspSolverTest, FindsOptimalSolutionForSmallCase) {
     TspSolver* solver = setupCanonicalTestExample();
 
     std::vector<int>* result = solver->solveTsp();
 
-    // Since the number of points is small, the backtracking method should
-    // be selected.
+    // Since the number of points is small, we should find an optimal
+    // solution.
     std::set<std::vector<int>> expected = {{0, 1, 3, 2}, {0, 2, 3, 1}};
     EXPECT_TRUE(expected.find(*result) != expected.end());    
 }
 
-TEST(TspSolverTest, ChoosesNNGreedyAlgorithmForLargeCase) {
+TEST(TspSolverTest, AllowsApproximateSolutionForLargeCase) {
     // Lambda function, used to check timelimit (otherwise unsupported
     // by GoogleTest).
     auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
