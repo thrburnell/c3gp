@@ -86,6 +86,8 @@ mapPointsTest = test_env.Program('test/map_points_test',
                                  create_objs(['map_points_test',
                                               'map_points',
                                               'tsp_solver',
+                                              'simple_travel_time_computer',
+                                              'tube_network',
                                               'haversine'],
                                              "test/")
                                  + ['test/libgtest.a'],

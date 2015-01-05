@@ -1,78 +1,58 @@
 #include "lib/gtest/gtest.h"
 
 #include "map_points.h"
+#include "simple_travel_time_computer.h"
 
-// TODO: As Jeremy was saying, this is a crappy test. We cannot manually
-// see that these coordinates will come in this order. This will be
-// moved anyway, as this logic is now part of the TspSolver class
 TEST(MapPointsTest, OrdersPointsAsExpected) {
 
     MapPoints* mp = new MapPoints();
     mp->errands = new std::vector<Coordinate*>();
 
-    Coordinate* c;
+    // I know, this looks weird, but this is how multiple declaration of
+    // pointers looks like in C++.
+    Coordinate *c1, *c2, *c3, *c4, *c5;
 
-    c = new Coordinate();
-    c->lat = 51.497843351035144;
-    c->lng = -0.1702022552285598;
-    mp->errands->push_back(c);
+    c1 = new Coordinate();
+    c1->lat = 50;
+    c1->lng = 50;
+    mp->origin = c1;
+    mp->destination = c1;
 
-    c = new Coordinate();
-    c->lat = 51.497629616981214;
-    c->lng = -0.17346382139066918;
-    mp->errands->push_back(c);
+    c2 = new Coordinate();
+    c2->lat = 51;
+    c2->lng = 50;
+    mp->errands->push_back(c2);
 
-    c = new Coordinate();
-    c->lat = 51.49841775633878;
-    c->lng = -0.17533063886503442;
-    mp->errands->push_back(c);
+    c3 = new Coordinate();
+    c3->lat = 53;
+    c3->lng = 50;
+    mp->errands->push_back(c3);
 
-    c = new Coordinate();
-    c->lat = 51.497910142721445;
-    c->lng = -0.17936468122343285;
-    mp->errands->push_back(c);
+    c4 = new Coordinate();
+    c4->lat = 55;
+    c4->lng = 50;
+    mp->errands->push_back(c4);
 
-    c = new Coordinate();
-    c->lat = 51.495759401256;
-    c->lng = -0.1717901229653762;
-    mp->errands->push_back(c);
+    SimpleTravelTimeComputer sttc("testData/fake_tube_network.csv", 5.0);
 
-    c = new Coordinate();
-    c->lat = 51.49644070301275;
-    c->lng = -0.17026662824491723;
-    mp->errands->push_back(c);
+    // The fake tube network is essentially useless for this test case.
+    mp = process_coordinates(mp, &sttc);
 
-    c = new Coordinate();
-    c->lat = 51.50055501480524;
-    c->lng = -0.17445087432861328;
-    mp->origin = c;
+    // The correct solution is to travel a straight line from c1 out,
+    // walking 10 degrees total in terms of latitude. Note that comparison
+    // is nontrivial since there are many valid routes; it would be sufficient
+    // to ensure that there is a unique local maximum at the furthest point out
+    // but this is also OK.
+    double distance = abs(((*(mp->errands))[0])->lat - 
+                          (mp->origin)->lat);
+    for(int i = 1; i < 3; ++i) {
+        distance += abs(((*(mp->errands))[i])->lat - 
+                        ((*(mp->errands))[i - 1])->lat);
+    }
+    distance += abs(((*(mp->errands))[2])->lat - 
+                    (mp->destination)->lat);
 
-    c = new Coordinate();
-    c->lat = 51.50055501480524;
-    c->lng = -0.17445087432861328;
-    mp->destination = c;
-
-    // TODO jeremykong: Clean up this test.
-    // mp = process_coordinates(mp);
-
-    // EXPECT_EQ(mp->errands->at(0)->lat, 51.497843351035147);
-    // EXPECT_EQ(mp->errands->at(0)->lng, -0.1702022552285598);
-
-    // EXPECT_EQ(mp->errands->at(1)->lat, 51.49644070301275);
-    // EXPECT_EQ(mp->errands->at(1)->lng, -0.17026662824491724);
-
-    // EXPECT_EQ(mp->errands->at(2)->lat, 51.495759401256);
-    // EXPECT_EQ(mp->errands->at(2)->lng, -0.1717901229653762);
-
-    // EXPECT_EQ(mp->errands->at(3)->lat, 51.497629616981217);
-    // EXPECT_EQ(mp->errands->at(3)->lng, -0.17346382139066919);
-
-    // EXPECT_EQ(mp->errands->at(4)->lat, 51.49841775633878);
-    // EXPECT_EQ(mp->errands->at(4)->lng, -0.17533063886503442);
-
-    // EXPECT_EQ(mp->errands->at(5)->lat, 51.497910142721448);
-    // EXPECT_EQ(mp->errands->at(5)->lng, -0.17936468122343286);
-
+    ASSERT_DOUBLE_EQ(10, distance);
 }
 
 int main(int argc, char **argv) {

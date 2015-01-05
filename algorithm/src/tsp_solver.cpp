@@ -15,7 +15,14 @@ void TspSolver::setNumberOfNodes(int nodes) {
 
 void TspSolver::addPoint(int firstNode, int secondNode, double cost) {
     if (totalNodes < 0) {
-        throw std::runtime_error("The number of nodes in the graph has not been initialized!");
+        throw std::runtime_error("Number of nodes in graph not initialized!");
+    }
+
+    if (firstNode >= totalNodes ||
+        secondNode >= totalNodes ||
+        firstNode < 0 ||
+        secondNode < 0) {
+        throw std::out_of_range("Node indices out of range!");
     }
 
     adjacencyMatrix[firstNode][secondNode] = cost;
