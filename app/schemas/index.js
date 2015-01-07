@@ -9,6 +9,10 @@ module.exports = {
               "description": "The errand to search for",
               "type": "string"
           },
+          "name": {
+              "description": "The name of the places to complete the errand",
+              "type": "string"
+          },
           "areas": {
               "description": "Array of coordinate/radius objects defining search space",
               "type": "array",
