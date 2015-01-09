@@ -9,7 +9,6 @@ module.exports = (function() {
     var listen = function() {
         $("#get-route").click(function() {
             api.calcRoute();
-            menu.changeToResultsStripe();
         });
 
         $("#b-edit-route").click(function() {

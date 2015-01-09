@@ -1,5 +1,7 @@
 var markers = require('./markers.js');
 var map = require('./map.js');
+var menu = require('./menu.js');
+var polyline = require('./polyline.js');
 
 module.exports = (function() {
 
@@ -9,13 +11,28 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
+        var i;
         var start = new google.maps.LatLng(route[0].lat, route[0].lng);
         var end = start;
+
+        var resultsArray = {
+            origin: "Current Location",
+            errands: [],
+            destination: "Current Location"
+        };
+        for (i = 1; i < route.length; i++) {
+            var temp = String.fromCharCode('A'.charCodeAt(0) + i);
+            resultsArray.errands.push("Step towards point " + temp);
+        }
+
+        menu.clearResults();
+        menu.setResults(resultsArray);
+        menu.changeToResultsStripe();
 
         clearRoute();
         locations = [];
         locations.push(start);
-        for (var i = 1; i < route.length; i++) {
+        for (i = 1; i < route.length; i++) {
             locations.push(new google.maps.LatLng(route[i].lat, route[i].lng));
         }
         locations.push(end);
@@ -63,12 +80,14 @@ module.exports = (function() {
     var renderDirections = function(result) {
         var directionsRenderer = new google.maps.DirectionsRenderer();
         directionsRenderer.setMap(map.getMapCanvas());
-        directionsRenderer.setOptions ({
+
+        var newPolyline = polyline.createPolyline(map.getMapCanvas());
+        polyline.addPolyline(newPolyline);
+
+        directionsRenderer.setOptions({
             suppressMarkers: true,
             preserveViewport: true,
-            // polylineOptions: {
-                // strokeColor: "#000000"
-            // }
+            polylineOptions: newPolyline
         });
         directionsRenderer.setDirections(result);
         directionsRenderers.push(directionsRenderer);
@@ -79,6 +98,7 @@ module.exports = (function() {
             renderer.setMap(null);
         });
         directionsRenderers = [];
+        polyline.clearPolylines();
     };
 
     return {
