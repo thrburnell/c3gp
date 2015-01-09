@@ -156,7 +156,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('public',
       'Generates public static files.',
-      ['copy', 'browserify']);
+      ['copy', 'sass', 'browserify']);
 
   grunt.registerTask('dev',
       'Compiles all code, starts server, watches for all file changes.',
