@@ -57,14 +57,14 @@ module.exports = function(grunt) {
         files: ['web/stylesheets/*.scss'],
         tasks: ['sass']
       },
-      // jshint: {
-      //   files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
-      //   tasks: ['jshint']
-      // },
-      // jsonlint: {
-      //   files: ['*.json'],
-      //   tasks: ['jsonlint']
-      // },
+      jshint: {
+        files: ['*.js', 'web/javascripts/**/*.js', 'app/**/*.js'],
+        tasks: ['jshint']
+      },
+      jsonlint: {
+        files: ['*.json'],
+        tasks: ['jsonlint']
+      },
       js: {
         files: ['web/javascripts/**/*.js'],
         tasks: ['browserify']
@@ -183,7 +183,7 @@ module.exports = function(grunt) {
         }
 
         // Compile all algorithm code and generate public files
-        grunt.task.run(['algorithm', 'public']);
+        grunt.task.run(['algorithm', 'public', 'client-errands']);
 
       });
 
@@ -226,6 +226,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jsonlint');
   grunt.loadNpmTasks('grunt-browserify');
+
+  // Load custom tasks
+  grunt.loadTasks('grunt');
 
 };
 

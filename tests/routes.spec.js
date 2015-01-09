@@ -12,6 +12,7 @@ describe("Routes", function() {
   describe("GET /", function() {
     
     it("should return 200", function(done) {
+      this.timeout(1000);
       this.request
         .get('/')      
         .expect(200, done);
@@ -22,6 +23,7 @@ describe("Routes", function() {
   describe("GET /status", function() {
 
     it("should return 200", function(done) {
+      this.timeout(1000);
       this.request
         .get('/status')
         .expect(200, done);
@@ -32,6 +34,8 @@ describe("Routes", function() {
   describe("POST /cpp", function() {
 
     it("should return 200 given valid request", function(done) {
+
+      this.timeout(1000);
 
       var data = {
         "origin":      
@@ -56,13 +60,16 @@ describe("Routes", function() {
   describe("POST /errand", function() {
 
     it("should return 200 given valid request", function(done) {
+      // Set a high timeout (10s) to allow for Google Places query
+      this.timeout(10000);
       this.request
         .post('/errand')
-        .send(makeRequest("coffee", makeAreas()))
+        .send(makeRequest("buy_coffee", makeAreas()))
         .expect(200, done);
     });
 
     it("should return 400 given unrecognised errand", function(done) {
+      this.timeout(1000);
       this.request
         .post('/errand')
         .send(makeRequest("unknown", makeAreas()))
@@ -70,6 +77,7 @@ describe("Routes", function() {
     });
 
     it("should return 400 given no errand", function(done) {
+      this.timeout(1000);
       this.request
         .post('/errand')
         .send({ "areas": makeAreas() })
@@ -77,6 +85,7 @@ describe("Routes", function() {
     });
 
     it("should return 400 given no areas", function(done) {
+      this.timeout(1000);
       this.request
         .post('/errand')
         .send({ "errand": "coffee" })
@@ -84,6 +93,7 @@ describe("Routes", function() {
     });
 
     it("should return 400 given empty areas", function(done) {
+      this.timeout(1000);
       this.request
         .post('/errand')
         .send({ "errand": "coffee", "areas": [] })

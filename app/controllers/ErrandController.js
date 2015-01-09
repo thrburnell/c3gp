@@ -8,14 +8,12 @@ exports.controller = function(req, res) {
   var openNow = req.body.opennow;
 
   errand.findPlaces(qErrand, areas, name, openNow)
-    .then(
-      function(result) {
-        res.send(result);
-      },
-      function(err) {
-        console.error(err);
-        res.status(500).end();
-      }
-    );
+    .then(function(result) {
+      res.send(result);
+    }, function(err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  );
 };
 

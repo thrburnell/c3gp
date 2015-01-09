@@ -1,10 +1,13 @@
-var googleMapping = require('./google-mapping')
+var errandDefinitions = require('./errand-definitions')
 var request = require('request');
 var sleep = require('sleep');
 var Q = require('q');
 
 // Environment variable GMAPS_KEY provides Google Maps API key
 var API_KEY = process.env.GMAPS_KEY;
+
+// The default radius to search around given point, if not specified
+var DEFAULT_AREA_RADIUS = 500;
 
 // Makes a request to the given Google Maps API URL, and returns a promise 
 // representing the result of the call. The promise is resolved with the 
@@ -22,7 +25,8 @@ var makeRequest = function(url, retry) {
     body = JSON.parse(body);
     
     if (error || response.statusCode != 200) {
-      deferred.reject(error); return;
+      deferred.reject(error);
+      return deferred.promise;
     }
 
     var googleStatus = body.status;
@@ -53,7 +57,7 @@ module.exports = {
   findPlaces: function(errand, areas, name, openNow) {
 
     // Get the Google Places types/keywords corresponding to this errand
-    var googleVals = googleMapping[errand];
+    var googleVals = errandDefinitions[errand].googleAttributes;
     var types = googleVals.types || [];
     var keyword = googleVals.keyword || "";
 
@@ -72,9 +76,9 @@ module.exports = {
     var promises = [];
     for (var i = 0; i < areas.length; i++) {
       var area = areas[i];
-      var requestUrl = baseUrl
-        + "&location=" + area.location.lat + "," + area.location.lng
-        + "&radius=" + (area.radius || 500); // TODO: abstract
+      var requestUrl = baseUrl +
+        "&location=" + area.location.lat + "," + area.location.lng +
+        "&radius=" + (area.radius || DEFAULT_AREA_RADIUS);
 
       promises.push(makeRequest(requestUrl));
     }
@@ -85,7 +89,7 @@ module.exports = {
     // propagate error
     Q.all(promises).then(
       function(res) { deferred.resolve([].concat.apply([], res)); },
-      function(err) { deferred.reject(err); })
+      function(err) { deferred.reject(err); });
 
     return deferred.promise;
   }
