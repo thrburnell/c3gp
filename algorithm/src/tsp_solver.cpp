@@ -1,5 +1,6 @@
 #include "tsp_solver.h"
 
+#include <algorithm>
 #include <limits>
 #include <stdexcept>
 #include <unordered_set>
@@ -39,7 +40,10 @@ std::vector<int>* TspSolver::solveTsp() {
         return solveTspWithBacktracking();
     }
 
-    return solveTspWithNNGreedy();
+    std::vector<int>* result = solveTspWithNNGreedy();
+    apply2OptLocalSearch(result);
+
+    return result;
 }
 
 std::vector<int>* TspSolver::solveTspWithNNGreedy() {
@@ -48,7 +52,7 @@ std::vector<int>* TspSolver::solveTspWithNNGreedy() {
 
     std::vector<int>* result = new std::vector<int>();
 
-    int pivot = 0;
+    int pivot = startingPoint;
     bool visited[totalNodes];
     for (int i = 0; i < totalNodes; i++) {
         visited[i] = 0;
@@ -75,6 +79,74 @@ std::vector<int>* TspSolver::solveTspWithNNGreedy() {
     return result;
 }
 
+double TspSolver::computeTourWeight(std::vector<int>* tour) {
+    if (tour->empty()) {
+        return 0;
+    }
+
+    double weight = 0;
+    for (int i = 1; i < tour->size(); ++i) {
+        weight += adjacencyMatrix[tour->at(i-1)][tour->at(i)];
+    }
+    weight += adjacencyMatrix[tour->at(tour->size() - 1)][startingPoint];
+
+    return weight;
+}
+
+// Applies 2-opt local search heuristic to the given tour, modifying it
+// in-place.
+void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
+    bool hasImprovement = true;
+    double min_dist = computeTourWeight(tour);
+    std::vector<int> temp = *tour; // copy tour to a temporary buffer
+    temp.push_back(startingPoint); // makes implementation easier
+    totalNodes++;
+
+    while (hasImprovement) {
+        hasImprovement = false;
+        for (int i = 1; i < totalNodes; i++) {
+            for (int j = i + 2; j < totalNodes; j++) {
+                // We are trying to cut (i-1, i) and (j-1, j).
+                // We're then comparing cost of start->(i-1), (i-1)->(j-1),
+                // (j-1)->(i), (i)->(j) and (j)->start vs. original.
+                double new_dist = 0;
+
+                // Start to (i - 1)
+                for (int k = 1; k < i; ++k) {
+                    new_dist += adjacencyMatrix[temp[k-1]][temp[k]];
+                }
+
+                // (i - 1) to (j - 1)
+                new_dist += adjacencyMatrix[temp[i-1]][temp[j-1]];
+
+                // (j - 1) to (i), backwards
+                for (int k = j - 1; k > i; --k) {
+                    new_dist += adjacencyMatrix[temp[k]][temp[k-1]];
+                }
+
+                // (i) to (j)
+                new_dist += adjacencyMatrix[temp[i]][temp[j]];
+
+                // (j) to start
+                for (int k = j + 1; k < totalNodes; k++) {
+                    new_dist += adjacencyMatrix[temp[k-1]][temp[k]];
+                }
+
+                // Check if there is an improvement
+                if (new_dist < min_dist) {
+                    hasImprovement = true;
+                    min_dist = new_dist;
+                    // Swap the relevant elements.
+                    std::reverse(temp.begin() + i, temp.begin() + j);
+                }
+            }
+        }
+    }
+    totalNodes--;
+    temp.pop_back(); // get rid of the extra origin added to make things easier
+    *tour = temp; // update the starting vector.
+}
+
 // CODE FOR BACKTRACKING
 // TODO: Move this into a separate file or something. Ask someone??
 
@@ -93,11 +165,11 @@ void TspSolver::tbBkt(int currNode) {
 
     if (tbTotalVisited == totalNodes) {
         if (tbCurrent + adjacencyMatrix[currNode][startingPoint] < tbMinimum) {
-        tbMinimum = tbCurrent + adjacencyMatrix[currNode][startingPoint];
-        tbOrderedResult.clear();
-        for (const auto& it : tbAccumulator) {
-            tbOrderedResult.push_back(it);
-        }
+            tbMinimum = tbCurrent + adjacencyMatrix[currNode][startingPoint];
+            tbOrderedResult.clear();
+            for (const auto& it : tbAccumulator) {
+                tbOrderedResult.push_back(it);
+            }
         }
     }
 

@@ -26,6 +26,9 @@ public:
     std::vector<int>* solveTsp();
 
     std::vector<int>* solveTspWithNNGreedy();
+    double computeTourWeight(std::vector<int>* tour);
+    void apply2OptLocalSearch(std::vector<int>* tour);
+
     std::vector<int>* solveTspWithBacktracking();
     std::vector<int>* solveTspWithGeneticAlgorithm();
 
