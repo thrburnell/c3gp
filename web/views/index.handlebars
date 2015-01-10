@@ -3,19 +3,21 @@
 		<div id="stripe-input" class="stripe stripe1 withpadding">
 			<img id="mini-logo" class="mini-logo" src="/img/logo2.png" alt="">
 
-			<div class="point-type">
-				<label>ORIGIN</label>
+			<div id="origin-point" class="point-type">
+				<label>ORIGIN ADDRESS</label>
 				<hr>
-				<input type="text" placeholder="e.g. current location" value="current location">
+				<input type="text" id="origin-input" placeholder="e.g. 12 Queen's Gate">
+        <a class="link-button" id="origin-button" href="#">Search Address</a>
+        <a class="link-button" id="gps-button" href="#">Use current Location</a>
 			</div>
 
-			<div class="point-type">
+			<div id="search-point" class="point-type">
 				<label> SEARCH PLACE</label>
 				<input type="text" id="search-input" placeholder="e.g. Sushi">
 				<a class="link-button" id="search-button" href="#">Search</a>
 			</div>
 
-			<div class="point-type">
+			<div id="errands-point" class="point-type">
 				<label>ERRANDS</label>
 				<hr>
 				<input type="text" placeholder="e.g. grab a coffee">

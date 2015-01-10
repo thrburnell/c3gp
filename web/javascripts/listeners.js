@@ -1,7 +1,10 @@
 var api = require('./api.js');
+var map = require('./map.js');
 var splash = require('./splash.js');
 var search = require('./search.js');
 var menu = require('./menu.js');
+var locals = require('./locals.js');
+var instructions = require('./instructions.js');
 
 module.exports = (function() {
 
@@ -20,6 +23,20 @@ module.exports = (function() {
             splash.splashAddCookie();
         });
 
+        $("#origin-button").click(function() {
+            search.searchOriginAddress();
+        });
+
+        $("#origin-input").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#origin-button").click();
+            }
+        });
+
+        $("#gps-button").click(function() {
+            map.setCurrentLocation();
+        });
+
         $("#search-button").click(function() {
             search.makeSearch();
         });
@@ -29,6 +46,19 @@ module.exports = (function() {
                 $("#search-button").click();
             }
         });
+
+        $("#origin-point").hover(function() {
+            instructions.setText(locals.originInputText);
+        });
+
+        $("#search-point").hover(function() {
+            instructions.setText(locals.searchText);
+        });
+
+        $("#errands-point").hover(function() {
+            instructions.setText(locals.errandText);
+        });
+
     };
 
     return {

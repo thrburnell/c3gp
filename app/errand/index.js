@@ -1,4 +1,4 @@
-var errandDefinitions = require('./errand-definitions')
+var errandDefinitions = require('./errand-definitions');
 var request = require('request');
 var sleep = require('sleep');
 var Q = require('q');
@@ -9,12 +9,12 @@ var API_KEY = process.env.GMAPS_KEY;
 // The default radius to search around given point, if not specified
 var DEFAULT_AREA_RADIUS = 500;
 
-// Makes a request to the given Google Maps API URL, and returns a promise 
-// representing the result of the call. The promise is resolved with the 
-// place results upon success, or rejected with the Google Maps `status` 
+// Makes a request to the given Google Maps API URL, and returns a promise
+// representing the result of the call. The promise is resolved with the
+// place results upon success, or rejected with the Google Maps `status`
 // and `error_message` upon failure.
-// If `retry` is `true`, then an OVER_QUERY_LIMIT Google Maps response 
-// results in promise rejection; otherwise, the request is retried after the 
+// If `retry` is `true`, then an OVER_QUERY_LIMIT Google Maps response
+// results in promise rejection; otherwise, the request is retried after the
 // instructed 2 seconds.
 var makeRequest = function(url, retry) {
 
@@ -23,7 +23,7 @@ var makeRequest = function(url, retry) {
   request(url, function(error, response, body) {
 
     body = JSON.parse(body);
-    
+
     if (error || response.statusCode != 200) {
       deferred.reject(error);
       return deferred.promise;
@@ -48,10 +48,10 @@ var makeRequest = function(url, retry) {
 
 module.exports = {
 
-  // Returns a promise which, upon success, is resolved with an array of 
-  // places where a user can complete the given errand. The places are all 
-  // within the specified vicinities, and if a `name` is given then the 
-  // names of all places match. Additionally, if the openNow flag is 
+  // Returns a promise which, upon success, is resolved with an array of
+  // places where a user can complete the given errand. The places are all
+  // within the specified vicinities, and if a `name` is given then the
+  // names of all places match. Additionally, if the openNow flag is
   // given, all places are open at the time of calling.
   // Please refer to `schemas` for detail on the place structure.
   findPlaces: function(errand, areas, name, openNow) {
@@ -63,9 +63,9 @@ module.exports = {
 
     // Construct the Google Places request URL common to each request
     // (a separate request is made for each search area)
-    var baseUrl = "https://maps.googleapis.com/maps/api/place/" + 
+    var baseUrl = "https://maps.googleapis.com/maps/api/place/" +
                   "nearbysearch/json?";
-    
+
     baseUrl += "key=" + API_KEY;
     baseUrl += "&types=" + types.join('|');
     baseUrl += "&keyword=" + keyword;
@@ -85,7 +85,7 @@ module.exports = {
 
     var deferred = Q.defer();
 
-    // Resolve returned promise with concat of all request results, or 
+    // Resolve returned promise with concat of all request results, or
     // propagate error
     Q.all(promises).then(
       function(res) { deferred.resolve([].concat.apply([], res)); },

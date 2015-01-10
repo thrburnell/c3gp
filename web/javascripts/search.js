@@ -6,13 +6,13 @@ module.exports = (function() {
     var makeSearch = function() {
         // Clear any previous search
         markers.clearTemporaries();
-        var searchInput = $("#search-input").val();
+        var searchInput = $('#search-input').val();
         var request = {
             location: map.getStartingLocation(),
             keyword: searchInput,
             radius: '500'
         };
-        service = new google.maps.places.PlacesService(map.getMapCanvas());
+        var service = new google.maps.places.PlacesService(map.getMapCanvas());
         service.nearbySearch(request, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 markers.addTemporaries(map.getMapCanvas(), results);
@@ -20,9 +20,23 @@ module.exports = (function() {
         });
     };
 
+    var searchOriginAddress = function() {
+        var locationInput = $('#origin-input').val();
+        var request = {
+            location: map.getStartingLocation(),
+            address: locationInput
+        };
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode(request, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                map.setStartingLocation(results[0].geometry.location);
+            }
+        });
+    };
 
     return {
-        makeSearch: makeSearch
+        makeSearch: makeSearch,
+        searchOriginAddress: searchOriginAddress
     };
 
 })();

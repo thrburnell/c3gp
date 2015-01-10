@@ -4,7 +4,6 @@
 "use strict";
 
 var map = require('./map.js');
-var api = require('./api.js');
 var splash = require('./splash.js');
 var listeners = require('./listeners.js');
 
