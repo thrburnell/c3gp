@@ -26,6 +26,8 @@ public:
     std::vector<int>* solveTsp();
 
     std::vector<int>* solveTspWithNNGreedy();
+    void apply2OptLocalSearch(std::vector<int>* tour);
+
     std::vector<int>* solveTspWithBacktracking();
     std::vector<int>* solveTspWithGeneticAlgorithm();
 
@@ -33,6 +35,8 @@ private:
     double** adjacencyMatrix;
     int totalNodes = -1;
     int startingPoint = -1;
+
+    double computeTourWeight(std::vector<int>* tour);
 
     void tbBkt(int currNode);
 
