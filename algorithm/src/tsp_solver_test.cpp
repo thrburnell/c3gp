@@ -5,7 +5,6 @@
 #include <future>
 #include <vector>
 #include <set>
-#include <iostream>
 #include <fstream>
 
 static TspSolver* setupCanonicalTestExample() {

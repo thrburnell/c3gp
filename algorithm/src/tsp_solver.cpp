@@ -86,9 +86,9 @@ double TspSolver::computeTourWeight(std::vector<int>* tour) {
 
     double weight = 0;
     for(int i = 1; i < tour->size(); ++i) {
-        weight += adjacencyMatrix[(*tour)[i-1]][(*tour)[i]];
+        weight += adjacencyMatrix[tour->at(i-1)][tour->at(i)];
     }
-    weight += adjacencyMatrix[(*tour)[tour->size() - 1]][startingPoint];
+    weight += adjacencyMatrix[tour->at(tour->size() - 1)][startingPoint];
 
     return weight;
 }
@@ -104,15 +104,15 @@ void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
 
     while (hasImprovement) {
         hasImprovement = false;
-        for(int i = 1; i < totalNodes; i++) {
-            for(int j = i + 2; j < totalNodes; j++) {
+        for (int i = 1; i < totalNodes; i++) {
+            for (int j = i + 2; j < totalNodes; j++) {
                 // We are trying to cut (i-1, i) and (j-1, j).
                 // We're then comparing cost of start->(i-1), (i-1)->(j-1),
                 // (j-1)->(i), (i)->(j) and (j)->start vs. original.
                 double new_dist = 0;
 
                 // Start to (i - 1)
-                for(int k = 1; k < i; ++k) {
+                for (int k = 1; k < i; ++k) {
                     new_dist += adjacencyMatrix[temp[k-1]][temp[k]];
                 }
 
@@ -120,7 +120,7 @@ void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
                 new_dist += adjacencyMatrix[temp[i-1]][temp[j-1]];
 
                 // (j - 1) to (i), backwards
-                for(int k = j - 1; k > i; --k) {
+                for (int k = j - 1; k > i; --k) {
                     new_dist += adjacencyMatrix[temp[k]][temp[k-1]];
                 }
 
@@ -128,12 +128,12 @@ void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
                 new_dist += adjacencyMatrix[temp[i]][temp[j]];
 
                 // (j) to start
-                for(int k = j + 1; k < totalNodes; k++) {
+                for (int k = j + 1; k < totalNodes; k++) {
                     new_dist += adjacencyMatrix[temp[k-1]][temp[k]];
                 }
 
                 // Check if there is an improvement
-                if(new_dist < min_dist) {
+                if (new_dist < min_dist) {
                     hasImprovement = true;
                     min_dist = new_dist;
                     // Swap the relevant elements.
