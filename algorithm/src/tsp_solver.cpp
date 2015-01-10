@@ -80,12 +80,12 @@ std::vector<int>* TspSolver::solveTspWithNNGreedy() {
 }
 
 double TspSolver::computeTourWeight(std::vector<int>* tour) {
-    if(tour->empty()) {
+    if (tour->empty()) {
         return 0;
     }
 
     double weight = 0;
-    for(int i = 1; i < tour->size(); ++i) {
+    for (int i = 1; i < tour->size(); ++i) {
         weight += adjacencyMatrix[tour->at(i-1)][tour->at(i)];
     }
     weight += adjacencyMatrix[tour->at(tour->size() - 1)][startingPoint];
