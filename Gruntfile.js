@@ -193,14 +193,13 @@ module.exports = function(grunt) {
 
         script = grunt.config('serverScript');
 
-        // Attempt to restart process
-        if (exec('forever restart ' + script).code !== 0) {
+        // Stop server (will fail if server isn't running)
+        exec('forever stop ' + script);
 
-          // Restart failed (i.e. it was never started to begin with)
-          if (exec('forever start ' + script).code !== 0) {
-            // Start failed unexpectedly
-            grunt.log.writeln('Failed to start forever process.');
-          }
+        // Start server
+        if (exec('forever start ' + script).code !== 0) {
+          // Start failed unexpectedly
+          grunt.log.writeln('Failed to start forever process.');
         }
 
       });
