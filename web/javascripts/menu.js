@@ -1,4 +1,6 @@
 var polyline = require('./polyline.js');
+var errand = require('./errand.js');
+var locals = require('./locals.js');
 
 module.exports = (function() {
 
@@ -12,6 +14,81 @@ module.exports = (function() {
     var changeToInputStripe = function() {
         $('#stripe-input').css('left', 0);
         $('#stripe-results').css('left', stripeWidth);
+    };
+
+    var createErrandBox = function() {
+
+        //TODO: This is super hacky. I do this so I can preserve
+        // the event, since I cannot call search.makeSearch(event.target.value); from here
+
+        //Clone the events attached as well
+        var newErrandBox = $('#errand-hack').clone(true);
+        newErrandBox.val('');
+        newErrandBox.removeAttr('id');
+        newErrandBox.removeAttr('disabled');
+        newErrandBox.removeClass('hidden');
+        newErrandBox.addClass('errand-input');
+        newErrandBox.keyup(function(event) {
+            errand.makeSearch(event.target);
+        });
+        newErrandBox.click(function(event) {
+            errand.makeSearch(event.target);
+        });
+        $('#errands-point').append(newErrandBox);
+    };
+
+    var insertTextIntoNextBox = function(text) {
+        var originInput = $('#origin-input-primary');
+        if (originInput.val() === '') {
+            originInput.val(text);
+            lockOriginInput();
+            return;
+        }
+
+        var errandInput = $('.errand-input').last();
+        errandInput.val(text);
+        disableNextErrandInput();
+    };
+
+    var lockOriginInput = function() {
+        var originInput = $('#origin-input-primary');
+        var destinationInput = $('#destination-input-primary');
+        var errandInput = $('#errand-input-primary');
+
+        destinationInput.val(originInput.val());
+        originInput.attr('disabled', 'true');
+        destinationInput.attr('disabled', 'true');
+        errandInput.removeAttr('disabled');
+        errandInput.attr('placeholder', locals.searchSuggestion);
+    };
+
+    var setOriginText = function(text) {
+        $('#origin-input-primary').val(text);
+        $('#destination-input-primary').val(text);
+    };
+
+    var disableNextErrandInput = function() {
+        var errandInputs = $('.errand-input');
+        for (var i = 0; i < errandInputs.length; i++) {
+            if (errandInputs[i].disabled !== true) {
+                errandInputs[i].disabled = true;
+                if (allErrandBoxesAreFull) {
+                    createErrandBox();
+                }
+                return;
+            }
+        }
+    };
+
+    var allErrandBoxesAreFull = function() {
+        var errandInputs = $('.errand-input');
+        for (var i = 0; i < errandInputs.length; i++) {
+            if (errandInputs[i].value === '') {
+                return false;
+            }
+        }
+
+        return true;
     };
 
     var setResults = function(resultArray) {
@@ -70,7 +147,13 @@ module.exports = (function() {
         changeToResultsStripe: changeToResultsStripe,
         changeToInputStripe: changeToInputStripe,
         setResults: setResults,
-        clearResults: clearResults
+        clearResults: clearResults,
+        createErrandBox: createErrandBox,
+        allErrandBoxesAreFull: allErrandBoxesAreFull,
+        insertTextIntoNextBox: insertTextIntoNextBox,
+        disableNextErrandInput: disableNextErrandInput,
+        lockOriginInput: lockOriginInput,
+        setOriginText: setOriginText,
     };
 
 })();

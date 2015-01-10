@@ -5,6 +5,7 @@ var search = require('./search.js');
 var menu = require('./menu.js');
 var locals = require('./locals.js');
 var instructions = require('./instructions.js');
+var errand = require('./errand.js');
 
 module.exports = (function() {
 
@@ -23,13 +24,9 @@ module.exports = (function() {
             splash.splashAddCookie();
         });
 
-        $("#origin-button").click(function() {
-            search.searchOriginAddress();
-        });
-
-        $("#origin-input").keyup(function(event) {
+        $("#origin-input-primary").keyup(function(event) {
             if (event.keyCode === 13) {
-                $("#origin-button").click();
+                search.searchOriginAddress();
             }
         });
 
@@ -37,14 +34,27 @@ module.exports = (function() {
             map.setCurrentLocation();
         });
 
-        $("#search-button").click(function() {
-            search.makeSearch();
+        $("#errand-input-primary").keyup(function(event) {
+            errand.makeSearch(event.target);
         });
 
-        $("#search-input").keyup(function(event) {
-            if (event.keyCode === 13) {
-                $("#search-button").click();
+        $("#errand-input-primary").click(function(event) {
+            errand.makeSearch(event.target);
+        });
+
+        $("#errand-input-primary, #errand-hack").keyup(function(event) {
+
+            if (event.which !== 13) {
+                event.target.title = '';
+                return;
             }
+
+            if (event.target.title !== '') {
+                search.makeErrandSearch(event.target.title);
+            } else {
+                search.makeSearch(event.target.value);
+            }
+
         });
 
         $("#origin-point").hover(function() {

@@ -3,10 +3,9 @@ var map = require('./map.js');
 
 module.exports = (function() {
 
-    var makeSearch = function() {
+    var makeSearch = function(searchInput) {
         // Clear any previous search
         markers.clearTemporaries();
-        var searchInput = $('#search-input').val();
         var request = {
             location: map.getStartingLocation(),
             keyword: searchInput,
@@ -21,7 +20,7 @@ module.exports = (function() {
     };
 
     var searchOriginAddress = function() {
-        var locationInput = $('#origin-input').val();
+        var locationInput = $('#origin-input-primary').val();
         var request = {
             location: map.getStartingLocation(),
             address: locationInput
@@ -34,9 +33,40 @@ module.exports = (function() {
         });
     };
 
+    var makeErrandSearch = function(api_id) {
+
+        markers.clearTemporaries();
+
+        var requestData = {
+            errand: api_id,
+            areas: []
+        };
+
+        markers.getMarkers().forEach(function(marker) {
+            var newLocation = {
+                location: {
+                    lat: marker.position.lat(),
+                    lng: marker.position.lng()
+                }
+            };
+            requestData.areas.push(newLocation);
+        });
+
+        jQuery.ajax({
+            url: '/errand',
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(requestData),
+            success: function(ret, status) {
+                markers.addTemporaries(map.getMapCanvas(), ret);
+            }
+        });
+    };
+
     return {
         makeSearch: makeSearch,
-        searchOriginAddress: searchOriginAddress
+        searchOriginAddress: searchOriginAddress,
+        makeErrandSearch: makeErrandSearch
     };
 
 })();

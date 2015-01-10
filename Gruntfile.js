@@ -183,7 +183,7 @@ module.exports = function(grunt) {
         }
 
         // Compile all algorithm code and generate public files
-        grunt.task.run(['algorithm', 'public', 'client-errands']);
+        grunt.task.run(['client-errands', 'algorithm', 'public']);
 
       });
 

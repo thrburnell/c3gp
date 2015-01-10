@@ -1,6 +1,7 @@
 var instructions = require('./instructions.js');
 var locals = require('./locals.js');
 var markers = require('./markers.js');
+var menu = require('./menu.js');
 
 module.exports = (function() {
     var directionsService = new google.maps.DirectionsService();
@@ -30,6 +31,7 @@ module.exports = (function() {
 
         google.maps.event.addListener(map, 'click', function(event) {
             var marker = markers.add(map, event.latLng);
+            menu.insertTextIntoNextBox(locals.pointOnMap);
 
             google.maps.event.addListener(marker, 'click', function(point) {
                 markers.remove(marker);
@@ -39,17 +41,19 @@ module.exports = (function() {
     };
 
     var setCurrentLocation = function() {
-            navigator.geolocation.getCurrentPosition(function(pos) {
-                var loc = new google.maps.LatLng(pos.coords.latitude,
-                                                 pos.coords.longitude);
-                setStartingLocation(loc);
-            });
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var loc = new google.maps.LatLng(pos.coords.latitude,
+                                             pos.coords.longitude);
+            menu.setOriginText(locals.currentLocation);
+            setStartingLocation(loc);
+        });
     };
 
     var setStartingLocation = function(loc) {
         startingLocation = loc;
         map.setCenter(startingLocation);
         markers.setOrigin(map, startingLocation);
+        menu.lockOriginInput();
     };
 
     return {

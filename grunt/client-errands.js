@@ -1,5 +1,5 @@
 // This task generates a JSON file, errands.json, defining all supported 
-// errands, which is dumped in the public/js directory. The resulting 
+// errands, which is dumped in the web/javascripts directory. The resulting 
 // file is of the format:
 //
 // [
@@ -33,10 +33,10 @@ module.exports = function(grunt) {
         }
         
         // Write the file
-        fs.writeFileSync('./public/js/errands.json',
+        fs.writeFileSync('./web/javascripts/errands.json',
           JSON.stringify(clientErrands, null, 2));
 
-        console.log("Generated public/js/errands.json with success.");
+        console.log("Generated web/javascripts/errands.json with success.");
        
       });
 

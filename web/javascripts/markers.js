@@ -1,5 +1,6 @@
 var instructions = require('./instructions.js');
 var locals = require('./locals.js');
+var menu = require('./menu.js');
 
 module.exports = (function() {
 
@@ -90,6 +91,7 @@ module.exports = (function() {
         google.maps.event.addDomListener(button[0], 'click', function() {
             add(map, place.geometry.location);
             clearTemporaries();
+            menu.disableNextErrandInput();
         });
 
         infoWindow.open(map, marker);
