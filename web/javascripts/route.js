@@ -9,18 +9,31 @@ module.exports = (function() {
     var locations = [];
     var directionsRenderers = [];
 
+    // An array of strings corresponding to the google.maps.TravelMode constants
+    // transitToPoint[i] = 'transit' means we take the tube to reach that point
+    // transitToPoint[0] === null because that is the origin (we are already there)
+    var transitToPoint = [];
+
     var displayRoute = function(route) {
 
-        var i;
-        var start = new google.maps.LatLng(route[0].lat, route[0].lng);
-        var end = start;
+        computeMenuItems(route);
+        computeTransitToPoints(route);
+        computeLocationsArray(route);
+
+        clearRoute();
+
+        currRequest = 0;
+        nextRequest();
+    };
+
+    var computeMenuItems = function(route) {
 
         var resultsArray = {
             origin: "Current Location",
             errands: [],
             destination: "Current Location"
         };
-        for (i = 1; i < route.length; i++) {
+        for (var i = 1; i < route.length - 1; i++) {
             var temp = String.fromCharCode('A'.charCodeAt(0) + i);
             resultsArray.errands.push("Step towards point " + temp);
         }
@@ -28,20 +41,20 @@ module.exports = (function() {
         menu.clearResults();
         menu.setResults(resultsArray);
         menu.changeToResultsStripe();
+    };
 
-        clearRoute();
+    var computeTransitToPoints = function(route) {
+        transitToPoint.push(null);
+        for (var i = 1; i < route.length; i++) {
+            transitToPoint.push(route[i].transit);
+        }
+    };
+
+    var computeLocationsArray = function(route) {
         locations = [];
-        locations.push(start);
-        for (i = 1; i < route.length; i++) {
+        for (var i = 0; i < route.length; i++) {
             locations.push(new google.maps.LatLng(route[i].lat, route[i].lng));
         }
-        locations.push(end);
-
-        markers.clear();
-
-        currRequest = 0;
-        nextRequest();
-
     };
 
     /**
@@ -52,10 +65,17 @@ module.exports = (function() {
             return;
         }
 
+        var travelMode;
+        if (transitToPoint[currRequest + 1] === 'transit') {
+            travelMode = google.maps.TravelMode.TRANSIT;
+        } else {
+            travelMode = google.maps.TravelMode.WALKING;
+        }
+
         var request = {
             origin: locations[currRequest],
             destination: locations[currRequest+1],
-            travelMode: google.maps.TravelMode.WALKING
+            travelMode: travelMode
         };
 
         currRequest++;
@@ -94,6 +114,7 @@ module.exports = (function() {
     };
 
     var clearRoute = function() {
+        markers.clear();
         directionsRenderers.forEach(function(renderer) {
             renderer.setMap(null);
         });

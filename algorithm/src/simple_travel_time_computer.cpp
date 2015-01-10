@@ -1,17 +1,18 @@
 #include "haversine.h"
 #include "tube_network.h"
 #include "simple_travel_time_computer.h"
+#include "transit_type.h"
 
 #include <string>
 #include <limits>
+#include <utility>
 
-#include <iostream>
+std::pair<double, transit_type>
+SimpleTravelTimeComputer::find_time(const Coordinate& from, const Coordinate& to) {
 
-double SimpleTravelTimeComputer::find_time(const Coordinate& from,
-                                           const Coordinate& to) {
-    std::vector<TubeStation> nearest_to_origin = 
+    std::vector<TubeStation> nearest_to_origin =
         tube.find_nearest_stations(from, 3);
-    std::vector<TubeStation> nearest_to_destination = 
+    std::vector<TubeStation> nearest_to_destination =
         tube.find_nearest_stations(to, 3);
 
     double tube_time = std::numeric_limits<double>::infinity();
@@ -24,5 +25,11 @@ double SimpleTravelTimeComputer::find_time(const Coordinate& from,
         }
     }
 
-    return std::min(walk_time(from, to), tube_time);
+    double walk_time_value = walk_time(from, to);
+
+    if (walk_time_value < tube_time) {
+        return std::make_pair(walk_time_value, WALKING);
+    } else {
+        return std::make_pair(tube_time, TRANSIT);
+    }
 }

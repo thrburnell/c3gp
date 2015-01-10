@@ -95,7 +95,8 @@ mapPointsTest = test_env.Program('test/map_points_test',
 
 jsonParseTest = test_env.Program('test/json_parse_test',
                                  create_objs(['json_parse_test',
-                                              'json_parse'],
+                                              'json_parse',
+                                              'transit_type'],
                                              "test/")
                                  + ['test/libgtest.a'],
                                  LIBS=['pthread'])

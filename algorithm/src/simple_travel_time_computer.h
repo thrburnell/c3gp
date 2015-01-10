@@ -5,8 +5,10 @@
 #include "haversine.h"
 #include "travel_time_computer.h"
 #include "tube_network.h"
+#include "transit_type.h"
 
 #include <string>
+#include <utility>
 
 class SimpleTravelTimeComputer : public TravelTimeComputer {
 /* This implementation considers both walking from the start to end point
@@ -19,8 +21,8 @@ public:
     SimpleTravelTimeComputer(const std::string& tube_path,
         double walking_speed) : tube(tube_path), walk_speed(walking_speed)
         {};
-    virtual double find_time(const Coordinate& from,
-                             const Coordinate& to);
+    virtual std::pair<double, transit_type> find_time(const Coordinate& from,
+                                                      const Coordinate& to);
 private:
     TubeNetwork tube;
     double walk_speed; // kilometers per hour

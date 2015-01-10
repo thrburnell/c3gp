@@ -2,6 +2,10 @@
 #include "lib/rapidjson/writer.h"
 #include "lib/rapidjson/stringbuffer.h"
 
+#include <string>
+
+#include "transit_type.h"
+
 #include "json_parse.h"
 
 namespace rj = rapidjson;
@@ -55,7 +59,7 @@ MapPoints* parse_coordinates(const char* const json) {
  * The JSON returned is of the form [{"lat": 123, "lng": 321}, ...]
  * The first point is the origin
  * The second point is the first errand to visit
- * The destination is not represented because it is assumed to be the origin
+ * The destination is now also present
  */
 std::string print_coordinates(MapPoints* map_points) {
 
@@ -83,8 +87,25 @@ std::string print_coordinates(MapPoints* map_points) {
         writer.String("lng");
         writer.Double((*it)->lng);
 
+        writer.String("transit");
+        writer.String(transit_type_to_string((*it)->transit).c_str());
+
         writer.EndObject();
     }
+
+    writer.StartObject();
+
+    writer.String("lat");
+    writer.Double(map_points->destination->lat);
+
+    writer.String("lng");
+    writer.Double(map_points->destination->lng);
+
+    writer.String("transit");
+    writer.String(transit_type_to_string(map_points->destination->transit).c_str());
+
+    writer.EndObject();
+
 
     writer.EndArray();
 

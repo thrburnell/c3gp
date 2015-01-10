@@ -10,11 +10,11 @@ TEST(SimpleTravelTimeComputerTest, IdentityTimeIsZero) {
 
     c1.lat = 0.3;
     c1.lng = 0.3;
-    EXPECT_EQ(0, sttc.find_time(c1, c1));
+    EXPECT_EQ(0, sttc.find_time(c1, c1).first);
 
     c1.lat = -38.88;
     c1.lng = 51.72;
-    EXPECT_EQ(0, sttc.find_time(c1, c1));
+    EXPECT_EQ(0, sttc.find_time(c1, c1).first);
 }
 
 TEST(SimpleTravelTimeComputerTest, DoesntUseTubeUnlessUseful) {
@@ -28,7 +28,7 @@ TEST(SimpleTravelTimeComputerTest, DoesntUseTubeUnlessUseful) {
 
     // There is a (useless) tube connection taking 20 minutes from alpha to
     // beta, which should not be used.
-    EXPECT_NEAR(0.23588, sttc.find_time(alpha, beta), 0.00001);
+    EXPECT_NEAR(0.23588, sttc.find_time(alpha, beta).first, 0.00001);
 }
 
 TEST(SimpleTravelTimeComputerTest, ConsidersNearbyTubeStops) {
@@ -42,7 +42,7 @@ TEST(SimpleTravelTimeComputerTest, ConsidersNearbyTubeStops) {
 
     // Walk to the station Beta (0.23588 min) and take the 4-minute train
     // from there instead of the 20-minute train from Alpha.
-    EXPECT_NEAR(4.23588, sttc.find_time(alpha, gamma), 0.00001);
+    EXPECT_NEAR(4.23588, sttc.find_time(alpha, gamma).first, 0.00001);
 }
 
 TEST(SimpleTravelTimeComputerTest, ChoosesCorrectStoppingPoint) {
@@ -55,7 +55,7 @@ TEST(SimpleTravelTimeComputerTest, ChoosesCorrectStoppingPoint) {
     gamma.lat = 5;
 
     // It's faster to take the train back to alpha and walk than to beta.
-    EXPECT_NEAR(19.11794, sttc.find_time(gamma, ab_midpoint), 0.00001);
+    EXPECT_NEAR(19.11794, sttc.find_time(gamma, ab_midpoint).first, 0.00001);
 }
 
 TEST(EdgeFindingIntegrationTest, SloaneSquareToGloucesterRoad) {
@@ -67,7 +67,7 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToGloucesterRoad) {
     gloucester_road.lat = 51.494499579725;
     gloucester_road.lng = -0.18352915689619;
 
-    EXPECT_NEAR(12, sttc.find_time(sloane_square, gloucester_road), 1);
+    EXPECT_NEAR(12, sttc.find_time(sloane_square, gloucester_road).first, 1);
 }
 
 TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
@@ -82,7 +82,7 @@ TEST(EdgeFindingIntegrationTest, SloaneSquareToKnightsbridge) {
     knightsbridge.lat = 51.501354916808;
     knightsbridge.lng = -0.16065008131194;
 
-    EXPECT_NEAR(16, sttc.find_time(sloane_square, knightsbridge), 1);
+    EXPECT_NEAR(16, sttc.find_time(sloane_square, knightsbridge).first, 1);
 }
 
 TEST(EdgeFindingIntegrationTest, PiccadilyCircusToTottenhamCourtRoad) {
@@ -95,7 +95,7 @@ TEST(EdgeFindingIntegrationTest, PiccadilyCircusToTottenhamCourtRoad) {
     tcr.lat = 51.51621088565;
     tcr.lng = -0.13109602942553;
 
-    EXPECT_NEAR(11.195, sttc.find_time(pc, tcr), 1);
+    EXPECT_NEAR(11.195, sttc.find_time(pc, tcr).first, 1);
 }
 
 TEST(EdgeFindingIntegrationTest, PiccadilyCircusToLeicesterSquare) {
@@ -108,7 +108,7 @@ TEST(EdgeFindingIntegrationTest, PiccadilyCircusToLeicesterSquare) {
     ls.lat = 51.511291196842;
     ls.lng = -0.12822773962177;
 
-    EXPECT_NEAR(6.2696, sttc.find_time(pc, ls), 1);
+    EXPECT_NEAR(6.2696, sttc.find_time(pc, ls).first, 1);
 }
 
 TEST(EdgeFindingIntegrationTest, UxbridgeToCockfosters) {
@@ -121,7 +121,7 @@ TEST(EdgeFindingIntegrationTest, UxbridgeToCockfosters) {
     cf.lat = 51.652024496788;
     cf.lng = -0.14990225857042;
 
-    EXPECT_NEAR(87.25, sttc.find_time(ux, cf), 1);
+    EXPECT_NEAR(87.25, sttc.find_time(ux, cf).first, 1);
 }
 
 int main(int argc, char **argv) {
