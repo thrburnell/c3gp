@@ -132,7 +132,7 @@ void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
                     new_dist += adjacencyMatrix[temp[k-1]][temp[k]];
                 }
 
-                // check if there is an improvement
+                // Check if there is an improvement
                 if(new_dist < min_dist) {
                     hasImprovement = true;
                     min_dist = new_dist;
@@ -140,7 +140,6 @@ void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
                     std::reverse(temp.begin() + i, temp.begin() + j);
                 }
             }
-
         }
     }
     totalNodes--;

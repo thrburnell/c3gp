@@ -5,6 +5,8 @@
 #include <future>
 #include <vector>
 #include <set>
+#include <iostream>
+#include <fstream>
 
 static TspSolver* setupCanonicalTestExample() {
     TspSolver* solver = new TspSolver();
@@ -75,6 +77,23 @@ static TspSolver* setupLargeTestExample() {
         }
     }
 
+    return solver;
+}
+
+static TspSolver* setupBenchmarkTestExample(const std::string& file_path,
+                                            int numNodes) {
+    TspSolver* solver = new TspSolver();
+    solver->setNumberOfNodes(numNodes);
+    solver->setStartingPoint(0);
+
+    std::ifstream ifs(file_path, std::ifstream::in);
+    for(int i = 0; i < numNodes; ++i) {
+        for(int j = 0; j < numNodes; ++j) {
+            double cost;
+            ifs >> cost;
+            solver->addPoint(i, j, cost);
+        }
+    }
     return solver;
 }
 
@@ -178,6 +197,40 @@ TEST(TspSolverTest, AllowsApproximateSolutionForLargeCase) {
         // There are 500 nodes so backtracking will fail horribly.
         // The key is we don't want this to be overly slow.
         std::vector<int>* result = solver->solveTsp();
+        return;
+    });
+
+    // The future above should complete itself in 1 second, or the test fails.
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+                std::future_status::timeout);
+}
+
+TEST(TspSolverTest, ApproximateSolutionForBR17Benchmark) {
+    // Lambda function, used to check timelimit (otherwise unsupported
+    // by GoogleTest).
+    auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
+        TspSolver* solver = setupBenchmarkTestExample("testData/br17.atsp",
+                                                      17);
+        std::vector<int>* result = solver->solveTsp();
+        // Optimal solution is 39.
+        EXPECT_LE(solver->computeTourWeight(result), 39 * 1.1);
+        return;
+    });
+
+    // The future above should complete itself in 1 second, or the test fails.
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+                std::future_status::timeout);
+}
+
+TEST(TspSolverTest, ApproximateSolutionForFTV44Benchmark) {
+    // Lambda function, used to check timelimit (otherwise unsupported
+    // by GoogleTest).
+    auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
+        TspSolver* solver = setupBenchmarkTestExample("testData/ftv44.atsp",
+                                                      44);
+        std::vector<int>* result = solver->solveTsp();
+        // Optimal solution is 1613.
+        EXPECT_LE(solver->computeTourWeight(result), 1613 * 1.5);
         return;
     });
 
