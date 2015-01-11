@@ -91,12 +91,28 @@ module.exports = (function() {
         return true;
     };
 
-    var setResults = function(resultArray) {
+    var computeResultsStripe = function(routeLength) {
+
+        var i;
+
+        var resultArray = {};
+        resultArray.origin = $("#origin-input-primary").val();
+        resultArray.destination = $("#destination-input-primary").val();
+        resultArray.errands = [];
+
+        var errandInputs = $('.errand-input');
+        for (i = 0; i < errandInputs.length; i++) {
+            var it = $(errandInputs[i]);
+            if (it.attr('disabled')) {
+                resultArray.errands.push(it.val());
+            }
+        }
+
+        clearResults();
 
         //Hack to avoid a double polyline at the very beginning. No idea why it is done.
         polyline.createPolyline(null);
 
-        var i;
         var origin = resultArray.origin || '';
         var errands = resultArray.errands || [];
         var destination = resultArray.destination || '';
@@ -146,7 +162,7 @@ module.exports = (function() {
     return {
         changeToResultsStripe: changeToResultsStripe,
         changeToInputStripe: changeToInputStripe,
-        setResults: setResults,
+        computeResultsStripe: computeResultsStripe,
         clearResults: clearResults,
         createErrandBox: createErrandBox,
         allErrandBoxesAreFull: allErrandBoxesAreFull,

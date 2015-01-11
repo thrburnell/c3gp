@@ -27,19 +27,7 @@ module.exports = (function() {
     };
 
     var computeMenuItems = function(route) {
-
-        var resultsArray = {
-            origin: "Current Location",
-            errands: [],
-            destination: "Current Location"
-        };
-        for (var i = 1; i < route.length - 1; i++) {
-            var temp = String.fromCharCode('A'.charCodeAt(0) + i);
-            resultsArray.errands.push("Step towards point " + temp);
-        }
-
-        menu.clearResults();
-        menu.setResults(resultsArray);
+        menu.computeResultsStripe(route.length);
         menu.changeToResultsStripe();
     };
 
