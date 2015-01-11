@@ -15,7 +15,7 @@ module.exports = (function() {
         var marker = createMarker(map, position, letter);
         if (pinIndex > 0) {
             addInstructionToMarker(marker, locals.defaultMarker,
-                                 locals.mapText);
+                                   locals.mapText);
         }
         markers[pinIndex++] = marker;
         return marker;
@@ -46,24 +46,28 @@ module.exports = (function() {
         }
         markers[0].isOrigin = true;
         addInstructionToMarker(markers[0], locals.originMarker,
-                             locals.mapText);
+                               locals.mapText);
     };
 
     var createMarker = function(map, position, letter, colour) {
         colour = colour || redColour;
         letter = letter || String.fromCharCode('A'.charCodeAt(0) + pinIndex);
         var draggable = letter === 'A';
-        var markerUrl = "http://chart.apis.google.com/chart?chst=d_map_pin" +
-                        "_letter&chld=" + letter + "|" + colour + "|" +
-                        letterColour;
-        var myPin = new google.maps.MarkerImage(markerUrl);
+        var myPin = makeIcon(letter, colour);
         var marker = new google.maps.Marker({
             position: position,
             map: map,
             icon: myPin,
+            index: pinIndex,
             draggable: draggable
         });
         return marker;
+    };
+
+    var makeIcon = function(letter, colour) {
+        return new google.maps.MarkerImage("http://chart.apis.google.com" +
+               "/chart?chst=d_map_pin_letter&chld=" + letter + "|" +
+               colour + "|" + letterColour);
     };
 
     var displayInfoBox = function(map, place, marker) {
@@ -94,8 +98,20 @@ module.exports = (function() {
 
     var remove = function(marker) {
         marker.setMap(null);
-        delete markers[marker.index];
+        markers.splice(marker.index, 1);
         pinIndex--;
+        if (marker.index < pinIndex) {
+            reorderMarkers();
+        }
+    };
+
+    var reorderMarkers = function() {
+        for (var i = 0; i < markers.length; i++) {
+            var letter = String.fromCharCode('A'.charCodeAt(0) + i);
+            var icon = makeIcon(letter, redColour);
+            markers[i].setIcon(icon);
+            markers[i].index = i;
+        }
     };
 
     var addInstructionToMarker = function(marker, mouseoverText,
