@@ -64,6 +64,11 @@ body {
   overflow: hidden;
 }
 
+.stripe1 {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .main {
   height: 100%;
   margin-left: $stripe-width;
@@ -215,4 +220,8 @@ body {
 .link-button {
   margin-top: -5px;
   display: block;
+}
+
+.slimScrollDiv {
+  float: left;
 }

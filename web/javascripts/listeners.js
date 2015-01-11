@@ -59,6 +59,21 @@ module.exports = (function() {
             instructions.setText(locals.errandText);
         });
 
+        $("#stripe-input").slimScroll({
+            width: '225px',
+            height: '100%',
+            size: '10px',
+            float: 'left',
+            position: 'right',
+            color: '#ffffff',
+            alwaysVisible: false,
+            distance: '5px',
+            railVisible: false,
+            wheelStep: 10,
+            allowPageScroll: false,
+            disableFadeOut: false
+        });
+
     };
 
     return {
