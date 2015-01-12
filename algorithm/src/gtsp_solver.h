@@ -22,6 +22,7 @@ public:
     void setNumberOfNodes(int nodes);
     void addPoint(int fromNode, int toNode, double cost);
     void setStartingPoint(int node);
+    void setGroupForNode(int node, int group);
 
     std::vector<int>* solveGtsp();
 
@@ -30,6 +31,7 @@ public:
 
 private:
     double** adjacencyMatrix;
+    int* nodeGroup;
     int totalNodes = -1;
     int startingPoint = -1;
 
@@ -44,6 +46,11 @@ private:
         }
     }
 
+    void checkInitializationReady() {
+        if (totalNodes == -1) {
+            throw std::runtime_error("Not initialized");
+        }
+    }
 };
 
 #endif /* GTSP_SOLVER_H */

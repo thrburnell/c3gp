@@ -12,6 +12,10 @@ void GtspSolver::setNumberOfNodes(int nodes) {
     for (int i = 0; i < nodes; i++) {
         adjacencyMatrix[i] = new double[nodes];
     }
+    nodeGroup = new int[nodes];
+    for (int i = 0; i < nodes; i++) {
+        nodeGroup[i] = 0;
+    }
 }
 
 void GtspSolver::addPoint(int firstNode, int secondNode, double cost) {
@@ -27,6 +31,12 @@ void GtspSolver::addPoint(int firstNode, int secondNode, double cost) {
     }
 
     adjacencyMatrix[firstNode][secondNode] = cost;
+}
+
+void GtspSolver::setGroupForNode(int node, int group) {
+    checkInitializationReady();
+
+    nodeGroup[node] = group;
 }
 
 void GtspSolver::setStartingPoint(int node) {
