@@ -67,8 +67,9 @@ void GtspSolver::tbBkt(int currNode) {
     tbTotalVisited ++;
     tbAccumulator.push_back(currNode);
     tbVisited[currNode] = 1;
+    tbGroupVisited[nodeGroup[currNode]] = 1;
 
-    if (tbTotalVisited == totalNodes) {
+    if (tbTotalVisited == tbTotalGroups) {
         if (tbCurrent + adjacencyMatrix[currNode][startingPoint] < tbMinimum) {
             tbMinimum = tbCurrent + adjacencyMatrix[currNode][startingPoint];
             tbOrderedResult.clear();
@@ -79,7 +80,7 @@ void GtspSolver::tbBkt(int currNode) {
     }
 
     for (int i = 0; i < totalNodes; i++) {
-        if (! tbVisited[i]) {
+        if (! tbVisited[i] && !tbGroupVisited[nodeGroup[i]]) {
             tbCurrent += adjacencyMatrix[currNode][i];
             tbBkt(i);
             tbCurrent -= adjacencyMatrix[currNode][i];
@@ -87,6 +88,7 @@ void GtspSolver::tbBkt(int currNode) {
     }
 
     tbVisited[currNode] = 0;
+    tbGroupVisited[nodeGroup[currNode]] = 0;
     tbAccumulator.pop_back();
     tbTotalVisited --;
 }

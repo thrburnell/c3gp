@@ -46,7 +46,7 @@ MapPoints* process_coordinates(MapPoints* map_points,
 
         int last_point = nodesOrder->at(0);
         std::vector<Coordinate*>* ordered_errands = new std::vector<Coordinate*>();
-        for (int i = 1; i < points.size(); i++) {
+        for (int i = 1; i < nodesOrder->size(); i++) {
             int current_point = nodesOrder->at(i);
             points[current_point]->transit = transit_matrix[last_point][current_point];
             ordered_errands->push_back(points[current_point]);
