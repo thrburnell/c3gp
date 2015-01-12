@@ -37,7 +37,7 @@ module.exports = (function() {
         };
 
         var ret = {
-            "algorithm": "gtsp",
+            "algorithm": "tsp",
             "data": data
         };
 
