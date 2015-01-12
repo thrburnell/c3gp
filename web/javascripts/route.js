@@ -16,7 +16,7 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
-        computeMenuItems(route);
+        // computeMenuItems(route);
         computeTransitToPoints(route);
         computeLocationsArray(route);
 
@@ -26,17 +26,19 @@ module.exports = (function() {
         nextRequest();
     };
 
-    var computeMenuItems = function(route) {
+    var computeMenuItems = function(response) {
+        console.log("Called");
+        console.log(response);
 
         var resultsArray = {
             origin: "Current Location",
             errands: [],
             destination: "Current Location"
         };
-        for (var i = 1; i < route.length - 1; i++) {
-            var temp = String.fromCharCode('A'.charCodeAt(0) + i);
-            resultsArray.errands.push("Step towards point " + temp);
-        }
+        // for (var i = 1; i < response.length - 1; i++) {
+        var letter = String.fromCharCode('A'.charCodeAt(0) + 0);
+        resultsArray.errands.push("Step towards point " + letter);
+        console.log("Taking " + response.routes[0].legs[0].duration.text);
 
         menu.clearResults();
         menu.setResults(resultsArray);
@@ -85,6 +87,7 @@ module.exports = (function() {
     var requestForRoute = function(request, index) {
         map.getDirectionsService().route(request, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
+                computeMenuItems(response);
                 renderDirections(response);
                 markers.add(map.getMapCanvas(), request.origin, index);
                 nextRequest();
