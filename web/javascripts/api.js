@@ -14,7 +14,8 @@ module.exports = (function() {
 
         var origin = {
             "lat": origLat,
-            "lng": origLng
+            "lng": origLng,
+            "group": 0
         };
 
         var destination = origin;
@@ -25,11 +26,14 @@ module.exports = (function() {
         // to points. Currently, the user is required to click on the relevant
         // points, which are used to form this array of waypoints.
         for (var i = 1; i < indexes.length; i++) {
-            var position = points[indexes[i]][0].getPosition();
-            waypoints.push({
-                "lat": position.lat(),
-                "lng": position.lng()
-            });
+            for (var j = 0; j < points[indexes[i]].length; j++) {
+                var position = points[indexes[i]][j].getPosition();
+                waypoints.push({
+                    "lat": position.lat(),
+                    "lng": position.lng(),
+                    "group": i
+                });
+            }
         }
 
         var data = {
@@ -56,6 +60,8 @@ module.exports = (function() {
     };
 
     var calcRoute = function() {
+
+        // console.log(JSON.stringify(formRequest()));
 
         $.ajax({
             url: "/cpp",
