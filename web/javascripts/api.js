@@ -25,7 +25,7 @@ module.exports = (function() {
         // to points. Currently, the user is required to click on the relevant
         // points, which are used to form this array of waypoints.
         for (var i = 1; i < indexes.length; i++) {
-            var position = points[indexes[i]].getPosition();
+            var position = points[indexes[i]][0].getPosition();
             waypoints.push({
                 "lat": position.lat(),
                 "lng": position.lng()

@@ -18,7 +18,8 @@ module.exports = (function() {
             addInstructionToMarker(marker, locals.defaultMarker,
                                    locals.mapText);
         }
-        markers[pinIndex++] = marker;
+        pinIndex++;
+        markers.push([marker]);
         return marker;
     };
 
@@ -41,12 +42,12 @@ module.exports = (function() {
         if (markers.length === 0) {
             add(map, position, 'A');
         } else {
-            var previous = markers[0];
-            markers[0] = createMarker(map, position, 'A');
+            var previous = markers[0][0];
+            markers[0][0] = createMarker(map, position, 'A');
             previous.setMap(null);
         }
-        markers[0].isOrigin = true;
-        addInstructionToMarker(markers[0], locals.originMarker,
+        markers[0][0].isOrigin = true;
+        addInstructionToMarker(markers[0][0], locals.originMarker,
                                locals.mapText);
     };
 
@@ -111,8 +112,8 @@ module.exports = (function() {
         for (var i = 0; i < markers.length; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
             var icon = makeIcon(letter, redColour);
-            markers[i].setIcon(icon);
-            markers[i].index = i;
+            markers[i][0].setIcon(icon);
+            markers[i][0].index = i;
         }
     };
 
@@ -129,7 +130,11 @@ module.exports = (function() {
     };
 
     var clear = function() {
-        markers.map(function(m) { m.setMap(null); });
+        markers.map(function(m) {
+            m.map(function(m) {
+                m.setMap(null);
+            });
+        });
         markers = [];
         pinIndex = 0;
     };
@@ -145,7 +150,7 @@ module.exports = (function() {
         clear: clear,
         clearTemporaries: clearTemporaries,
         getSortedMarkers: function() { return Object.keys(markers).sort(); },
-        getOrigin: function() { return markers[0]; },
+        getOrigin: function() { return markers[0][0]; },
         getMarkers: function() { return markers; },
         setOrigin: setOrigin
     };
