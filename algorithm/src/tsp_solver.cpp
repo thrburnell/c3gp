@@ -33,7 +33,11 @@ void TspSolver::setStartingPoint(int node) {
     startingPoint = node;
 }
 
-std::vector<int>* TspSolver::solveTsp() {
+void TspSolver::setGroupForNode(int node, int group) {
+    throw std::runtime_error("There are not groups to set. Use GTSP solver for that");
+}
+
+std::vector<int>* TspSolver::solve() {
     checkBuildReady();
 
     if (totalNodes < 8) {
@@ -146,9 +150,6 @@ void TspSolver::apply2OptLocalSearch(std::vector<int>* tour) {
     temp.pop_back(); // get rid of the extra origin added to make things easier
     *tour = temp; // update the starting vector.
 }
-
-// CODE FOR BACKTRACKING
-// TODO: Move this into a separate file or something. Ask someone??
 
 static std::vector<int> tbOrderedResult;
 static std::vector<int> tbAccumulator;

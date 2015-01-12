@@ -45,8 +45,8 @@ module.exports = (function() {
         markers.getMarkers().forEach(function(marker) {
             var newLocation = {
                 location: {
-                    lat: marker.position.lat(),
-                    lng: marker.position.lng()
+                    lat: marker[0].position.lat(),
+                    lng: marker[0].position.lng()
                 }
             };
             requestData.areas.push(newLocation);

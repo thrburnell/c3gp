@@ -6,6 +6,7 @@ var menu = require('./menu.js');
 var locals = require('./locals.js');
 var instructions = require('./instructions.js');
 var errand = require('./errand.js');
+var markers = require('./markers.js');
 
 module.exports = (function() {
 
@@ -49,6 +50,8 @@ module.exports = (function() {
                 return;
             }
 
+            markers.clearTemporaries();
+
             if (event.target.title !== '') {
                 search.makeErrandSearch(event.target.title);
             } else {
@@ -82,6 +85,12 @@ module.exports = (function() {
             wheelStep: 10,
             allowPageScroll: false,
             disableFadeOut: false
+        });
+
+        $("#b-use-gtsp").click(function() {
+            api.setGtspFlagOn();
+            markers.convertTemporariesToPermanent();
+            menu.disableNextErrandInput();
         });
 
     };

@@ -1,0 +1,1 @@
+{"algorithm":"gtsp","data":{"origin":{"lat":3,"lng":3},"destination":{"lat":3,"lng":3},"waypoints":[{"lat":3,"lng":6,"group":2},{"lat":3,"lng":7,"group":2},{"lat":7,"lng":3,"group":3},{"lat":9,"lng":3,"group":3}]}}

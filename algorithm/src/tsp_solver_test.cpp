@@ -111,9 +111,9 @@ TEST(TspSolverTest, CannotDefineOutOfRangeNodes) {
 TEST(TspSolverTest, FailsOnInvalidStartingPoints) {
     TspSolver* solver = setupCanonicalTestExample();
     solver->setStartingPoint(-1);
-    ASSERT_ANY_THROW(solver->solveTsp());
+    ASSERT_ANY_THROW(solver->solve());
     solver->setStartingPoint(6); // The underlying graph has 4 nodes.
-    ASSERT_ANY_THROW(solver->solveTsp());
+    ASSERT_ANY_THROW(solver->solve());
 }
 
 TEST(TspSolverTest, NNGreedyWorks) {
@@ -179,12 +179,12 @@ TEST(TspSolverTest, BacktrackingWorksOnBiggerExample) {
 TEST(TspSolverTest, FindsOptimalSolutionForSmallCase) {
     TspSolver* solver = setupCanonicalTestExample();
 
-    std::vector<int>* result = solver->solveTsp();
+    std::vector<int>* result = solver->solve();
 
     // Since the number of points is small, we should find an optimal
     // solution.
     std::set<std::vector<int>> expected = {{0, 1, 3, 2}, {0, 2, 3, 1}};
-    EXPECT_TRUE(expected.find(*result) != expected.end());    
+    EXPECT_TRUE(expected.find(*result) != expected.end());
 }
 
 TEST(TspSolverTest, AllowsApproximateSolutionForLargeCase) {
@@ -195,12 +195,12 @@ TEST(TspSolverTest, AllowsApproximateSolutionForLargeCase) {
 
         // There are 500 nodes so backtracking will fail horribly.
         // The key is we don't want this to be overly slow.
-        std::vector<int>* result = solver->solveTsp();
+        std::vector<int>* result = solver->solve();
         return;
     });
 
     // The future above should complete itself in 1 second, or the test fails.
-    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) !=
                 std::future_status::timeout);
 }
 
@@ -210,14 +210,14 @@ TEST(TspSolverTest, ApproximateSolutionForBR17Benchmark) {
     auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
         TspSolver* solver = setupBenchmarkTestExample("testData/br17.atsp",
                                                       17);
-        std::vector<int>* result = solver->solveTsp();
+        std::vector<int>* result = solver->solve();
         // Optimal solution is 39.
         EXPECT_LE(solver->computeTourWeight(result), 39 * 1.1);
         return;
     });
 
     // The future above should complete itself in 1 second, or the test fails.
-    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) !=
                 std::future_status::timeout);
 }
 
@@ -227,14 +227,14 @@ TEST(TspSolverTest, ApproximateSolutionForFTV44Benchmark) {
     auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
         TspSolver* solver = setupBenchmarkTestExample("testData/ftv44.atsp",
                                                       44);
-        std::vector<int>* result = solver->solveTsp();
+        std::vector<int>* result = solver->solve();
         // Optimal solution is 1613.
         EXPECT_LE(solver->computeTourWeight(result), 1613 * 1.5);
         return;
     });
 
     // The future above should complete itself in 1 second, or the test fails.
-    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) !=
                 std::future_status::timeout);
 }
 

@@ -3,6 +3,8 @@ var route = require('./route.js');
 
 module.exports = (function() {
 
+    var useGtsp = false;
+
     var formRequest = function() {
         var indexes = markers.getSortedMarkers();
 
@@ -12,7 +14,8 @@ module.exports = (function() {
 
         var origin = {
             "lat": origLat,
-            "lng": origLng
+            "lng": origLng,
+            "group": 0
         };
 
         var destination = origin;
@@ -23,19 +26,35 @@ module.exports = (function() {
         // to points. Currently, the user is required to click on the relevant
         // points, which are used to form this array of waypoints.
         for (var i = 1; i < indexes.length; i++) {
-            var position = points[indexes[i]].getPosition();
-            waypoints.push({
-                "lat": position.lat(),
-                "lng": position.lng()
-            });
+            for (var j = 0; j < points[indexes[i]].length; j++) {
+                var position = points[indexes[i]][j].getPosition();
+                waypoints.push({
+                    "lat": position.lat(),
+                    "lng": position.lng(),
+                    "group": i
+                });
+            }
         }
 
-        return {
+        var data = {
             "origin": origin,
             "destination": destination,
             "waypoints": waypoints
         };
 
+        return {
+            algorithm: useGtsp ? 'gtsp' : 'tsp',
+            data: data
+        };
+
+    };
+
+    var setGtspFlagOn = function() {
+        useGtsp = true;
+    };
+
+    var setGtspFlagOff = function() {
+        useGtsp = false;
     };
 
     var calcRoute = function() {
@@ -52,7 +71,9 @@ module.exports = (function() {
     };
 
     return {
-        calcRoute: calcRoute
+        calcRoute: calcRoute,
+        setGtspFlagOn: setGtspFlagOn,
+        setGtspFlagOff: setGtspFlagOff
     };
 
 })();

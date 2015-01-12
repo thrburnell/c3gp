@@ -1,5 +1,5 @@
-#ifndef TSP_SOLVER_H
-#define TSP_SOLVER_H
+#ifndef GTSP_SOLVER_H
+#define GTSP_SOLVER_H
 
 #include "solver.h"
 
@@ -16,10 +16,10 @@
  *  - The result is an ordered array of points, where the node on the
  *      first position (0) will be the starting point for the TSP
  */
-class TspSolver : public Solver {
+class GtspSolver : public Solver {
 
 public:
-    virtual ~TspSolver() {};
+    virtual ~GtspSolver() {};
 
     virtual void setNumberOfNodes(int nodes);
     virtual void addPoint(int fromNode, int toNode, double cost);
@@ -28,15 +28,12 @@ public:
 
     virtual std::vector<int>* solve();
 
-    std::vector<int>* solveTspWithNNGreedy();
-    double computeTourWeight(std::vector<int>* tour);
-    void apply2OptLocalSearch(std::vector<int>* tour);
-
-    std::vector<int>* solveTspWithBacktracking();
-    std::vector<int>* solveTspWithGeneticAlgorithm();
+    std::vector<int>* solveGtspWithBacktracking();
+    std::vector<int>* solveGtspWithGeneticAlgorithm();
 
 private:
     double** adjacencyMatrix;
+    int* nodeGroup;
     int totalNodes = -1;
     int startingPoint = -1;
 
@@ -51,6 +48,11 @@ private:
         }
     }
 
+    void checkInitializationReady() {
+        if (totalNodes == -1) {
+            throw std::runtime_error("Not initialized");
+        }
+    }
 };
 
-#endif /* TSP_SOLVER_H */
+#endif /* GTSP_SOLVER_H */

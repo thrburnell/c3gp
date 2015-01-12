@@ -44,6 +44,7 @@ module.exports = (function() {
     };
 
     var computeTransitToPoints = function(route) {
+        transitToPoint = [];
         transitToPoint.push(null);
         for (var i = 1; i < route.length; i++) {
             transitToPoint.push(route[i].transit);
