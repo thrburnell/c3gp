@@ -84,6 +84,10 @@ module.exports = (function() {
             disableFadeOut: false
         });
 
+        $("#b-use-gtsp").click(function() {
+            api.setGtsp();
+        });
+
     };
 
     return {

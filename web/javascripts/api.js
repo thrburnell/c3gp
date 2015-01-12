@@ -3,6 +3,8 @@ var route = require('./route.js');
 
 module.exports = (function() {
 
+    var useGtsp = false;
+
     var formRequest = function() {
         var indexes = markers.getSortedMarkers();
 
@@ -36,13 +38,21 @@ module.exports = (function() {
             "waypoints": waypoints
         };
 
-        var ret = {
-            "algorithm": "tsp",
-            "data": data
-        };
+        var ret = {};
+        if (useGtsp) {
+            ret.algorithm = 'gtsp';
+        } else {
+            ret.algorithm = 'tsp';
+        }
+
+        ret.data = data;
 
         return ret;
 
+    };
+
+    var setGtsp = function() {
+        useGtsp = true;
     };
 
     var calcRoute = function() {
@@ -59,7 +69,8 @@ module.exports = (function() {
     };
 
     return {
-        calcRoute: calcRoute
+        calcRoute: calcRoute,
+        setGtsp: setGtsp
     };
 
 })();
