@@ -8,30 +8,37 @@
 
 #include "json_parse.h"
 
+//TODO: remove
+#include <iostream>
+
 namespace rj = rapidjson;
 
 /**
  * For sample data, see testData/coordinates.json
  */
 MapPoints* parse_coordinates(const char* const json) {
+
     rj::Document document;
     document.Parse(json);
+
+    // const rj::Value & algorithm = document["algorithm"];
+    const rj::Value & data = document;
 
     MapPoints* mapPoints = new MapPoints();
 
     Coordinate* origin = new Coordinate();
-    origin->lat = document["origin"]["lat"].GetDouble();
-    origin->lng = document["origin"]["lng"].GetDouble();
+    origin->lat = data["origin"]["lat"].GetDouble();
+    origin->lng = data["origin"]["lng"].GetDouble();
     origin->group = 0;
 
     Coordinate* destination = new Coordinate();
-    destination->lat = document["destination"]["lat"].GetDouble();
-    destination->lng = document["destination"]["lng"].GetDouble();
+    destination->lat = data["destination"]["lat"].GetDouble();
+    destination->lng = data["destination"]["lng"].GetDouble();
     destination->group = 0;
 
     std::vector<Coordinate*>* errands = new std::vector<Coordinate*>();
 
-    const rj::Value & waypoints = document["waypoints"];
+    const rj::Value & waypoints = data["waypoints"];
     for (int i = 0; i < waypoints.Size(); i++) {
         Coordinate* newCoordinate = new Coordinate();
         newCoordinate->lat = waypoints[i]["lat"].GetDouble();

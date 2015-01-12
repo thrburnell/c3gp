@@ -30,15 +30,24 @@ module.exports = (function() {
             });
         }
 
-        return {
+        var data = {
             "origin": origin,
             "destination": destination,
             "waypoints": waypoints
         };
 
+        var ret = {
+            "algorithm": "gtsp",
+            "data": data
+        };
+
+        return ret;
+
     };
 
     var calcRoute = function() {
+
+        console.log(JSON.stringify(formRequest()));
 
         $.ajax({
             url: "/cpp",
