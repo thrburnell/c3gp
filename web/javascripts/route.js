@@ -16,7 +16,7 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
-        // computeMenuItems(route);
+        computeMenuItems(route);
         computeTransitToPoints(route);
         computeLocationsArray(route);
 
@@ -26,23 +26,41 @@ module.exports = (function() {
         nextRequest();
     };
 
-    var computeMenuItems = function(response) {
-        console.log("Called");
-        console.log(response);
+    var computeMenuItems = function(route) {
 
+        console.log(route);
         var resultsArray = {
             origin: "Current Location",
             errands: [],
             destination: "Current Location"
         };
-        // for (var i = 1; i < response.length - 1; i++) {
-        var letter = String.fromCharCode('A'.charCodeAt(0) + 0);
-        resultsArray.errands.push("Step towards point " + letter);
-        console.log("Taking " + response.routes[0].legs[0].duration.text);
+        for (var i = 1; i < route.length - 1; i++) {
+            var letter = String.fromCharCode('A'.charCodeAt(0) + i);
+            // resultsArray.errands.push("Step towards point " + letter);
+            var errandsInfo = markers.getErrandsInfo();
+            var info;
+            for (var errandKey in errandsInfo) {
+                if (isSamePosition(errandKey, route[i].lat, route[i].lng)) {
+                    info = errandsInfo[errandKey];
+                    break;
+                }
+            }
+
+            resultsArray.errands.push(info.placeName + ": " + info.errand);
+        }
 
         menu.clearResults();
         menu.setResults(resultsArray);
         menu.changeToResultsStripe();
+    };
+
+    var isSamePosition = function(key, lat, lng) {
+        var epsilon = 0.00001;
+        var keyPos = key.split(",");
+        var keyLat = keyPos[0];
+        var keyLng = keyPos[1];
+        return Math.abs(keyLat - lat) < epsilon &&
+                     Math.abs(keyLng - lng) < epsilon;
     };
 
     var computeTransitToPoints = function(route) {
@@ -88,7 +106,7 @@ module.exports = (function() {
     var requestForRoute = function(request, index) {
         map.getDirectionsService().route(request, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
-                computeMenuItems(response);
+                // computeMenuItems(response);
                 renderDirections(response);
                 markers.add(map.getMapCanvas(), request.origin, index);
                 nextRequest();
