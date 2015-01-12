@@ -58,7 +58,9 @@ static std::vector<int> tbAccumulator;
 static double tbCurrent;
 static double tbMinimum;
 static int tbTotalVisited;
+static int tbTotalGroups;
 static int* tbVisited;
+static int* tbGroupVisited;
 
 void GtspSolver::tbBkt(int currNode) {
 
@@ -100,6 +102,24 @@ std::vector<int>* GtspSolver::solveGtspWithBacktracking() {
     for (int i = 0; i < totalNodes; i++) {
         tbVisited[i] = 0;
     }
+    tbGroupVisited = new int[totalNodes];
+    for (int i = 0; i < totalNodes; i++) {
+        tbGroupVisited[i] = 0;
+    }
+
+    tbTotalGroups = 0;
+    for (int i = 0; i < totalNodes; i++) {
+        int currGroup = nodeGroup[i];
+        if (tbGroupVisited[currGroup] == 0) {
+            tbTotalGroups++;
+            tbGroupVisited[currGroup] = 1;
+        }
+    }
+
+    for (int i = 0; i < totalNodes; i++) {
+        tbGroupVisited[i] = 0;
+    }
+
     tbCurrent = 0;
     tbTotalVisited = 0;
 
