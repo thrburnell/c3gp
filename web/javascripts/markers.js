@@ -38,6 +38,20 @@ module.exports = (function() {
         });
     };
 
+    var convertTemporariesToPermanent = function() {
+
+        var bulk = [];
+        for (var i = 0; i < temporaryMarkers.length; i++) {
+            var temporaryMarker = temporaryMarkers[i];
+            var marker = createMarker(temporaryMarker.map, temporaryMarker.position);
+            bulk.push(marker);
+        }
+        clearTemporaries();
+
+        pinIndex++;
+        markers.push(bulk);
+    };
+
     var setOrigin = function(map, position) {
         if (markers.length === 0) {
             add(map, position, 'A');
@@ -152,7 +166,8 @@ module.exports = (function() {
         getSortedMarkers: function() { return Object.keys(markers).sort(); },
         getOrigin: function() { return markers[0][0]; },
         getMarkers: function() { return markers; },
-        setOrigin: setOrigin
+        setOrigin: setOrigin,
+        convertTemporariesToPermanent: convertTemporariesToPermanent
     };
 
 })();

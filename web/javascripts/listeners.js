@@ -6,6 +6,7 @@ var menu = require('./menu.js');
 var locals = require('./locals.js');
 var instructions = require('./instructions.js');
 var errand = require('./errand.js');
+var markers = require('./markers.js');
 
 module.exports = (function() {
 
@@ -86,6 +87,8 @@ module.exports = (function() {
 
         $("#b-use-gtsp").click(function() {
             api.setGtsp();
+            markers.convertTemporariesToPermanent();
+            menu.disableNextErrandInput();
         });
 
     };
