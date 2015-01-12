@@ -47,8 +47,6 @@ module.exports = (function() {
 
     var calcRoute = function() {
 
-        console.log(JSON.stringify(formRequest()));
-
         $.ajax({
             url: "/cpp",
             method: "POST",
