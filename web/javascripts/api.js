@@ -69,6 +69,7 @@ module.exports = (function() {
             data: JSON.stringify(formRequest()),
             contentType: "application/json",
             success: function(ret) {
+                console.log(ret);
                 route.displayRoute(JSON.parse(ret));
             }
         });
