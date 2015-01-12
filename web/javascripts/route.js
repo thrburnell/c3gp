@@ -16,6 +16,8 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
+        console.log('a');
+
         computeMenuItems(route);
         computeTransitToPoints(route);
         computeLocationsArray(route);

@@ -61,7 +61,7 @@ module.exports = (function() {
 
     var calcRoute = function() {
 
-        // console.log(JSON.stringify(formRequest()));
+        console.log(JSON.stringify(formRequest()));
 
         $.ajax({
             url: "/cpp",

@@ -50,6 +50,8 @@ module.exports = (function() {
                 return;
             }
 
+            markers.clearTemporaries();
+
             if (event.target.title !== '') {
                 search.makeErrandSearch(event.target.title);
             } else {

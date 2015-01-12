@@ -155,6 +155,7 @@ module.exports = (function() {
 
     var clearTemporaries = function() {
         temporaryMarkers.map(function(m) { m.setMap(null); });
+        temporaryMarkers = [];
     };
 
     return {
