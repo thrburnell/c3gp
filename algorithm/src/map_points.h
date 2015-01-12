@@ -11,6 +11,7 @@ struct MapPoints {
     Coordinate* origin;
     Coordinate* destination;
     std::vector<Coordinate*>* errands;
+    std::string algorithm_to_use;
 };
 
 MapPoints* process_coordinates(MapPoints* map_points,

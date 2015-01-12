@@ -21,8 +21,8 @@ MapPoints* parse_coordinates(const char* const json) {
     rj::Document document;
     document.Parse(json);
 
-    // const rj::Value & algorithm = document["algorithm"];
-    const rj::Value & data = document;
+    std::string algorithm_to_use = document["algorithm"].GetString();
+    const rj::Value & data = document["data"];
 
     MapPoints* mapPoints = new MapPoints();
 
@@ -56,6 +56,7 @@ MapPoints* parse_coordinates(const char* const json) {
     mapPoints->origin = origin;
     mapPoints->destination = destination;
     mapPoints->errands = errands;
+    mapPoints->algorithm_to_use = algorithm_to_use;
 
     return mapPoints;
 }

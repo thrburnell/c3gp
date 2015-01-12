@@ -15,6 +15,12 @@
 MapPoints* process_coordinates(MapPoints* map_points,
                                TravelTimeComputer* time_computer) {
 
+
+    if (map_points->algorithm_to_use == "gtsp") {
+
+        return map_points;
+    }
+
     std::vector<Coordinate*> points;
     points.push_back(map_points->origin);
     for (const auto& it : *map_points->errands) {
