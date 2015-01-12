@@ -33,8 +33,7 @@ module.exports = (function() {
         });
     };
 
-    var makeErrandSearch = function(api_id) {
-
+    var makeErrandSearch = function(api_id, colloquial) {
         markers.clearTemporaries();
 
         var requestData = {
@@ -58,6 +57,7 @@ module.exports = (function() {
             contentType: "application/json",
             data: JSON.stringify(requestData),
             success: function(ret, status) {
+                markers.buildErrandsInfo(ret, colloquial);
                 markers.addTemporaries(map.getMapCanvas(), ret);
             }
         });
