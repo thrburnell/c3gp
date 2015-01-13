@@ -32,6 +32,8 @@ public:
     double computeTourWeight(std::vector<int>* tour);
     void apply2OptLocalSearch(std::vector<int>* tour);
 
+    std::vector<int>* solveTspWithDynamicProgramming();
+
     std::vector<int>* solveTspWithBacktracking();
     std::vector<int>* solveTspWithGeneticAlgorithm();
 
@@ -41,6 +43,8 @@ private:
     int startingPoint = -1;
 
     void tbBkt(int currNode);
+
+    double dynamicSolve(int visited, int end);
 
     void checkBuildReady() {
         if (startingPoint == -1) {
