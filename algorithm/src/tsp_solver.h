@@ -41,7 +41,7 @@ private:
 
     void tbBkt(int currNode);
 
-    double dynamicSolve(std::vector<bool> visited, int end);
+    double dynamicSolve(int visited, int end);
 
     void checkBuildReady() {
         if (startingPoint == -1) {

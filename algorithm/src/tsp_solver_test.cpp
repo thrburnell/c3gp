@@ -236,11 +236,11 @@ TEST(TspSolverTest, DPWorksOnBR17) {
     });
 
     // The future above should complete itself in 3s, or the test fails.
-    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(3000)) != 
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
                 std::future_status::timeout);
 }
 
-TEST(TspSolverTest, ApproximateSolutionForBR17Benchmark) {
+TEST(TspSolverTest, OptimalSolutionForBR17) {
     // Lambda function, used to check timelimit (otherwise unsupported
     // by GoogleTest).
     auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
@@ -248,7 +248,7 @@ TEST(TspSolverTest, ApproximateSolutionForBR17Benchmark) {
                                                       17);
         std::vector<int>* result = solver->solveTsp();
         // Optimal solution is 39.
-        EXPECT_LE(solver->computeTourWeight(result), 39 * 1.1);
+        EXPECT_FLOAT_EQ(solver->computeTourWeight(result), 39);
         return;
     });
 
