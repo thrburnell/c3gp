@@ -153,8 +153,8 @@ TEST(TspSolverTest, NNGreedyWith2OptWorksOnBiggerExample) {
     // Again, 2-Opt should fix the Nearest Neighbour heuristic's mistake.
     std::vector<int>* result = solver->solveTspWithNNGreedy();
     solver->apply2OptLocalSearch(result);
-    std::vector<int> expected = {0, 1, 2, 4, 3};
-    EXPECT_EQ(expected, *result);
+    std::set<std::vector<int>> expected = {{0, 1, 2, 4, 3}, {0, 3, 4, 2, 1}};
+    EXPECT_TRUE(expected.find(*result) != expected.end());
 }
 
 TEST(TspSolverTest, BacktrackingWorks) {
@@ -172,8 +172,27 @@ TEST(TspSolverTest, BacktrackingWorksOnBiggerExample) {
 
     // The optimal tour is 0-1-2-4-3 with length 7.
     std::vector<int>* result = solver->solveTspWithBacktracking();
-    std::vector<int> expected = {0, 1, 2, 4, 3};
-    EXPECT_EQ(expected, *result);
+    std::set<std::vector<int>> expected = {{0, 1, 2, 4, 3}, {0, 3, 4, 2, 1}};
+    EXPECT_TRUE(expected.find(*result) != expected.end());
+}
+
+TEST(TspSolverTest, DynamicProgrammingWorks) {
+    TspSolver* solver = setupCanonicalTestExample();
+
+    // DP should find one of the shortest tours, which is length
+    // 6. Which one is returned doesn't really matter.
+    std::vector<int>* result = solver->solveTspWithDynamicProgramming();
+    std::set<std::vector<int>> expected = {{0, 1, 3, 2}, {0, 2, 3, 1}};
+    EXPECT_TRUE(expected.find(*result) != expected.end()); 
+}
+
+TEST(TspSolverTest, DynamicProgrammingWorksOnBiggerExample) {
+    TspSolver* solver = setup2OptTestExample();
+
+    // The optimal tour is 0-1-2-4-3 with length 7.
+    std::vector<int>* result = solver->solveTspWithDynamicProgramming();
+    std::set<std::vector<int>> expected = {{0, 1, 2, 4, 3}, {0, 3, 4, 2, 1}};
+    EXPECT_TRUE(expected.find(*result) != expected.end());
 }
 
 TEST(TspSolverTest, FindsOptimalSolutionForSmallCase) {
@@ -201,6 +220,23 @@ TEST(TspSolverTest, AllowsApproximateSolutionForLargeCase) {
 
     // The future above should complete itself in 1 second, or the test fails.
     EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+                std::future_status::timeout);
+}
+
+TEST(TspSolverTest, DPWorksOnBR17) {
+    // Lambda function, used to check timelimit (otherwise unsupported
+    // by GoogleTest).
+    auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
+        TspSolver* solver = setupBenchmarkTestExample("testData/br17.atsp",
+                                                      17);
+        std::vector<int>* result = solver->solveTspWithDynamicProgramming();
+        // Optimal solution is 39.
+        EXPECT_FLOAT_EQ(solver->computeTourWeight(result), 39);
+        return;
+    });
+
+    // The future above should complete itself in 3s, or the test fails.
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(3000)) != 
                 std::future_status::timeout);
 }
 

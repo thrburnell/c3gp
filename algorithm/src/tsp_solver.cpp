@@ -3,8 +3,10 @@
 #include <algorithm>
 #include <limits>
 #include <stdexcept>
-#include <unordered_set>
+#include <unordered_map>
 #include <vector>
+
+#include <iostream>
 
 void TspSolver::setNumberOfNodes(int nodes) {
     totalNodes = nodes;
@@ -205,6 +207,90 @@ std::vector<int>* TspSolver::solveTspWithBacktracking() {
     return &tbOrderedResult;
 }
 
+// Dynamic Programming code.
+// hash_combine from Boost.
+template <class T>
+inline void hash_combine(std::size_t & seed, const T & v)
+{
+  std::hash<T> hasher;
+  seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+}
+
+namespace std
+{
+  template<typename S, typename T> struct hash<pair<S, T>>
+  {
+    inline size_t operator()(const pair<S, T> & v) const
+    {
+      size_t seed = 0;
+      ::hash_combine(seed, v.first);
+      ::hash_combine(seed, v.second);
+      return seed;
+    }
+  };
+}
+
+static std::unordered_map<std::pair<std::vector<bool>, int>, double>* opt_map;
+static std::unordered_map<std::pair<std::vector<bool>, int>, int>* prev_step;
+
+double TspSolver::dynamicSolve(std::vector<bool> visited, int end) {
+    if (opt_map->find(std::make_pair(visited, end)) != opt_map->end()) {
+        return (*opt_map)[std::make_pair(visited, end)];
+    }
+
+    if (std::count(visited.begin(), visited.end(), true) == 0) {
+        return 0;
+    }
+
+    if (std::count(visited.begin(), visited.end(), true) == 1) {
+        // find which bit is involved
+        (*opt_map)[std::make_pair(visited, end)] 
+            = adjacencyMatrix[startingPoint][end];
+        (*prev_step)[std::make_pair(visited, end)] = startingPoint;
+        return adjacencyMatrix[startingPoint][end];
+    }
+
+    // The 'other' cases when we need to take something out
+    double min_cost = std::numeric_limits<double>::max();
+    visited[end] = false;
+    for (int i = 0; i < totalNodes; ++i) {
+        if (visited[i]) {
+            double possible_cost = dynamicSolve(visited, i) +
+                                   adjacencyMatrix[i][end];
+            if (possible_cost < min_cost) {
+                min_cost = possible_cost;
+                (*prev_step)[std::make_pair(visited, end)] = i;
+            }
+        }
+    }
+    visited[end] = true;
+    (*opt_map)[std::make_pair(visited, end)] = min_cost;
+    return min_cost;
+}
+
+std::vector<int>* TspSolver::solveTspWithDynamicProgramming() {
+    opt_map
+        = new std::unordered_map<std::pair<std::vector<bool>, int>, double>();
+    prev_step
+        = new std::unordered_map<std::pair<std::vector<bool>, int>, int>();
+
+    std::vector<bool> all_nodes(totalNodes, true);
+    // No need to visit the origin as an intermediate point.
+    all_nodes[startingPoint] = false; 
+
+    dynamicSolve(all_nodes, 0);
+
+    std::vector<int>* solution = new std::vector<int>(totalNodes);
+    std::vector<bool> considered_nodes(all_nodes);
+    int currNode = startingPoint;
+    for(int i = totalNodes - 1; i >= 0; --i) {
+        currNode =
+            (*prev_step)[std::make_pair(considered_nodes, currNode)];
+        considered_nodes[currNode] = false;
+        (*solution)[i] = currNode;
+    }
+    return solution;
+}
 
 //GENETIC ALGORITHM CODE
 // TODO: inspired from here

@@ -5,7 +5,7 @@ VariantDir('build', 'src', duplicate = 0)
 
 # Build the main binary.
 env = Environment(
-    CXXFLAGS = ['-std=c++11']
+    CXXFLAGS = ['-std=c++11', '-O2']
     )
 
 source = []
@@ -21,7 +21,7 @@ tsp_bin = env.Program(target = target, source = source)
 
 # Build unittests.
 test_env = Environment(
-    CXXFLAGS = ['-std=c++11'],
+    CXXFLAGS = ['-std=c++11', '-O2'],
     CPPPATH = ['bower_components/googletest/include']
 )
 
