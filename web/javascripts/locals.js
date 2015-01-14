@@ -11,5 +11,6 @@ module.exports = {
         goTo: 'Go to',
         errandText: 'Enter a new errand',
         pointOnMap: 'Point on the map',
+        returnTo: 'Return to',
         currentLocation: 'Current location',
 };

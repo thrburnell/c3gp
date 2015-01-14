@@ -2,6 +2,7 @@ var markers = require('./markers.js');
 var map = require('./map.js');
 var menu = require('./menu.js');
 var polyline = require('./polyline.js');
+var locals = require('./locals.js');
 
 module.exports = (function() {
 
@@ -30,9 +31,9 @@ module.exports = (function() {
 
         console.log(route);
         var resultsArray = {
-            origin: "Current Location",
+            origin: menu.getOriginText(),
             errands: [],
-            destination: "Return to current Location"
+            destination: locals.returnTo + ' ' + menu.getOriginText()
         };
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
@@ -40,10 +41,20 @@ module.exports = (function() {
             console.log('a');
 
             var currPointDescription = getPointDescription(route[i]);
+
+            var actionString = route[i].transit === 'transit' ?
+                'Take public transport to' :
+                'Walk to';
+
             if (! currPointDescription) {
-                resultsArray.errands.push("Walk to point " + letter);
+                resultsArray.errands.push(actionString + ' point ' + letter);
             } else {
-                var description = currPointDescription.placeName + ': '+ currPointDescription.errandName;
+                var description =
+                    actionString +
+                    ' ' +
+                    currPointDescription.placeName +
+                    ': '+
+                    currPointDescription.errandName;
                 resultsArray.errands.push(description);
             }
 

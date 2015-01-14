@@ -71,6 +71,10 @@ module.exports = (function() {
         $('#origin-input-primary').val(text);
     };
 
+    var getOriginText = function() {
+        return $('#origin-input-primary').val();
+    };
+
     var disableNextErrandInput = function() {
         var errandInputs = $('.errand-input');
         for (var i = 0; i < errandInputs.length; i++) {
@@ -164,6 +168,7 @@ module.exports = (function() {
         disableNextErrandInput: disableNextErrandInput,
         lockOriginInput: lockOriginInput,
         setOriginText: setOriginText,
+        getOriginText: getOriginText,
     };
 
 })();
