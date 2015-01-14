@@ -41,7 +41,9 @@ module.exports = (function() {
     };
 
     var setCurrentLocation = function() {
+        instructions.startSpinner();
         navigator.geolocation.getCurrentPosition(function(pos) {
+            instructions.stopSpinner();
             var loc = new google.maps.LatLng(pos.coords.latitude,
                                              pos.coords.longitude);
             menu.setOriginText(locals.currentLocation);
