@@ -6,8 +6,18 @@ module.exports = (function() {
         $("#instructions").text(message);
     };
 
+    var startSpinner = function() {
+    	$("#spinner").show();
+    };
+
+    var stopSpinner = function() {
+    	$("#spinner").hide();
+    };
+
     return {
-        setText: setText
+        setText: setText,
+        startSpinner: startSpinner,
+        stopSpinner: stopSpinner,
     };
 
 })();

@@ -1,5 +1,6 @@
 var markers = require('./markers.js');
 var route = require('./route.js');
+var instructions = require('./instructions.js');
 
 module.exports = (function() {
 
@@ -59,12 +60,15 @@ module.exports = (function() {
 
     var calcRoute = function() {
 
+        instructions.startSpinner();
+
         $.ajax({
             url: "/cpp",
             method: "POST",
             data: JSON.stringify(formRequest()),
             contentType: "application/json",
             success: function(ret) {
+                instructions.stopSpinner();
                 route.displayRoute(JSON.parse(ret));
             }
         });
