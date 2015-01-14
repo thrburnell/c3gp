@@ -195,6 +195,23 @@ TEST(TspSolverTest, DynamicProgrammingWorksOnBiggerExample) {
     EXPECT_TRUE(expected.find(*result) != expected.end());
 }
 
+TEST(TspSolverTest, DynamicProgrammingWorksOnBR17Benchmark) {
+    // Lambda function, used to check timelimit (otherwise unsupported
+    // by GoogleTest).
+    auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
+        TspSolver* solver = setupBenchmarkTestExample("testData/br17.atsp",
+                                                      17);
+        std::vector<int>* result = solver->solveTspWithDynamicProgramming();
+        // Optimal solution is 39.
+        EXPECT_FLOAT_EQ(solver->computeTourWeight(result), 39);
+        return;
+    });
+
+    // The future above should complete itself in 3s, or the test fails.
+    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
+                std::future_status::timeout);
+}
+
 TEST(TspSolverTest, FindsOptimalSolutionForSmallCase) {
     TspSolver* solver = setupCanonicalTestExample();
 
@@ -223,24 +240,7 @@ TEST(TspSolverTest, AllowsApproximateSolutionForLargeCase) {
                 std::future_status::timeout);
 }
 
-TEST(TspSolverTest, DPWorksOnBR17) {
-    // Lambda function, used to check timelimit (otherwise unsupported
-    // by GoogleTest).
-    auto timeLimitCheck = std::async(std::launch::async, [this]()->void {
-        TspSolver* solver = setupBenchmarkTestExample("testData/br17.atsp",
-                                                      17);
-        std::vector<int>* result = solver->solveTspWithDynamicProgramming();
-        // Optimal solution is 39.
-        EXPECT_FLOAT_EQ(solver->computeTourWeight(result), 39);
-        return;
-    });
-
-    // The future above should complete itself in 3s, or the test fails.
-    EXPECT_TRUE(timeLimitCheck.wait_for(std::chrono::milliseconds(1000)) != 
-                std::future_status::timeout);
-}
-
-TEST(TspSolverTest, OptimalSolutionForBR17) {
+TEST(TspSolverTest, OptimallySolvesBR17Benchmark) {
     // Lambda function, used to check timelimit (otherwise unsupported
     // by GoogleTest).
     auto timeLimitCheck = std::async(std::launch::async, [this]()->void {

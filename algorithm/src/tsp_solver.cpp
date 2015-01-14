@@ -3,11 +3,7 @@
 #include <algorithm>
 #include <limits>
 #include <stdexcept>
-#include <unordered_map>
 #include <vector>
-
-#include <iostream>
-#include <bitset>
 
 void TspSolver::setNumberOfNodes(int nodes) {
     totalNodes = nodes;
