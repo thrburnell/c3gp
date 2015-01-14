@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <limits>
 #include <stdexcept>
-#include <unordered_set>
 #include <vector>
 
 void TspSolver::setNumberOfNodes(int nodes) {
@@ -42,6 +41,10 @@ std::vector<int>* TspSolver::solve() {
 
     if (totalNodes < 8) {
         return solveTspWithBacktracking();
+    }
+
+    if (totalNodes < 20) {
+        return solveTspWithDynamicProgramming();
     }
 
     std::vector<int>* result = solveTspWithNNGreedy();
@@ -206,6 +209,77 @@ std::vector<int>* TspSolver::solveTspWithBacktracking() {
     return &tbOrderedResult;
 }
 
+// Dynamic Programming code - implementation of Held-Karp algorithm.
+// Eventually, this was implemented using bitwise operations. I acknowledge
+// there's a tradeoff for speed vs readability here (the code's not the most
+// understandable).
+
+static double* opt_map;
+static int* prev_step;
+
+double TspSolver::dynamicSolve(int visited, int end) {
+    int row_size = totalNodes;
+
+    if (opt_map[visited * row_size + end] != -1) {
+        return opt_map[visited * row_size + end];
+    }
+
+    // base case: nothing visited
+    if (visited == 0) {
+        return 0;
+    }
+
+    // base case: 1 node visited
+    if ((visited & (visited - 1)) == 0) {
+        opt_map[visited * row_size + end]
+            = adjacencyMatrix[startingPoint][end];
+        prev_step[visited * row_size + end]
+            = startingPoint;
+        return adjacencyMatrix[startingPoint][end];
+    }
+
+    // The 'other' cases when we need to take something out
+    double min_cost = std::numeric_limits<double>::max();
+    
+    // remove end from the visited list
+    int visited_before = visited & ~(1 << end); 
+    for (int i = 0; i < totalNodes; ++i) {
+        if (visited_before & (1 << i)) {
+            double possible_cost = dynamicSolve(visited_before, i) +
+                                   adjacencyMatrix[i][end];
+            if (possible_cost < min_cost) {
+                min_cost = possible_cost;
+                prev_step[visited_before * row_size + end] = i;
+            }
+        }
+    }
+    opt_map[visited * row_size + end] = min_cost;
+    return min_cost;
+}
+
+std::vector<int>* TspSolver::solveTspWithDynamicProgramming() {
+    int num_sets = 1 << (totalNodes);
+    opt_map = new double[num_sets * totalNodes];
+    prev_step = new int[num_sets * totalNodes];
+    for(int i = 0; i < num_sets * totalNodes; ++i) {
+        opt_map[i] = -1;
+    }
+
+    int all_nodes = (1 << (totalNodes)) - 2;
+    // -2, to get all 1s except for the units position.
+    dynamicSolve(all_nodes, 0);
+
+    std::vector<int>* solution = new std::vector<int>(totalNodes);
+    int considered_nodes = all_nodes;
+    int currNode = startingPoint;
+    for(int i = totalNodes - 1; i > 0; --i) {
+        currNode = prev_step[considered_nodes * totalNodes + currNode];
+        considered_nodes = considered_nodes & ~(1 << currNode);
+        (*solution)[i] = currNode;
+    }
+    (*solution)[0] = startingPoint;
+    return solution;
+}
 
 //GENETIC ALGORITHM CODE
 // TODO: inspired from here
