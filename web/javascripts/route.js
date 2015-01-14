@@ -54,7 +54,7 @@ module.exports = (function() {
                     ' ' +
                     currPointDescription.placeName +
                     ': '+
-                    currPointDescription.errandName;
+                    currPointDescription.errandName.toLowerCase();
                 resultsArray.errands.push(description);
             }
 

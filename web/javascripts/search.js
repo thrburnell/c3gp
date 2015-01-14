@@ -18,7 +18,7 @@ module.exports = (function() {
         service.nearbySearch(request, function(results, status) {
             instructions.stopSpinner();
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                markers.buildErrandsInfo(results, locals.goTo + ' ' + searchInput);
+                markers.buildErrandsInfo(results, searchInput);
                 markers.addTemporaries(map.getMapCanvas(), results);
             }
         });
