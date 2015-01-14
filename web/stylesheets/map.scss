@@ -1,3 +1,4 @@
+// Make sure this stays in sync with the value from constants.js file
 $stripe-width: 225px;
 
 html,
@@ -68,11 +69,6 @@ hr {
   overflow: hidden;
 }
 
-.stripe1 {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 .main {
   height: 100%;
   margin-left: $stripe-width;
@@ -90,6 +86,8 @@ hr {
   -o-transition: left 0.5s ease-out;
   transition: left 0.5s ease-out;
 
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .stripe.stripe1 {

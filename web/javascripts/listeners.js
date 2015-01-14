@@ -7,6 +7,7 @@ var locals = require('./locals.js');
 var instructions = require('./instructions.js');
 var errand = require('./errand.js');
 var markers = require('./markers.js');
+var constants = require('./constants.js');
 
 module.exports = (function() {
 
@@ -73,7 +74,7 @@ module.exports = (function() {
         });
 
         $("#stripe-input").slimScroll({
-            width: '225px',
+            width: constants.menuStripeWidth + 'px',
             height: '100%',
             size: '10px',
             float: 'left',
