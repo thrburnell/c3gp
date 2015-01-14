@@ -5,13 +5,14 @@ var menu = require('./menu.js');
 module.exports = (function() {
 
     var markers = [];
-    var errandsInfo = {};
+    var errandsInfo = [];
     var temporaryMarkers = [];
     var pinIndex = 0;
     var redColour = "F7574C";
     var greenColour = "7BCC70";
     var letterColour = "000000";
     var infoWindow = new google.maps.InfoWindow();
+
 
     var add = function(map, position, letter) {
         var marker = createMarker(map, position, letter);
@@ -135,14 +136,15 @@ module.exports = (function() {
         infoWindow.setContent(content[0]);
     };
 
-    var buildErrandsInfo = function(results, errand) {
+    // Used for menu display
+    var buildErrandsInfo = function(results, errandName) {
         results.forEach(function(place) {
-            var key = place.geometry.location.lat + "," +
-                      place.geometry.location.lng;
-            errandsInfo[key] = {
-                errand: errand,
-                placeName: place.name
-            };
+            errandsInfo.push({
+                lat: place.geometry.location.lat,
+                lng: place.geometry.location.lng,
+                errandName: errandName,
+                placeName: place.name,
+            });
         });
     };
 

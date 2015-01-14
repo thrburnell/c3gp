@@ -36,17 +36,21 @@ module.exports = (function() {
         };
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
-            // resultsArray.errands.push("Step towards point " + letter);
-            var errandsInfo = markers.getErrandsInfo();
-            var info;
-            for (var errandKey in errandsInfo) {
-                if (isSamePosition(errandKey, route[i].lat, route[i].lng)) {
-                    info = errandsInfo[errandKey];
-                    break;
-                }
-            }
+            resultsArray.errands.push("Step towards point " + letter);
 
-            resultsArray.errands.push(info.placeName + ": " + info.errand);
+            var errandsInfo = markers.getErrandsInfo();
+
+            console.log('a');
+
+            // var info;
+            // for (var errandKey in errandsInfo) {
+            //     if (isSamePosition(errandKey, route[i].lat, route[i].lng)) {
+            //         info = errandsInfo[errandKey];
+            //         break;
+            //     }
+            // }
+
+            // resultsArray.errands.push(info.placeName + ": " + info.errand);
         }
 
         menu.clearResults();
