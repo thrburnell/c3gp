@@ -1,5 +1,5 @@
 // Make sure this stays in sync with the value from constants.js file
-$stripe-width: 225px;
+$stripe-width: 300px;
 
 html,
 body {
@@ -111,7 +111,7 @@ hr {
   width: 150px;
 }
 
-.stripe button {
+.stripe .big-button {
   margin: 0 auto;
   display: block;
 
@@ -129,9 +129,13 @@ hr {
   font-weight: bold;
 }
 
-.stripe button.secondary {
+.stripe .big-button.secondary {
   background-color: #CADFAA;
   border-color: #CADFAA;
+}
+
+.errand-button {
+  color: #000;
 }
 
 .stripe input {
@@ -243,4 +247,27 @@ hr {
 
 .ui-state-focus {
   margin: 0 !important;
+}
+
+.gps-button {
+  text-align: center;
+
+  font-size: 22px;
+  color: white;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  background-color: #627FAB;
+  border: solid 1px #627FAB;
+
+  vertical-align: middle
+}
+
+.gps-button:hover {
+  background-color: #8AA4AC;
+  border: solid 1px #8AA4AC;
+  cursor: pointer;
 }

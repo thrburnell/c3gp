@@ -51,19 +51,15 @@ module.exports = (function() {
 
     var lockOriginInput = function() {
         var originInput = $('#origin-input-primary');
-        var destinationInput = $('#destination-input-primary');
         var errandInput = $('#errand-input-primary');
 
-        destinationInput.val(originInput.val());
         originInput.attr('disabled', 'true');
-        destinationInput.attr('disabled', 'true');
         errandInput.removeAttr('disabled');
         errandInput.attr('placeholder', locals.searchSuggestion);
     };
 
     var setOriginText = function(text) {
         $('#origin-input-primary').val(text);
-        $('#destination-input-primary').val(text);
     };
 
     var disableNextErrandInput = function() {

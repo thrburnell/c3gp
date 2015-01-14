@@ -7,7 +7,9 @@
                 <label>ORIGIN</label>
                 <hr>
                 <input type="text" id="origin-input-primary" placeholder="e.g. current location">
-                <a class="link-button" id="gps-button" href="#">Use current Location</a>
+                <button class="errand-button gps-button" id="gps-button" type="button">
+                    <i class="fa fa-crosshairs"></i>
+                </button>
             </div>
 
             <div id="errands-point" class="point-type">
@@ -15,17 +17,15 @@
                 <hr>
                 <input type="text" id="errand-hack" class="hidden" placeholder="e.g. Grab a coffee">
                 <input type="text" id="errand-input-primary" class="errand-input" placeholder="First select starting point" disabled="disabled">
+                <button class="errand-button gps-button" id="b-any-location" type="button">
+                    <i class="fa fa-map-marker"></i>
+                </button>
             </div>
 
-            <div class="point&#45;type">
-                <label>DESTINATION</label>
-                <hr>
-                <input type="text" id="destination-input-primary" placeholder="e.g. current location">
-            </div>
             <hr>
-            <button type="button" id="get-route">GET ROUTE</button>
+            <button class="big-button" type="button" id="get-route">GET ROUTE</button>
             <hr>
-            <button type="button" id="b-use-gtsp" class="secondary">ANY</button>
+            <button class="big-button secondary" type="button" id="b-use-gtsp">ANY</button>
         </div> {{!-- .stripe --}}
 
         <div id="stripe-results" class="stripe stripe2 withpadding">
@@ -50,7 +50,7 @@
                 {{!-- Javascript Generated points --}}
             </div>
 
-            <button type="button" id="b-edit-route">EDIT ROUTE</button>
+            <button class="big-button" type="button" id="b-edit-route">EDIT ROUTE</button>
         </div> {{!-- .stripe --}}
     </div> {{!-- .menu --}}
 
