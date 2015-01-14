@@ -20,11 +20,16 @@ module.exports = (function() {
 
         $("#b-edit-route").click(function() {
             menu.changeToInputStripe();
+            // Optimization. We no longer have GTSP clusters on the map when this button
+            // is pressable
+            api.setGtspFlagOff();
         });
 
         $("#b-clear-route").click(function() {
+            menu.clearInputStripe();
             menu.changeToInputStripe();
             route.clearRoute();
+            api.setGtspFlagOff();
         });
 
         $("#b-start").click(function() {
@@ -99,8 +104,6 @@ module.exports = (function() {
             markers.convertTemporariesToPermanent();
             menu.disableNextErrandInput();
         });
-
-        $(".gps-button").removeClass('hidden');
 
     };
 

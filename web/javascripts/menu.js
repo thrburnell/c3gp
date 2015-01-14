@@ -34,8 +34,12 @@ module.exports = (function() {
             errand.makeSearch(event.target);
         });
         var useGtspButton = $('#b-use-gtsp').clone(true);
+        useGtspButton.removeClass('first');
 
-        var wrapper = $('<div>').append(newErrandBox).append(useGtspButton);
+        var wrapper = $('<div>', {
+            class: 'delete-on-clear'
+        }).append(newErrandBox)
+        .append(useGtspButton);
 
         $('#errands-point').append(wrapper);
 
@@ -89,6 +93,11 @@ module.exports = (function() {
         }
 
         return true;
+    };
+
+    var clearInputStripe = function() {
+        $('.delete-on-clear').remove();
+        $('.input-box').val('').removeAttr('disabled');
     };
 
     var setResults = function(resultArray) {
@@ -148,6 +157,7 @@ module.exports = (function() {
         changeToInputStripe: changeToInputStripe,
         setResults: setResults,
         clearResults: clearResults,
+        clearInputStripe: clearInputStripe,
         createErrandBox: createErrandBox,
         allErrandBoxesAreFull: allErrandBoxesAreFull,
         insertTextIntoNextBox: insertTextIntoNextBox,
