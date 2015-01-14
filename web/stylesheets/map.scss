@@ -1,19 +1,22 @@
 // Make sure this stays in sync with the value from constants.js file
 $stripe-width: 268px;
 
-$green-color: #CADFAA;
-$orange-color: #EA7260;
-$dark-blue-color: #354458;
+$green-color: #A0B72C;
+$light-green-color: #B9CE5F;
+$light-blue-color: #3593DD;
+$grey-blue-color: #8CCBF2;
+$dark-blue-color: #08111D;
 
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "HelveticaNeue-Light", Helvetica;
 }
 
 hr {
-  border-color: $orange-color;
+  border-color: $light-blue-color;
 }
 
 #map-canvas {
@@ -31,11 +34,14 @@ hr {
   left: 50%;
   width: 500px;
   margin-left: -250px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(16, 44, 68, 0.5);
   padding: 10px;
   color: white;
   z-index: 100;
   text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 
 #button {
@@ -116,18 +122,23 @@ hr {
   margin: 0 auto;
   display: block;
 
-  background-color: $orange-color;
+  background-color: $light-blue-color;
   cursor: pointer;
   overflow: hidden;
   outline: none;
 
-  border: solid 2px $orange-color;
+  border: solid 2px $light-blue-color;
   color: $dark-blue-color;
 
   width: 150px;
   height: 45px;
   font-size: 15px;
   font-weight: bold;
+}
+
+.stripe .big-button:hover {
+  border-color: $grey-blue-color;
+  background-color: $grey-blue-color;
 }
 
 .stripe .big-button.half {
@@ -140,13 +151,23 @@ hr {
 }
 
 .stripe .big-button.color1 {
-  border-color: $orange-color;
-  background-color: $orange-color;
+  border-color: $light-blue-color;
+  background-color: $light-blue-color;
+}
+
+.stripe .big-button.color1:hover {
+  border-color: $grey-blue-color;
+  background-color: $grey-blue-color;
 }
 
 .stripe .big-button.color2 {
   border-color: $green-color;
   background-color: $green-color;
+}
+
+.stripe .big-button.color2:hover {
+  border-color: $light-green-color;
+  background-color: $light-green-color;
 }
 
 .errand-button {
@@ -169,16 +190,16 @@ hr {
 }
 
 .point-type hr {
-  border-color: $orange-color;
+  border-color: $light-blue-color;
   margin: 0 0 8px;
 }
 
 .point-type label {
-  color: $orange-color;
+  color: $light-blue-color;
 }
 
 .point-type .number {
-  background-color: $orange-color;
+  background-color: $light-blue-color;
   padding: 1px 6px 3px;
   margin-right: 5px;
   -webkit-border-radius: 2px;
@@ -198,22 +219,24 @@ hr {
   left: 0;
 
 
-  background: -webkit-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* Standard syntax */
+  background: -webkit-linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* Standard syntax */
 }
 
 .welcome .mid {
   width: 500px;
   margin: 0 auto;
   margin-top: 100px;
+  text-align: center;
 }
 
 .welcome h1 {
-  color: white;
+  color: $dark-blue-color;
   text-transform: uppercase;
   text-align: center;
+  font-size: 28px;
 }
 
 .welcome h2 {
@@ -230,8 +253,8 @@ hr {
   overflow: hidden;
   outline: none;
 
-  border: solid 2px #EB7260;
-  color: #EB7260;
+  border: solid 2px $dark-blue-color;
+  color: $dark-blue-color;
 
   width: 200px;
   height: 75px;
@@ -275,16 +298,16 @@ hr {
 
   padding: 0;
 
-  background-color: #627FAB;
-  border: solid 1px #627FAB;
+  background-color: $green-color;
+  border: solid 1px $green-color;
 
   vertical-align: middle;
   margin-left: 10px;
 }
 
 .gps-button:hover {
-  background-color: #8AA4AC;
-  border: solid 1px #8AA4AC;
+  background-color: $light-green-color;
+  border: solid 1px $light-green-color;
   cursor: pointer;
 }
 
@@ -297,6 +320,10 @@ hr {
   -moz-animation: spin 4s infinite linear;
   -o-animation: spin 4s infinite linear;
   animation: spin 4s infinite linear;
+}
+
+.text-bold {
+  font-weight: 600;
 }
 
 @-moz-keyframes spin {
