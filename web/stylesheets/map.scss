@@ -1,9 +1,9 @@
 // Make sure this stays in sync with the value from constants.js file
 $stripe-width: 268px;
 
-$green-color: #CADFAA;
-$orange-color: #EA7260;
-$dark-blue-color: #354458;
+$green-color: #A0B72C;
+$light-blue-color: #3593DD;
+$dark-blue-color: #0D2335;
 
 html,
 body {
@@ -13,7 +13,7 @@ body {
 }
 
 hr {
-  border-color: $orange-color;
+  border-color: $light-blue-color;
 }
 
 #map-canvas {
@@ -116,12 +116,12 @@ hr {
   margin: 0 auto;
   display: block;
 
-  background-color: $orange-color;
+  background-color: $green-color;
   cursor: pointer;
   overflow: hidden;
   outline: none;
 
-  border: solid 2px $orange-color;
+  border: solid 2px $green-color;
   color: $dark-blue-color;
 
   width: 150px;
@@ -140,8 +140,8 @@ hr {
 }
 
 .stripe .big-button.color1 {
-  border-color: $orange-color;
-  background-color: $orange-color;
+  border-color: $light-blue-color;
+  background-color: $light-blue-color;
 }
 
 .stripe .big-button.color2 {
@@ -169,16 +169,16 @@ hr {
 }
 
 .point-type hr {
-  border-color: $orange-color;
+  border-color: $light-blue-color;
   margin: 0 0 8px;
 }
 
 .point-type label {
-  color: $orange-color;
+  color: $light-blue-color;
 }
 
 .point-type .number {
-  background-color: $orange-color;
+  background-color: $light-blue-color;
   padding: 1px 6px 3px;
   margin-right: 5px;
   -webkit-border-radius: 2px;
@@ -230,8 +230,8 @@ hr {
   overflow: hidden;
   outline: none;
 
-  border: solid 2px #EB7260;
-  color: #EB7260;
+  border: solid 2px $dark-blue-color;
+  color: $dark-blue-color;
 
   width: 200px;
   height: 75px;
@@ -275,16 +275,16 @@ hr {
 
   padding: 0;
 
-  background-color: #627FAB;
-  border: solid 1px #627FAB;
+  background-color: $green-color;
+  border: solid 1px $green-color;
 
   vertical-align: middle;
   margin-left: 10px;
 }
 
 .gps-button:hover {
-  background-color: #8AA4AC;
-  border: solid 1px #8AA4AC;
+  background-color: $light-blue-color;
+  border: solid 1px $light-blue-color;
   cursor: pointer;
 }
 
