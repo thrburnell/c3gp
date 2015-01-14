@@ -2,15 +2,17 @@
 $stripe-width: 268px;
 
 $green-color: #A0B72C;
+$light-green-color: #B9CE5F;
 $light-blue-color: #3593DD;
-$dark-blue-color: #0D2335;
+$grey-blue-color: #8CCBF2;
+$dark-blue-color: #08111D;
 
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "HelveticaNeue-Light";
+  font-family: "HelveticaNeue-Light", Helvetica;
 }
 
 hr {
@@ -134,6 +136,11 @@ hr {
   font-weight: bold;
 }
 
+.stripe .big-button:hover {
+  border-color: $grey-blue-color;
+  background-color: $grey-blue-color;
+}
+
 .stripe .big-button.half {
   width: 75px;
   display: inline;
@@ -148,9 +155,19 @@ hr {
   background-color: $light-blue-color;
 }
 
+.stripe .big-button.color1:hover {
+  border-color: $grey-blue-color;
+  background-color: $grey-blue-color;
+}
+
 .stripe .big-button.color2 {
   border-color: $green-color;
   background-color: $green-color;
+}
+
+.stripe .big-button.color2:hover {
+  border-color: $light-green-color;
+  background-color: $light-green-color;
 }
 
 .errand-button {
@@ -289,8 +306,8 @@ hr {
 }
 
 .gps-button:hover {
-  background-color: $light-blue-color;
-  border: solid 1px $light-blue-color;
+  background-color: $light-green-color;
+  border: solid 1px $light-green-color;
   cursor: pointer;
 }
 
