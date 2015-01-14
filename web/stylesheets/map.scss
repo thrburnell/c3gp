@@ -10,6 +10,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "HelveticaNeue-Light";
 }
 
 hr {
@@ -31,11 +32,14 @@ hr {
   left: 50%;
   width: 500px;
   margin-left: -250px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(16, 44, 68, 0.5);
   padding: 10px;
   color: white;
   z-index: 100;
   text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 
 #button {
@@ -116,12 +120,12 @@ hr {
   margin: 0 auto;
   display: block;
 
-  background-color: $green-color;
+  background-color: $light-blue-color;
   cursor: pointer;
   overflow: hidden;
   outline: none;
 
-  border: solid 2px $green-color;
+  border: solid 2px $light-blue-color;
   color: $dark-blue-color;
 
   width: 150px;
@@ -198,22 +202,24 @@ hr {
   left: 0;
 
 
-  background: -webkit-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(rgba(89, 100, 114, 0.8), rgba(255, 255, 255, 0.8)); /* Standard syntax */
+  background: -webkit-linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(16, 44, 68, 0.8), rgba(255, 255, 255, 0.8)); /* Standard syntax */
 }
 
 .welcome .mid {
   width: 500px;
   margin: 0 auto;
   margin-top: 100px;
+  text-align: center;
 }
 
 .welcome h1 {
-  color: white;
+  color: $dark-blue-color;
   text-transform: uppercase;
   text-align: center;
+  font-size: 28px;
 }
 
 .welcome h2 {
@@ -297,6 +303,10 @@ hr {
   -moz-animation: spin 4s infinite linear;
   -o-animation: spin 4s infinite linear;
   animation: spin 4s infinite linear;
+}
+
+.text-bold {
+  font-weight: 600;
 }
 
 @-moz-keyframes spin {
