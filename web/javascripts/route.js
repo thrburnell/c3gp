@@ -32,7 +32,7 @@ module.exports = (function() {
         var resultsArray = {
             origin: "Current Location",
             errands: [],
-            destination: "Current Location"
+            destination: "Return to current Location"
         };
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
