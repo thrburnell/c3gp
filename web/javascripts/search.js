@@ -1,5 +1,6 @@
 var markers = require('./markers.js');
 var map = require('./map.js');
+var instructions = require('./instructions.js');
 
 module.exports = (function() {
 
@@ -11,8 +12,10 @@ module.exports = (function() {
             keyword: searchInput,
             radius: '500'
         };
+        instructions.startSpinner();
         var service = new google.maps.places.PlacesService(map.getMapCanvas());
         service.nearbySearch(request, function(results, status) {
+            instructions.stopSpinner();
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 markers.addTemporaries(map.getMapCanvas(), results);
             }
@@ -26,7 +29,9 @@ module.exports = (function() {
             address: locationInput
         };
         var geocoder = new google.maps.Geocoder();
+        instructions.startSpinner();
         geocoder.geocode(request, function(results, status) {
+            instructions.stopSpinner();
             if (status === google.maps.GeocoderStatus.OK) {
                 map.setStartingLocation(results[0].geometry.location);
             }
@@ -52,6 +57,7 @@ module.exports = (function() {
             requestData.areas.push(newLocation);
         });
 
+        instructions.startSpinner();
         jQuery.ajax({
             url: '/errand',
             method: "POST",
@@ -59,6 +65,9 @@ module.exports = (function() {
             data: JSON.stringify(requestData),
             success: function(ret, status) {
                 markers.addTemporaries(map.getMapCanvas(), ret);
+            },
+            complete: function() {
+                instructions.stopSpinner();
             }
         });
     };

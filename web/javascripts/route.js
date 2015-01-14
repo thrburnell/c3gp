@@ -124,7 +124,8 @@ module.exports = (function() {
     };
 
     return {
-        displayRoute: displayRoute
+        displayRoute: displayRoute,
+        clearRoute: clearRoute,
     };
 
 })();

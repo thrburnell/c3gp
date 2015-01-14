@@ -7,6 +7,8 @@ var locals = require('./locals.js');
 var instructions = require('./instructions.js');
 var errand = require('./errand.js');
 var markers = require('./markers.js');
+var constants = require('./constants.js');
+var route = require('./route.js');
 
 module.exports = (function() {
 
@@ -14,10 +16,17 @@ module.exports = (function() {
     var listen = function() {
         $("#get-route").click(function() {
             api.calcRoute();
+            api.setGtspFlagOff();
         });
 
         $("#b-edit-route").click(function() {
             menu.changeToInputStripe();
+        });
+
+        $("#b-clear-route").click(function() {
+            menu.clearInputStripe();
+            menu.changeToInputStripe();
+            route.clearRoute();
         });
 
         $("#b-start").click(function() {
@@ -43,7 +52,7 @@ module.exports = (function() {
             errand.makeSearch(event.target);
         });
 
-        $("#errand-input-primary, #errand-hack").keyup(function(event) {
+        $("#errand-input-primary, #errand-template").keyup(function(event) {
 
             if (event.which !== 13) {
                 event.target.title = '';
@@ -73,7 +82,7 @@ module.exports = (function() {
         });
 
         $("#stripe-input").slimScroll({
-            width: '225px',
+            width: constants.menuStripeWidth + 'px',
             height: '100%',
             size: '10px',
             float: 'left',

@@ -1,19 +1,18 @@
 var polyline = require('./polyline.js');
 var errand = require('./errand.js');
 var locals = require('./locals.js');
+var constants = require('./constants.js');
 
 module.exports = (function() {
 
-    var stripeWidth = 225;
-
     var changeToResultsStripe = function() {
-        $('#stripe-input').css('left', -stripeWidth);
+        $('#stripe-input').css('left', -constants.menuStripeWidth);
         $('#stripe-results').css('left', 0);
     };
 
     var changeToInputStripe = function() {
         $('#stripe-input').css('left', 0);
-        $('#stripe-results').css('left', stripeWidth);
+        $('#stripe-results').css('left', constants.menuStripeWidth);
     };
 
     var createErrandBox = function() {
@@ -22,7 +21,7 @@ module.exports = (function() {
         // the event, since I cannot call search.makeSearch(event.target.value); from here
 
         //Clone the events attached as well
-        var newErrandBox = $('#errand-hack').clone(true);
+        var newErrandBox = $('#errand-template').clone(true);
         newErrandBox.val('');
         newErrandBox.removeAttr('id');
         newErrandBox.removeAttr('disabled');
@@ -34,7 +33,16 @@ module.exports = (function() {
         newErrandBox.click(function(event) {
             errand.makeSearch(event.target);
         });
-        $('#errands-point').append(newErrandBox);
+        var useGtspButton = $('#b-use-gtsp').clone(true);
+        useGtspButton.removeClass('first');
+
+        var wrapper = $('<div>', {
+            class: 'delete-on-clear'
+        }).append(newErrandBox)
+        .append(useGtspButton);
+
+        $('#errands-point').append(wrapper);
+
     };
 
     var insertTextIntoNextBox = function(text) {
@@ -52,19 +60,15 @@ module.exports = (function() {
 
     var lockOriginInput = function() {
         var originInput = $('#origin-input-primary');
-        var destinationInput = $('#destination-input-primary');
         var errandInput = $('#errand-input-primary');
 
-        destinationInput.val(originInput.val());
         originInput.attr('disabled', 'true');
-        destinationInput.attr('disabled', 'true');
         errandInput.removeAttr('disabled');
         errandInput.attr('placeholder', locals.searchSuggestion);
     };
 
     var setOriginText = function(text) {
         $('#origin-input-primary').val(text);
-        $('#destination-input-primary').val(text);
     };
 
     var disableNextErrandInput = function() {
@@ -91,6 +95,11 @@ module.exports = (function() {
         return true;
     };
 
+    var clearInputStripe = function() {
+        $('.delete-on-clear').remove();
+        $('.input-box').val('').removeAttr('disabled');
+    };
+
     var setResults = function(resultArray) {
 
         //Hack to avoid a double polyline at the very beginning. No idea why it is done.
@@ -101,12 +110,12 @@ module.exports = (function() {
         var errands = resultArray.errands || [];
         var destination = resultArray.destination || '';
 
-        var templateDiv = $("<div>", {
-            class: "direction-step"
-        }).append($("<text>", {
-            class: "number"
-        })).append($("<span>", {
-            class: "text"
+        var templateDiv = $('<div>', {
+            class: 'direction-step'
+        }).append($('<text>', {
+            class: 'number'
+        })).append($('<span>', {
+            class: 'text'
         }));
 
         var originDiv = templateDiv.clone();
@@ -148,6 +157,7 @@ module.exports = (function() {
         changeToInputStripe: changeToInputStripe,
         setResults: setResults,
         clearResults: clearResults,
+        clearInputStripe: clearInputStripe,
         createErrandBox: createErrandBox,
         allErrandBoxesAreFull: allErrandBoxesAreFull,
         insertTextIntoNextBox: insertTextIntoNextBox,
