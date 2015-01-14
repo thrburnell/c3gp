@@ -6,8 +6,8 @@
             <div id="origin-point" class="point-type">
                 <label>ORIGIN</label>
                 <hr>
-                <input type="text" id="origin-input-primary" placeholder="e.g. current location">
-                <button class="errand-button gps-button hidden" id="gps-button" type="button">
+                <input type="text" id="origin-input-primary" placeholder="e.g. current location">{{!-- WS
+                 --}}<button class="errand-button gps-button hidden" id="gps-button" type="button">
                     <i class="fa fa-crosshairs"></i>
                 </button>
             </div>
@@ -17,8 +17,8 @@
                 <hr>
                 <input type="text" id="errand-hack" class="hidden" placeholder="e.g. Grab a coffee">
                 <div>
-                    <input type="text" id="errand-input-primary" class="errand-input" placeholder="First select starting point" disabled="disabled">
-                    <button class="errand-button gps-button hidden" id="b-use-gtsp" type="button">
+                    <input type="text" id="errand-input-primary" class="errand-input" placeholder="First select starting point" disabled="disabled">{{!-- WS
+                     --}}<button class="errand-button gps-button hidden" id="b-use-gtsp" type="button">
                         <i class="fa fa-map-marker"></i>
                     </button>
                 </div>
@@ -52,7 +52,13 @@
                 {{!-- Javascript Generated points --}}
             </div>
 
-            <button class="big-button" type="button" id="b-edit-route">EDIT ROUTE</button>
+            <hr>
+
+            <div class="button-box">
+                <button class="big-button half color2" type="button" id="b-edit-route">EDIT</button>{{!-- WS
+                 --}}<button class="big-button half color1" type="button" id="b-edit-route">CLEAR</button>
+            </div>
+
         </div> {{!-- .stripe --}}
     </div> {{!-- .menu --}}
 

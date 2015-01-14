@@ -34,8 +34,6 @@ module.exports = (function() {
             errand.makeSearch(event.target);
         });
         var useGtspButton = $('#b-use-gtsp').clone(true);
-        // Hack. No idea what is wrong with it
-        useGtspButton.css('margin-left', '14px');
 
         var wrapper = $('<div>').append(newErrandBox).append(useGtspButton);
 
