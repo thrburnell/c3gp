@@ -8,6 +8,7 @@ var instructions = require('./instructions.js');
 var errand = require('./errand.js');
 var markers = require('./markers.js');
 var constants = require('./constants.js');
+var route = require('./route.js');
 
 module.exports = (function() {
 
@@ -19,6 +20,11 @@ module.exports = (function() {
 
         $("#b-edit-route").click(function() {
             menu.changeToInputStripe();
+        });
+
+        $("#b-clear-route").click(function() {
+            menu.changeToInputStripe();
+            route.clearRoute();
         });
 
         $("#b-start").click(function() {
