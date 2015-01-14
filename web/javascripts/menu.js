@@ -33,7 +33,14 @@ module.exports = (function() {
         newErrandBox.click(function(event) {
             errand.makeSearch(event.target);
         });
-        $('#errands-point').append(newErrandBox);
+        var useGtspButton = $('#b-use-gtsp').clone(true);
+        // Hack. No idea what is wrong with it
+        useGtspButton.css('margin-left', '14px');
+
+        var wrapper = $('<div>').append(newErrandBox).append(useGtspButton);
+
+        $('#errands-point').append(wrapper);
+
     };
 
     var insertTextIntoNextBox = function(text) {
@@ -96,12 +103,12 @@ module.exports = (function() {
         var errands = resultArray.errands || [];
         var destination = resultArray.destination || '';
 
-        var templateDiv = $("<div>", {
-            class: "direction-step"
-        }).append($("<text>", {
-            class: "number"
-        })).append($("<span>", {
-            class: "text"
+        var templateDiv = $('<div>', {
+            class: 'direction-step'
+        }).append($('<text>', {
+            class: 'number'
+        })).append($('<span>', {
+            class: 'text'
         }));
 
         var originDiv = templateDiv.clone();

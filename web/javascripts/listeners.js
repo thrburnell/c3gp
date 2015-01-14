@@ -94,6 +94,8 @@ module.exports = (function() {
             menu.disableNextErrandInput();
         });
 
+        $(".gps-button").removeClass('hidden');
+
     };
 
     return {

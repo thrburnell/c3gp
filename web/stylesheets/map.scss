@@ -1,5 +1,5 @@
 // Make sure this stays in sync with the value from constants.js file
-$stripe-width: 300px;
+$stripe-width: 272px;
 
 html,
 body {
@@ -31,10 +31,7 @@ hr {
   padding: 10px;
   color: white;
   z-index: 100;
-}
-
-#instructions {
-  float: left;
+  text-align: center;
 }
 
 #button {
@@ -263,7 +260,8 @@ hr {
   background-color: #627FAB;
   border: solid 1px #627FAB;
 
-  vertical-align: middle
+  vertical-align: middle;
+  margin-left: 10px;
 }
 
 .gps-button:hover {

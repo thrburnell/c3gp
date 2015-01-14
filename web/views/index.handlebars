@@ -7,7 +7,7 @@
                 <label>ORIGIN</label>
                 <hr>
                 <input type="text" id="origin-input-primary" placeholder="e.g. current location">
-                <button class="errand-button gps-button" id="gps-button" type="button">
+                <button class="errand-button gps-button hidden" id="gps-button" type="button">
                     <i class="fa fa-crosshairs"></i>
                 </button>
             </div>
@@ -16,16 +16,18 @@
                 <label>ERRANDS</label>
                 <hr>
                 <input type="text" id="errand-hack" class="hidden" placeholder="e.g. Grab a coffee">
-                <input type="text" id="errand-input-primary" class="errand-input" placeholder="First select starting point" disabled="disabled">
-                <button class="errand-button gps-button" id="b-any-location" type="button">
-                    <i class="fa fa-map-marker"></i>
-                </button>
+                <div>
+                    <input type="text" id="errand-input-primary" class="errand-input" placeholder="First select starting point" disabled="disabled">
+                    <button class="errand-button gps-button hidden" id="b-use-gtsp" type="button">
+                        <i class="fa fa-map-marker"></i>
+                    </button>
+                </div>
             </div>
 
             <hr>
             <button class="big-button" type="button" id="get-route">GET ROUTE</button>
-            <hr>
-            <button class="big-button secondary" type="button" id="b-use-gtsp">ANY</button>
+{{!--             <hr>
+            <button class="big-button secondary" type="button" id="b-use-gtsp">ANY</button> --}}
         </div> {{!-- .stripe --}}
 
         <div id="stripe-results" class="stripe stripe2 withpadding">
