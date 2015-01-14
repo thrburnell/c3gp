@@ -1,6 +1,7 @@
 var markers = require('./markers.js');
 var map = require('./map.js');
 var instructions = require('./instructions.js');
+var locals = require('./locals.js');
 
 module.exports = (function() {
 
@@ -17,6 +18,7 @@ module.exports = (function() {
         service.nearbySearch(request, function(results, status) {
             instructions.stopSpinner();
             if (status === google.maps.places.PlacesServiceStatus.OK) {
+                markers.buildErrandsInfo(results, locals.goTo + ' ' + searchInput);
                 markers.addTemporaries(map.getMapCanvas(), results);
             }
         });

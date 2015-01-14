@@ -36,21 +36,17 @@ module.exports = (function() {
         };
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
-            resultsArray.errands.push("Step towards point " + letter);
-
-            var errandsInfo = markers.getErrandsInfo();
 
             console.log('a');
 
-            // var info;
-            // for (var errandKey in errandsInfo) {
-            //     if (isSamePosition(errandKey, route[i].lat, route[i].lng)) {
-            //         info = errandsInfo[errandKey];
-            //         break;
-            //     }
-            // }
+            var currPointDescription = getPointDescription(route[i]);
+            if (! currPointDescription) {
+                resultsArray.errands.push("Walk to point " + letter);
+            } else {
+                var description = currPointDescription.placeName + ': '+ currPointDescription.errandName;
+                resultsArray.errands.push(description);
+            }
 
-            // resultsArray.errands.push(info.placeName + ": " + info.errand);
         }
 
         menu.clearResults();
@@ -58,13 +54,22 @@ module.exports = (function() {
         menu.changeToResultsStripe();
     };
 
-    var isSamePosition = function(key, lat, lng) {
+    var getPointDescription = function(position) {
+        var i;
+        var errandsInfo = markers.getErrandsInfo();
+
+        for (i = 0; i < errandsInfo.length; i++) {
+            if (withinEpsilon(errandsInfo[i], position)) {
+                return errandsInfo[i];
+            }
+        }
+
+        return null;
+    };
+
+    var withinEpsilon = function(pos1, pos2) {
         var epsilon = 0.00001;
-        var keyPos = key.split(",");
-        var keyLat = keyPos[0];
-        var keyLng = keyPos[1];
-        return Math.abs(keyLat - lat) < epsilon &&
-                     Math.abs(keyLng - lng) < epsilon;
+        return Math.abs(pos1.lat - pos2.lat) < epsilon && Math.abs(pos1.lng - pos2.lng) < epsilon;
     };
 
     var computeTransitToPoints = function(route) {

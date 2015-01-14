@@ -139,9 +139,26 @@ module.exports = (function() {
     // Used for menu display
     var buildErrandsInfo = function(results, errandName) {
         results.forEach(function(place) {
+
+            var lat, lng;
+
+            // Hack, Tom lied to me, the results of the /errand is not same as for the
+            // Google Places API call
+            try {
+                lat = place.geometry.location.lat();
+            } catch (err) {
+                lat = place.geometry.location.lat;
+            }
+
+            try {
+                lng = place.geometry.location.lng();
+            } catch (err) {
+                lng = place.geometry.location.lng;
+            }
+
             errandsInfo.push({
-                lat: place.geometry.location.lat,
-                lng: place.geometry.location.lng,
+                lat: lat,
+                lng: lng,
                 errandName: errandName,
                 placeName: place.name,
             });
