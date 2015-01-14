@@ -38,8 +38,6 @@ module.exports = (function() {
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
 
-            console.log('a');
-
             var currPointDescription = getPointDescription(route[i]);
 
             var actionString = route[i].transit === 'transit' ?
