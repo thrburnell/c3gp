@@ -90,7 +90,7 @@ module.exports = (function() {
     };
 
     var withinEpsilon = function(pos1, pos2) {
-        var epsilon = 0.0001;
+        var epsilon = 0.00001;
         return Math.abs(pos1.lat - pos2.lat) < epsilon && Math.abs(pos1.lng - pos2.lng) < epsilon;
     };
 
