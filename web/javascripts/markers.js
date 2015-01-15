@@ -8,9 +8,9 @@ module.exports = (function() {
     var errandsInfo = [];
     var temporaryMarkers = [];
     var pinIndex = 0;
-    var redColour = "F7574C";
-    var greenColour = "7BCC70";
-    var letterColour = "000000";
+    var redColour = "3593DD";
+    var greenColour = "A0B72C";
+    var letterColour = "FFFFFF";
     var infoWindow = new google.maps.InfoWindow();
 
 
@@ -93,39 +93,39 @@ module.exports = (function() {
         console.log(place);
 
         var priceDescriptors = [
-          "free", "inexpensive", "moderate", "expensive", "very expensive"  
+          "free", "inexpensive", "moderate", "expensive", "very expensive"
         ];
 
-        var contentString = "<div class='place-info-box'>" + 
-          "<h4>" + place.name + "</h4>" + 
+        var contentString = "<div class='place-info-box'>" +
+          "<h4>" + place.name + "</h4>" +
           "<h5>" + place.vicinity + "</h5>" +
-          "<table>" + 
-          (place.opening_hours ? 
-            "<tr>" + 
-            "<td><i class='fa fa-clock-o'></i></td>" + 
-            "<td>opening hours: currently " + (place.opening_hours.open_now ? "open" : "closed") + "</td>" + 
-            "</tr>" : "") + 
-          (place.price_level ? 
-            "<tr>" + 
-            "<td><i class='fa fa-gbp'></i></td>" + 
-            "<td>price: " + priceDescriptors[place.price_level] + "</td>" + 
-            "</tr>" : "") + 
-          (place.rating ? 
-            "<tr>" + 
-            "<td><i class='fa fa-star-o'></i></td>" + 
-            "<td>rating: " + place.rating + "</td>" + 
-            "</tr>" : "") + 
-          "<tr>" + 
-          "<td class='add-place-row' colspan='2'>" + 
-          "<button type='button'>Add To Route</button>" + 
-          "</td>" + 
-          "</tr>" + 
-          "<tr><td colspan='2'>&nbsp;</td></tr>" + 
-          "</table>" + 
+          "<table>" +
+          (place.opening_hours ?
+            "<tr>" +
+            "<td><i class='fa fa-clock-o'></i></td>" +
+            "<td>opening hours: currently " + (place.opening_hours.open_now ? "open" : "closed") + "</td>" +
+            "</tr>" : "") +
+          (place.price_level ?
+            "<tr>" +
+            "<td><i class='fa fa-gbp'></i></td>" +
+            "<td>price: " + priceDescriptors[place.price_level] + "</td>" +
+            "</tr>" : "") +
+          (place.rating ?
+            "<tr>" +
+            "<td><i class='fa fa-star-o'></i></td>" +
+            "<td>rating: " + place.rating + "</td>" +
+            "</tr>" : "") +
+          "<tr>" +
+          "<td class='add-place-row' colspan='2'>" +
+          "<button type='button'>Add To Route</button>" +
+          "</td>" +
+          "</tr>" +
+          "<tr><td colspan='2'>&nbsp;</td></tr>" +
+          "</table>" +
           "</div>";
 
         var content = $(contentString);
-        
+
         google.maps.event.addDomListener(content.find("button")[0], 'click', function() {
             add(map, place.geometry.location);
             clearTemporaries();
