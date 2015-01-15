@@ -88,22 +88,43 @@ module.exports = (function() {
 
     var displayInfoBox = function(map, place, marker) {
 
-        var content = $('<div>');
+        console.log(place);
 
-        ["Name: " + place.name,
-        "Rating: " + (place.rating || "N/A")
-        ].forEach(function(line) {
-            content.append($("<div>", {
-                class: "nowrap"
-            }).html(line));
-        });
+        var priceDescriptors = [
+          "free", "inexpensive", "moderate", "expensive", "very expensive"  
+        ];
 
-        var button = $('<input>', {
-            type: 'button',
-            value: 'Add me'
-        });
-        content.append(button);
-        google.maps.event.addDomListener(button[0], 'click', function() {
+        var contentString = "<div class='place-info-box'>" + 
+          "<h4>" + place.name + "</h4>" + 
+          "<h5>" + place.vicinity + "</h5>" +
+          "<table>" + 
+          (place.opening_hours ? 
+            "<tr>" + 
+            "<td><i class='fa fa-clock-o'></i></td>" + 
+            "<td>opening hours: currently " + (place.opening_hours.open_now ? "open" : "closed") + "</td>" + 
+            "</tr>" : "") + 
+          (place.price_level ? 
+            "<tr>" + 
+            "<td><i class='fa fa-gbp'></i></td>" + 
+            "<td>price: " + priceDescriptors[place.price_level] + "</td>" + 
+            "</tr>" : "") + 
+          (place.rating ? 
+            "<tr>" + 
+            "<td><i class='fa fa-star-o'></i></td>" + 
+            "<td>rating: " + place.rating + "</td>" + 
+            "</tr>" : "") + 
+          "<tr>" + 
+          "<td class='add-place-row' colspan='2'>" + 
+          "<button type='button'>Add To Route</button>" + 
+          "</td>" + 
+          "</tr>" + 
+          "<tr><td colspan='2'>&nbsp;</td></tr>" + 
+          "</table>" + 
+          "</div>";
+
+        var content = $(contentString);
+        
+        google.maps.event.addDomListener(content.find("button")[0], 'click', function() {
             add(map, place.geometry.location);
             clearTemporaries();
             menu.disableNextErrandInput();

@@ -6,5 +6,7 @@ node_modules/
 npm-debug.log
 
 # Ignore public (compiled) files
-public/
+public/js
+public/css
+public/lib
 
