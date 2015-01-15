@@ -62,7 +62,7 @@ module.exports = (function() {
                 description += actionString;
                 description += ' ' + currPointDescription.placeName;
                 description += currPointDescription.errandName ?
-                    ': ' + currPointDescription.errandName.toLowerCase()
+                    ': <i>' + currPointDescription.errandName.toLowerCase() + '</i>'
                     : '';
                 description += '. <b> Total time ' + currPointDescription.duration + '</b';
                 resultsArray.errands.push(description);

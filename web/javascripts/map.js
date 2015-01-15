@@ -18,7 +18,7 @@ module.exports = (function() {
 
         var mapOptions = {
             center: startingLocation,
-            zoom: 16,
+            zoom: 14,
             styles: mapStyles
         };
 
