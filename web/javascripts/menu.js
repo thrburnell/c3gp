@@ -33,9 +33,10 @@ module.exports = (function() {
         newErrandBox.click(function(event) {
             errand.makeSearch(event.target);
         });
-        var useGtspButton = $('#b-use-gtsp').clone(true);
 
-        $("#b-use-gtsp").remove();
+        $(".gtsp-button").hide();
+        var useGtspButton = $('#b-use-gtsp').clone(true);
+        useGtspButton.show();
 
         useGtspButton.removeClass('first');
 
@@ -103,6 +104,7 @@ module.exports = (function() {
     };
 
     var clearInputStripe = function() {
+        var useGtspButton = $('#b-use-gtsp').show();
         $('.delete-on-clear').remove();
         $('.input-box').val('').removeAttr('disabled');
     };
