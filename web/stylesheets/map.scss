@@ -174,10 +174,6 @@ hr {
   background-color: $light-green-color;
 }
 
-.errand-button {
-  color: #000;
-}
-
 .stripe input {
   margin-bottom: 20px;
   padding: 5px;
@@ -292,7 +288,7 @@ hr {
   margin: 0 !important;
 }
 
-.gps-button {
+.errand-button {
   text-align: center;
 
   font-size: 22px;
@@ -310,7 +306,7 @@ hr {
   margin-left: 10px;
 }
 
-.gps-button:hover {
+.errand-button:hover {
   background-color: $light-green-color;
   border: solid 1px $light-green-color;
   cursor: pointer;

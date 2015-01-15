@@ -34,6 +34,9 @@ module.exports = (function() {
             errand.makeSearch(event.target);
         });
         var useGtspButton = $('#b-use-gtsp').clone(true);
+
+        $("#b-use-gtsp").remove();
+
         useGtspButton.removeClass('first');
 
         var wrapper = $('<div>', {
