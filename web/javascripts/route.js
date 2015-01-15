@@ -42,7 +42,7 @@ module.exports = (function() {
         };
 
         var originDescription = getPointDescription(route[0]);
-        resultsArray.destination += '. Total time ' + originDescription.duration;
+        resultsArray.destination += '. <b>Total time ' + originDescription.duration + '</b';
         totalTime += originDescription.exactDuration;
 
         for (var i = 1; i < route.length - 1; i++) {
@@ -64,7 +64,7 @@ module.exports = (function() {
                 description += currPointDescription.errandName ?
                     ': ' + currPointDescription.errandName.toLowerCase()
                     : '';
-                description += '. Total time ' + currPointDescription.duration;
+                description += '. <b> Total time ' + currPointDescription.duration + '</b';
                 resultsArray.errands.push(description);
                 totalTime += currPointDescription.exactDuration;
             }
