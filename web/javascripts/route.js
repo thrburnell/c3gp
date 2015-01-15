@@ -31,6 +31,8 @@ module.exports = (function() {
 
     var computeMenuItems = function(route) {
 
+        console.log('a');
+
         var totalTime = 0;
 
         var resultsArray = {
@@ -43,7 +45,6 @@ module.exports = (function() {
         resultsArray.destination += '. Total time ' + originDescription.duration;
         totalTime += originDescription.exactDuration;
 
-        console.log('a');
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
 
@@ -154,13 +155,12 @@ module.exports = (function() {
                         lng: response.kc.destination.D,
                         errandName: '',
                         placeName: response.routes[0].legs[0].end_address,
-                        duration: response.routes[0].legs[0].duration.text,
-                        exactDuration: response.routes[0].legs[0].duration.value
                     };
                     markers.getErrandsInfo().push(pointDescription);
-                } else {
-                    pointDescription.duration = response.routes[0].legs[0].duration.text;
                 }
+
+                pointDescription.duration = response.routes[0].legs[0].duration.text;
+                pointDescription.exactDuration = response.routes[0].legs[0].duration.value;
 
                 // If taking public transport
                 if (response.routes[0].legs[0].steps > 1) {
