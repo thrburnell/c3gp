@@ -31,11 +31,19 @@ module.exports = (function() {
 
     var computeMenuItems = function(route) {
 
+        var totalTime = 0;
+
         var resultsArray = {
             origin: menu.getOriginText(),
             errands: [],
-            destination: locals.returnTo + ' ' + menu.getOriginText()
+            destination: locals.returnTo + ' ' + menu.getOriginText().toLowerCase()
         };
+
+        var originDescription = getPointDescription(route[0]);
+        resultsArray.destination += '. Total time ' + originDescription.duration;
+        totalTime += originDescription.exactDuration;
+
+        console.log('a');
         for (var i = 1; i < route.length - 1; i++) {
             var letter = String.fromCharCode('A'.charCodeAt(0) + i);
 
@@ -57,9 +65,12 @@ module.exports = (function() {
                     : '';
                 description += '. Total time ' + currPointDescription.duration;
                 resultsArray.errands.push(description);
+                totalTime += currPointDescription.exactDuration;
             }
-
         }
+
+        resultsArray.totalTime = '' + (Math.floor(totalTime / 60)) + ' minutes ' +
+            (totalTime % 60) + ' seconds' ;
 
         menu.clearResults();
         menu.setResults(resultsArray);
@@ -143,11 +154,18 @@ module.exports = (function() {
                         lng: response.kc.destination.D,
                         errandName: '',
                         placeName: response.routes[0].legs[0].end_address,
-                        duration: response.routes[0].legs[0].duration.text
+                        duration: response.routes[0].legs[0].duration.text,
+                        exactDuration: response.routes[0].legs[0].duration.value
                     };
                     markers.getErrandsInfo().push(pointDescription);
                 } else {
                     pointDescription.duration = response.routes[0].legs[0].duration.text;
+                }
+
+                // If taking public transport
+                if (response.routes[0].legs[0].steps > 1) {
+                    // Suspended as it is not important
+                    // pointDescription.transit =
                 }
 
                 markers.add(map.getMapCanvas(), request.origin, index);

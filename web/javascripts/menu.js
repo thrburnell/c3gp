@@ -147,6 +147,8 @@ module.exports = (function() {
             polyline.normalizeSegment(errands.length);
         });
         $('#result-destination').append(destinationDiv);
+
+        $("#d-total-time").text('TOTAL: ' + resultArray.totalTime);
     };
 
     var clearResults = function() {
