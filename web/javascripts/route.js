@@ -31,8 +31,6 @@ module.exports = (function() {
 
     var computeMenuItems = function(route) {
 
-        console.log('a');
-
         var totalTime = 0;
 
         var resultsArray = {
