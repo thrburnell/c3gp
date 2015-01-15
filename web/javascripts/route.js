@@ -17,19 +17,17 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
-        computeMenuItems(route);
         computeTransitToPoints(route);
         computeLocationsArray(route);
 
         clearRoute();
 
         currRequest = 0;
-        nextRequest();
+        nextRequest(route);
     };
 
     var computeMenuItems = function(route) {
 
-        console.log(route);
         var resultsArray = {
             origin: menu.getOriginText(),
             errands: [],
@@ -45,6 +43,7 @@ module.exports = (function() {
                 'Walk to';
 
             if (! currPointDescription) {
+                console.error('Could not find route to point');
                 resultsArray.errands.push(actionString + ' point ' + letter);
             } else {
                 var description =
@@ -52,7 +51,9 @@ module.exports = (function() {
                     ' ' +
                     currPointDescription.placeName +
                     ': '+
-                    currPointDescription.errandName.toLowerCase();
+                    currPointDescription.errandName.toLowerCase() +
+                    '. Total time ' +
+                    currPointDescription.duration;
                 resultsArray.errands.push(description);
             }
 
@@ -77,7 +78,7 @@ module.exports = (function() {
     };
 
     var withinEpsilon = function(pos1, pos2) {
-        var epsilon = 0.00001;
+        var epsilon = 0.0001;
         return Math.abs(pos1.lat - pos2.lat) < epsilon && Math.abs(pos1.lng - pos2.lng) < epsilon;
     };
 
@@ -99,8 +100,9 @@ module.exports = (function() {
     /**
      * Hack. Too lazy to see what a promise is.
      */
-    var nextRequest = function() {
+    var nextRequest = function(route) {
         if (currRequest === locations.length - 1) {
+            computeMenuItems(route);
             return;
         }
 
@@ -118,20 +120,40 @@ module.exports = (function() {
         };
 
         currRequest++;
-        requestForRoute(request);
+        requestForRoute(request, undefined, route);
     };
 
-    var requestForRoute = function(request, index) {
+    var requestForRoute = function(request, index, route) {
         map.getDirectionsService().route(request, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
-                // computeMenuItems(response);
                 renderDirections(response);
+
+                var key = {
+                    lat: response.kc.destination.k,
+                    lng: response.kc.destination.D
+                };
+
+                var pointDescription = getPointDescription(key);
+
+                if (! pointDescription) {
+                    pointDescription = {
+                        lat: response.kc.destination.k,
+                        lng: response.kc.destination.D,
+                        errandName: '',
+                        placeName: response.routes[0].legs[0].end_address,
+                        duration: response.routes[0].legs[0].duration.text
+                    };
+                    markers.getErrandsInfo().push(pointDescription);
+                } else {
+                    pointDescription.duration = response.routes[0].legs[0].duration.text;
+                }
+
                 markers.add(map.getMapCanvas(), request.origin, index);
-                nextRequest();
+                nextRequest(route);
             } else if (status === google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
                 currRequest--;
                 setTimeout(function() {
-                    nextRequest();
+                    nextRequest(route);
                 }, 1000);
             }
         });
