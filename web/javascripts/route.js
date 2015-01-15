@@ -17,6 +17,9 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
+        //Hack to avoid a double polyline at the very beginning. No idea why it is done.
+        polyline.createPolyline(null);
+
         computeTransitToPoints(route);
         computeLocationsArray(route);
 

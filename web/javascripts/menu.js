@@ -106,9 +106,6 @@ module.exports = (function() {
 
     var setResults = function(resultArray) {
 
-        //Hack to avoid a double polyline at the very beginning. No idea why it is done.
-        polyline.createPolyline(null);
-
         var i;
         var origin = resultArray.origin || '';
         var errands = resultArray.errands || [];
