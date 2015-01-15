@@ -49,14 +49,13 @@ module.exports = (function() {
                 console.error('Could not find route to point');
                 resultsArray.errands.push(actionString + ' point ' + letter);
             } else {
-                var description =
-                    actionString +
-                    ' ' +
-                    currPointDescription.placeName +
-                    ': '+
-                    currPointDescription.errandName.toLowerCase() +
-                    '. Total time ' +
-                    currPointDescription.duration;
+                var description = '';
+                description += actionString;
+                description += ' ' + currPointDescription.placeName;
+                description += currPointDescription.errandName ?
+                    ': ' + currPointDescription.errandName.toLowerCase()
+                    : '';
+                description += '. Total time ' + currPointDescription.duration;
                 resultsArray.errands.push(description);
             }
 
