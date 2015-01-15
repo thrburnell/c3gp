@@ -84,6 +84,19 @@ module.exports = (function() {
         for (var i = 0; i < errandInputs.length; i++) {
             if (errandInputs[i].disabled !== true) {
                 errandInputs[i].disabled = true;
+
+                var letter = String.fromCharCode('A'.charCodeAt(0) + (i + 1));
+                var markerUrl = makeIcon(letter, constants.markerColour1, constants.markerColourLetter);
+
+                var menuMarker = $('<div>', {
+                    class: 'menu-marker'
+                }).append($('<img>', {
+                    src: markerUrl.url
+                }));
+
+                var errDiv = $(errandInputs[i]).parent();
+                errDiv.append(menuMarker);
+
                 if (allErrandBoxesAreFull) {
                     createErrandBox();
                 }
@@ -107,6 +120,7 @@ module.exports = (function() {
         var useGtspButton = $('#b-use-gtsp').show();
         $('.delete-on-clear').remove();
         $('.input-box').val('').removeAttr('disabled');
+        $('.menu-marker').remove();
     };
 
     var setResults = function(resultArray) {
@@ -158,6 +172,12 @@ module.exports = (function() {
 
     var clearResults = function() {
         $('#stripe-results').find('.direction-step').not('.hidden').remove();
+    };
+
+    var makeIcon = function(letter, colour, letterColour) {
+        return new google.maps.MarkerImage("http://chart.apis.google.com" +
+               "/chart?chst=d_map_pin_letter&chld=" + letter + "|" +
+               colour + "|" + letterColour);
     };
 
     return {

@@ -1,6 +1,7 @@
 var instructions = require('./instructions.js');
 var locals = require('./locals.js');
 var menu = require('./menu.js');
+var constants = require('./constants.js');
 
 module.exports = (function() {
 
@@ -8,9 +9,9 @@ module.exports = (function() {
     var errandsInfo = [];
     var temporaryMarkers = [];
     var pinIndex = 0;
-    var redColour = "3593DD";
-    var greenColour = "A0B72C";
-    var letterColour = "FFFFFF";
+    var redColour = constants.markerColour1;
+    var greenColour = constants.markerColour2;
+    var letterColour = constants.markerColourLetter;
     var infoWindow = new google.maps.InfoWindow();
 
 
