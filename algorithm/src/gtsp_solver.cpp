@@ -140,8 +140,6 @@ vector<int>* GtspSolver::solveGtspWithBacktracking() {
 
 vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
-    throw std::runtime_error("TODO solve TSP using Genetic Algorithms");
-
     checkBuildReady();
 
     srand(time(NULL));
@@ -170,6 +168,25 @@ vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
     return result;
 }
+
+void GtspSolver::mutation(vector<int>* chromosome) {
+
+    int cut1 = rand() % chromosome->size();
+    int cut2 = rand() % chromosome->size();
+
+    if (cut1 > cut2) {
+        int aux = cut1;
+        cut1 = cut2;
+        cut2 = aux;
+    }
+
+    for (int i = 0; i < (cut2 - cut1 + 1) / 2; i++) {
+        int aux = (*chromosome)[cut1 + i];
+        (*chromosome)[cut1 + i] = (*chromosome)[cut2 - i];
+        (*chromosome)[cut2 - i] = aux;
+    }
+}
+
 
 
 vector<vector<int>*>* GtspSolver::getInitialPopulation() {
@@ -204,8 +221,6 @@ vector<vector<int>*>* GtspSolver::getInitialPopulation() {
 
         result->push_back(chromosome);
     }
-
-
 
     return result;
 }

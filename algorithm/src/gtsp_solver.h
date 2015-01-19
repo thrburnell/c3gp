@@ -59,6 +59,7 @@ private:
     vector<vector<int>*>* getInitialPopulation();
     double getFitness(vector<int>* chromosome);
     vector<int>* getBestChromosome(vector<vector<int>*>* population);
+    void mutation(vector<int>* population);
 };
 
 #endif /* GTSP_SOLVER_H */
