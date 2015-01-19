@@ -187,7 +187,9 @@ void GtspSolver::mutation(vector<int>* chromosome) {
     }
 }
 
+vector<vector<int>*>* GtspSolver::crossover(vector<int>* chromosome1, vector<int>* chromosome2) {
 
+}
 
 vector<vector<int>*>* GtspSolver::getInitialPopulation() {
     auto result = new vector<vector<int>*>();

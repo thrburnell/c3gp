@@ -60,6 +60,7 @@ private:
     double getFitness(vector<int>* chromosome);
     vector<int>* getBestChromosome(vector<vector<int>*>* population);
     void mutation(vector<int>* population);
+    vector<vector<int>*>* crossover(vector<int>* chromosome1, vector<int>* chromosome2);
 };
 
 #endif /* GTSP_SOLVER_H */
