@@ -61,6 +61,11 @@ private:
     vector<int>* getBestChromosome(vector<vector<int>*>* population);
     void mutation(vector<int>* population);
     vector<vector<int>*>* crossover(vector<int>* chromosome1, vector<int>* chromosome2);
+    vector<vector<int>*>* getBestChromosomes(vector<vector<int>*>* population);
+    void killWorstChromosomes(vector<vector<int>*>* population);
+    vector<vector<int>*>* getOffspringsThroughCrossoverAndMutation(vector<vector<int>*>* bestFits);
+
+
 };
 
 #endif /* GTSP_SOLVER_H */

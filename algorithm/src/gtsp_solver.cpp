@@ -164,6 +164,10 @@ vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
     vector<vector<int>*>* initialPopulation = getInitialPopulation();
 
+    for (int i = 0; i < 200; i++) {
+
+    }
+
     vector<int>* result = getBestChromosome(initialPopulation);
 
     return result;
@@ -188,7 +192,8 @@ void GtspSolver::mutation(vector<int>* chromosome) {
 }
 
 vector<vector<int>*>* GtspSolver::crossover(vector<int>* chromosome1, vector<int>* chromosome2) {
-
+    //TODO
+    return NULL;
 }
 
 vector<vector<int>*>* GtspSolver::getInitialPopulation() {
@@ -258,5 +263,21 @@ vector<int>* GtspSolver::getBestChromosome(vector<vector<int>*>* population) {
     }
 
     return bestFitnessChromosome;
+
+}
+
+vector<vector<int>*>* GtspSolver::getBestChromosomes(vector<vector<int>*>* population) {
+    //TODO
+    return population;
+}
+
+void GtspSolver::killWorstChromosomes(vector<vector<int>*>* population) {
+    //TODO
+}
+
+vector<vector<int>*>*
+GtspSolver::getOffspringsThroughCrossoverAndMutation(vector<vector<int>*>* bestFits) {
+    //TODO
+    return bestFits;
 
 }
