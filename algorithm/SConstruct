@@ -22,7 +22,8 @@ tsp_bin = env.Program(target = target, source = source)
 
 # Build unittests.
 test_env = Environment(
-    CXXFLAGS = ['-std=c++11', '-O2'],
+    # CXXFLAGS = ['-std=c++11', '-O2'],
+    CXXFLAGS = ['-std=c++11'],
     CPPPATH = ['bower_components/googletest/include']
 )
 

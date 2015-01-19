@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <vector>
 
+using std::vector;
+
 /**
  * Factory-ish pattern implemented here. The way you use this class is
  *  - Set the number of nodes on which you want to apply the TSP
@@ -53,6 +55,10 @@ private:
             throw std::runtime_error("Not initialized");
         }
     }
+
+    vector<vector<int>*>* getInitialPopulation();
+    double getFitness(vector<int>* chromosome);
+    vector<int>* getBestChromosome(vector<vector<int>*>* population);
 };
 
 #endif /* GTSP_SOLVER_H */
