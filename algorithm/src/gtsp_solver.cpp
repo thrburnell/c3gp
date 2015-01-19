@@ -138,7 +138,7 @@ vector<int>* GtspSolver::solveGtspWithBacktracking() {
 // http://josilber.scripts.mit.edu/GTSP.pdf
 
 
-vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
+chromosome* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
     checkBuildReady();
 
@@ -168,15 +168,15 @@ vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
     }
 
-    vector<int>* result = getBestChromosome(initialPopulation);
+    chromosome* result = getBestChromosome(initialPopulation);
 
     return result;
 }
 
-void GtspSolver::mutation(vector<int>* chromosome) {
+void GtspSolver::mutation(chromosome* chrom) {
 
-    int cut1 = rand() % chromosome->size();
-    int cut2 = rand() % chromosome->size();
+    int cut1 = rand() % chrom->size();
+    int cut2 = rand() % chrom->size();
 
     if (cut1 > cut2) {
         int aux = cut1;
@@ -185,13 +185,13 @@ void GtspSolver::mutation(vector<int>* chromosome) {
     }
 
     for (int i = 0; i < (cut2 - cut1 + 1) / 2; i++) {
-        int aux = (*chromosome)[cut1 + i];
-        (*chromosome)[cut1 + i] = (*chromosome)[cut2 - i];
-        (*chromosome)[cut2 - i] = aux;
+        int aux = (*chrom)[cut1 + i];
+        (*chrom)[cut1 + i] = (*chrom)[cut2 - i];
+        (*chrom)[cut2 - i] = aux;
     }
 }
 
-population* GtspSolver::crossover(vector<int>* chromosome1, vector<int>* chromosome2) {
+population* GtspSolver::crossover(chromosome* chrom1, chromosome* chrom2) {
     //TODO
     return NULL;
 }
@@ -232,25 +232,25 @@ population* GtspSolver::getInitialPopulation() {
     return result;
 }
 
-double GtspSolver::getFitness(vector<int>* chromosome) {
+double GtspSolver::getFitness(chromosome* chrom) {
 
     double length = 0;
 
-    for (int i = 1; i < chromosome->size(); i++) {
-        length += adjacencyMatrix[chromosome->at(i-1)][chromosome->at(i)];
+    for (int i = 1; i < chrom->size(); i++) {
+        length += adjacencyMatrix[chrom->at(i-1)][chrom->at(i)];
     }
 
-    length += adjacencyMatrix[chromosome->at(chromosome->size()-1)][chromosome->at(0)];
+    length += adjacencyMatrix[chrom->at(chrom->size()-1)][chrom->at(0)];
 
     return length;
 }
 
-vector<int>* GtspSolver::getBestChromosome(population* population) {
+vector<int>* GtspSolver::getBestChromosome(population* pop) {
 
     double bestFitnessValue = std::numeric_limits<double>::max();
     vector<int>* bestFitnessChromosome = NULL;
 
-    for (const auto& it : *population) {
+    for (const auto& it : *pop) {
         double currentFitnessValue = getFitness(it);
         if (currentFitnessValue < bestFitnessValue) {
             bestFitnessValue = currentFitnessValue;

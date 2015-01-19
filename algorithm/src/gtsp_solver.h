@@ -59,14 +59,14 @@ private:
         }
     }
 
-    vector<vector<int>*>* getInitialPopulation();
-    double getFitness(vector<int>* chromosome);
-    vector<int>* getBestChromosome(vector<vector<int>*>* population);
-    void mutation(vector<int>* population);
-    population* crossover(vector<int>* chromosome1, vector<int>* chromosome2);
+    population* getInitialPopulation();
+    double getFitness(chromosome* chrom);
+    chromosome* getBestChromosome(population* pop);
+    void mutation(chromosome* chrom);
+    population* crossover(chromosome* chrom1, chromosome* chrom2);
     population* getBestChromosomes(population* pop);
     void killWorstChromosomes(population* pop);
-    population* getOffspringsThroughCrossoverAndMutation(vector<vector<int>*>* bestFits);
+    population* getOffspringsThroughCrossoverAndMutation(population* bestFits);
 
 
 };
