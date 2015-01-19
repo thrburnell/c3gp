@@ -181,14 +181,26 @@ vector<vector<int>*>* GtspSolver::getInitialPopulation() {
         }
 
         auto chromosome = new vector<int>();
+        int totalNodesAdded = 0;
 
         chromosome->push_back(startingPoint);
         tbGroupVisited[nodeGroup[startingPoint]] = true;
+        totalNodesAdded++;
 
         for (;;) {
+            if (totalNodesAdded == tbTotalGroups) {
+                break;
+            }
 
+            int randomNode = rand() % totalNodes;
+            if (nodeGroup[randomNode] == true) {
+                continue;
+            }
+
+            chromosome->push_back(randomNode);
+            tbGroupVisited[nodeGroup[randomNode]] = true;
+            totalNodesAdded++;
         }
-
 
         result->push_back(chromosome);
     }
