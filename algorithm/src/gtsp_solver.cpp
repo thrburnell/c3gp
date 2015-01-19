@@ -162,7 +162,7 @@ vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
         tbGroupVisited[i] = 0;
     }
 
-    vector<vector<int>*>* initialPopulation = getInitialPopulation();
+    population* initialPopulation = getInitialPopulation();
 
     for (int i = 0; i < 200; i++) {
 
@@ -191,13 +191,13 @@ void GtspSolver::mutation(vector<int>* chromosome) {
     }
 }
 
-vector<vector<int>*>* GtspSolver::crossover(vector<int>* chromosome1, vector<int>* chromosome2) {
+population* GtspSolver::crossover(vector<int>* chromosome1, vector<int>* chromosome2) {
     //TODO
     return NULL;
 }
 
-vector<vector<int>*>* GtspSolver::getInitialPopulation() {
-    auto result = new vector<vector<int>*>();
+population* GtspSolver::getInitialPopulation() {
+    auto result = new population();
 
     for (int i = 1; i <= 50; i++) {
         for (int j = 0; j < tbTotalGroups; j++) {
@@ -245,7 +245,7 @@ double GtspSolver::getFitness(vector<int>* chromosome) {
     return length;
 }
 
-vector<int>* GtspSolver::getBestChromosome(vector<vector<int>*>* population) {
+vector<int>* GtspSolver::getBestChromosome(population* population) {
 
     double bestFitnessValue = std::numeric_limits<double>::max();
     vector<int>* bestFitnessChromosome = NULL;
@@ -266,17 +266,16 @@ vector<int>* GtspSolver::getBestChromosome(vector<vector<int>*>* population) {
 
 }
 
-vector<vector<int>*>* GtspSolver::getBestChromosomes(vector<vector<int>*>* population) {
+population* GtspSolver::getBestChromosomes(population* pop) {
     //TODO
-    return population;
+    return pop;
 }
 
-void GtspSolver::killWorstChromosomes(vector<vector<int>*>* population) {
+void GtspSolver::killWorstChromosomes(population* pop) {
     //TODO
 }
 
-vector<vector<int>*>*
-GtspSolver::getOffspringsThroughCrossoverAndMutation(vector<vector<int>*>* bestFits) {
+population* GtspSolver::getOffspringsThroughCrossoverAndMutation(population* bestFits) {
     //TODO
     return bestFits;
 

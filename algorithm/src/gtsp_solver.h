@@ -8,6 +8,9 @@
 
 using std::vector;
 
+typedef vector<int> chromosome;
+typedef vector<chromosome*> population;
+
 /**
  * Factory-ish pattern implemented here. The way you use this class is
  *  - Set the number of nodes on which you want to apply the TSP
@@ -60,10 +63,10 @@ private:
     double getFitness(vector<int>* chromosome);
     vector<int>* getBestChromosome(vector<vector<int>*>* population);
     void mutation(vector<int>* population);
-    vector<vector<int>*>* crossover(vector<int>* chromosome1, vector<int>* chromosome2);
-    vector<vector<int>*>* getBestChromosomes(vector<vector<int>*>* population);
-    void killWorstChromosomes(vector<vector<int>*>* population);
-    vector<vector<int>*>* getOffspringsThroughCrossoverAndMutation(vector<vector<int>*>* bestFits);
+    population* crossover(vector<int>* chromosome1, vector<int>* chromosome2);
+    population* getBestChromosomes(population* pop);
+    void killWorstChromosomes(population* pop);
+    population* getOffspringsThroughCrossoverAndMutation(vector<vector<int>*>* bestFits);
 
 
 };
