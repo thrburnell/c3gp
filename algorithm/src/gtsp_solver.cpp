@@ -162,13 +162,20 @@ chromosome* GtspSolver::solveGtspWithGeneticAlgorithm() {
         tbGroupVisited[i] = 0;
     }
 
-    population* initialPopulation = getInitialPopulation();
+    population* pop = getInitialPopulation();
 
     for (int i = 0; i < 200; i++) {
+        population* heroes = getBestChromosomes(pop);
+        population* children = getOffspringsThroughCrossoverAndMutation(heroes);
+        killWorstChromosomes(pop);
 
+        while (!children->empty()) {
+            pop->push_back(children->back());
+            children->pop_back();
+        }
     }
 
-    chromosome* result = getBestChromosome(initialPopulation);
+    chromosome* result = getBestChromosome(pop);
 
     return result;
 }
@@ -245,7 +252,7 @@ double GtspSolver::getFitness(chromosome* chrom) {
     return length;
 }
 
-vector<int>* GtspSolver::getBestChromosome(population* pop) {
+chromosome* GtspSolver::getBestChromosome(population* pop) {
 
     double bestFitnessValue = std::numeric_limits<double>::max();
     vector<int>* bestFitnessChromosome = NULL;
