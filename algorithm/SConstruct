@@ -5,7 +5,8 @@ VariantDir('build', 'src', duplicate = 0)
 
 # Build the main binary.
 env = Environment(
-    CXXFLAGS = ['-std=c++11', '-O2']
+    # CXXFLAGS = ['-std=c++11', '-O2']
+    CXXFLAGS = ['-std=c++11']
     )
 
 source = []

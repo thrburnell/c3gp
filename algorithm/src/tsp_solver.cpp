@@ -252,9 +252,9 @@ double TspSolver::dynamicSolve(int visited, int end) {
 
     // The 'other' cases when we need to take something out
     double min_cost = std::numeric_limits<double>::max();
-    
+
     // remove end from the visited list
-    int visited_before = visited & ~(1 << end); 
+    int visited_before = visited & ~(1 << end);
     for (int i = 0; i < totalNodes; ++i) {
         if (visited_before & (1 << i)) {
             double candidate_cost = dynamicSolve(visited_before, i) +
@@ -290,19 +290,4 @@ std::vector<int>* TspSolver::solveTspWithDynamicProgramming() {
         solution->push_back(currNode);
     }
     return solution;
-}
-
-//GENETIC ALGORITHM CODE
-// TODO: inspired from here
-// https://github.com/parano/GeneticAlgorithm-TSP/blob/master/src/algorithm.js
-
-std::vector<int>* TspSolver::solveTspWithGeneticAlgorithm() {
-
-    throw std::runtime_error("TODO solve TSP using Genetic Algorithms");
-
-    checkBuildReady();
-
-    std::vector<int>* result = new std::vector<int>();
-
-    return result;
 }

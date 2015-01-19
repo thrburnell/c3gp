@@ -35,7 +35,6 @@ public:
     std::vector<int>* solveTspWithDynamicProgramming();
 
     std::vector<int>* solveTspWithBacktracking();
-    std::vector<int>* solveTspWithGeneticAlgorithm();
 
 private:
     double** adjacencyMatrix;

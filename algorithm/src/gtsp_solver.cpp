@@ -128,9 +128,8 @@ std::vector<int>* GtspSolver::solveGtspWithBacktracking() {
 }
 
 
-//GENETIC ALGORITHM CODE
-// TODO: inspired from here
-// https://github.com/parano/GeneticAlgorithm-TSP/blob/master/src/algorithm.js
+// Inspired from here
+// http://josilber.scripts.mit.edu/GTSP.pdf
 
 std::vector<int>* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
