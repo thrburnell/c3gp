@@ -2,6 +2,7 @@ var markers = require('./markers.js');
 var map = require('./map.js');
 var menu = require('./menu.js');
 var polyline = require('./polyline.js');
+var locals = require('./locals.js');
 
 module.exports = (function() {
 
@@ -16,31 +17,81 @@ module.exports = (function() {
 
     var displayRoute = function(route) {
 
-        computeMenuItems(route);
+        //Hack to avoid a double polyline at the very beginning. No idea why it is done.
+        polyline.createPolyline(null);
+
         computeTransitToPoints(route);
         computeLocationsArray(route);
 
         clearRoute();
 
         currRequest = 0;
-        nextRequest();
+        nextRequest(route);
     };
 
     var computeMenuItems = function(route) {
 
+        var totalTime = 0;
+
         var resultsArray = {
-            origin: "Current Location",
+            origin: menu.getOriginText(),
             errands: [],
-            destination: "Current Location"
+            destination: locals.returnTo + ' ' + menu.getOriginText().toLowerCase()
         };
+
+        var originDescription = getPointDescription(route[0]);
+        resultsArray.destination += '. <b>Total time ' + originDescription.duration + '</b';
+        totalTime += originDescription.exactDuration;
+
         for (var i = 1; i < route.length - 1; i++) {
-            var temp = String.fromCharCode('A'.charCodeAt(0) + i);
-            resultsArray.errands.push("Step towards point " + temp);
+            var letter = String.fromCharCode('A'.charCodeAt(0) + i);
+
+            var currPointDescription = getPointDescription(route[i]);
+
+            var actionString = route[i].transit === 'transit' ?
+                'Take public transport to' :
+                'Walk to';
+
+            if (! currPointDescription) {
+                console.error('Could not find route to point');
+                resultsArray.errands.push(actionString + ' point ' + letter);
+            } else {
+                var description = '';
+                description += actionString;
+                description += ' ' + currPointDescription.placeName;
+                description += currPointDescription.errandName ?
+                    ': <i>' + currPointDescription.errandName.toLowerCase() + '</i>'
+                    : '';
+                description += '. <b> Total time ' + currPointDescription.duration + '</b';
+                resultsArray.errands.push(description);
+                totalTime += currPointDescription.exactDuration;
+            }
         }
+
+        resultsArray.totalTime = '' + (Math.floor(totalTime / 60)) + ' minutes ' +
+            (totalTime % 60) + ' seconds' ;
 
         menu.clearResults();
         menu.setResults(resultsArray);
         menu.changeToResultsStripe();
+    };
+
+    var getPointDescription = function(position) {
+        var i;
+        var errandsInfo = markers.getErrandsInfo();
+
+        for (i = 0; i < errandsInfo.length; i++) {
+            if (withinEpsilon(errandsInfo[i], position)) {
+                return errandsInfo[i];
+            }
+        }
+
+        return null;
+    };
+
+    var withinEpsilon = function(pos1, pos2) {
+        var epsilon = 0.00001;
+        return Math.abs(pos1.lat - pos2.lat) < epsilon && Math.abs(pos1.lng - pos2.lng) < epsilon;
     };
 
     var computeTransitToPoints = function(route) {
@@ -61,8 +112,9 @@ module.exports = (function() {
     /**
      * Hack. Too lazy to see what a promise is.
      */
-    var nextRequest = function() {
+    var nextRequest = function(route) {
         if (currRequest === locations.length - 1) {
+            computeMenuItems(route);
             return;
         }
 
@@ -80,19 +132,46 @@ module.exports = (function() {
         };
 
         currRequest++;
-        requestForRoute(request);
+        requestForRoute(request, undefined, route);
     };
 
-    var requestForRoute = function(request, index) {
+    var requestForRoute = function(request, index, route) {
         map.getDirectionsService().route(request, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 renderDirections(response);
+
+                var key = {
+                    lat: response.kc.destination.k,
+                    lng: response.kc.destination.D
+                };
+
+                var pointDescription = getPointDescription(key);
+
+                if (! pointDescription) {
+                    pointDescription = {
+                        lat: response.kc.destination.k,
+                        lng: response.kc.destination.D,
+                        errandName: '',
+                        placeName: response.routes[0].legs[0].end_address,
+                    };
+                    markers.getErrandsInfo().push(pointDescription);
+                }
+
+                pointDescription.duration = response.routes[0].legs[0].duration.text;
+                pointDescription.exactDuration = response.routes[0].legs[0].duration.value;
+
+                // If taking public transport
+                if (response.routes[0].legs[0].steps > 1) {
+                    // Suspended as it is not important
+                    // pointDescription.transit =
+                }
+
                 markers.add(map.getMapCanvas(), request.origin, index);
-                nextRequest();
+                nextRequest(route);
             } else if (status === google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
                 currRequest--;
                 setTimeout(function() {
-                    nextRequest();
+                    nextRequest(route);
                 }, 1000);
             }
         });

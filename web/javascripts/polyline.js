@@ -5,7 +5,7 @@ module.exports = (function() {
     var polylineDefaultWeight = 6;
     var polylineDefaultZIndex = 1;
     var polylineDefaultColor = '#0088FF';
-    var polylineHighlightColor = '#EA7260';
+    var polylineHighlightColor = '#A0B72C';
 
     var highlightSegment = function(segmentNumber) {
         segmentNumber = segmentNumber || 0;

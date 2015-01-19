@@ -39,6 +39,7 @@ module.exports = (function() {
                 if (errandForQuery.length === 0) {
                 } else if (errandForQuery.length === 1) {
                     event.target.title = errandForQuery[0].api_id;
+                    event.target.colloquial = errandForQuery[0].colloquial;
                 } else {
                     console.error("There is an issue with searching for errands");
                 }

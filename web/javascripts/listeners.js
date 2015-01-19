@@ -62,7 +62,8 @@ module.exports = (function() {
             markers.clearTemporaries();
 
             if (event.target.title !== '') {
-                search.makeErrandSearch(event.target.title);
+                search.makeErrandSearch(event.target.title,
+                                        event.target.colloquial);
             } else {
                 search.makeSearch(event.target.value);
             }

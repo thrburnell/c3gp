@@ -33,7 +33,11 @@ module.exports = (function() {
         newErrandBox.click(function(event) {
             errand.makeSearch(event.target);
         });
+
+        $(".gtsp-button").hide();
         var useGtspButton = $('#b-use-gtsp').clone(true);
+        useGtspButton.show();
+
         useGtspButton.removeClass('first');
 
         var wrapper = $('<div>', {
@@ -71,11 +75,28 @@ module.exports = (function() {
         $('#origin-input-primary').val(text);
     };
 
+    var getOriginText = function() {
+        return $('#origin-input-primary').val();
+    };
+
     var disableNextErrandInput = function() {
         var errandInputs = $('.errand-input');
         for (var i = 0; i < errandInputs.length; i++) {
             if (errandInputs[i].disabled !== true) {
                 errandInputs[i].disabled = true;
+
+                var letter = String.fromCharCode('A'.charCodeAt(0) + (i + 1));
+                var markerUrl = makeIcon(letter, constants.markerColour1, constants.markerColourLetter);
+
+                var menuMarker = $('<div>', {
+                    class: 'menu-marker'
+                }).append($('<img>', {
+                    src: markerUrl.url
+                }));
+
+                var errDiv = $(errandInputs[i]).parent();
+                errDiv.append(menuMarker);
+
                 if (allErrandBoxesAreFull) {
                     createErrandBox();
                 }
@@ -96,14 +117,13 @@ module.exports = (function() {
     };
 
     var clearInputStripe = function() {
+        var useGtspButton = $('#b-use-gtsp').show();
         $('.delete-on-clear').remove();
         $('.input-box').val('').removeAttr('disabled');
+        $('.menu-marker').remove();
     };
 
     var setResults = function(resultArray) {
-
-        //Hack to avoid a double polyline at the very beginning. No idea why it is done.
-        polyline.createPolyline(null);
 
         var i;
         var origin = resultArray.origin || '';
@@ -146,10 +166,18 @@ module.exports = (function() {
             polyline.normalizeSegment(errands.length);
         });
         $('#result-destination').append(destinationDiv);
+
+        $("#d-total-time").html('<b>TOTAL: ' + resultArray.totalTime + '</b>');
     };
 
     var clearResults = function() {
         $('#stripe-results').find('.direction-step').not('.hidden').remove();
+    };
+
+    var makeIcon = function(letter, colour, letterColour) {
+        return new google.maps.MarkerImage("http://chart.apis.google.com" +
+               "/chart?chst=d_map_pin_letter&chld=" + letter + "|" +
+               colour + "|" + letterColour);
     };
 
     return {
@@ -164,6 +192,7 @@ module.exports = (function() {
         disableNextErrandInput: disableNextErrandInput,
         lockOriginInput: lockOriginInput,
         setOriginText: setOriginText,
+        getOriginText: getOriginText,
     };
 
 })();

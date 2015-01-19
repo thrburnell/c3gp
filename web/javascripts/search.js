@@ -1,6 +1,7 @@
 var markers = require('./markers.js');
 var map = require('./map.js');
 var instructions = require('./instructions.js');
+var locals = require('./locals.js');
 
 module.exports = (function() {
 
@@ -17,6 +18,7 @@ module.exports = (function() {
         service.nearbySearch(request, function(results, status) {
             instructions.stopSpinner();
             if (status === google.maps.places.PlacesServiceStatus.OK) {
+                markers.buildErrandsInfo(results, searchInput);
                 markers.addTemporaries(map.getMapCanvas(), results);
             }
         });
@@ -38,8 +40,7 @@ module.exports = (function() {
         });
     };
 
-    var makeErrandSearch = function(api_id) {
-
+    var makeErrandSearch = function(api_id, colloquial) {
         markers.clearTemporaries();
 
         var requestData = {
@@ -64,6 +65,7 @@ module.exports = (function() {
             contentType: "application/json",
             data: JSON.stringify(requestData),
             success: function(ret, status) {
+                markers.buildErrandsInfo(ret, colloquial);
                 markers.addTemporaries(map.getMapCanvas(), ret);
             },
             complete: function() {

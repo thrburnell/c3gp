@@ -1,16 +1,19 @@
 var instructions = require('./instructions.js');
 var locals = require('./locals.js');
 var menu = require('./menu.js');
+var constants = require('./constants.js');
 
 module.exports = (function() {
 
     var markers = [];
+    var errandsInfo = [];
     var temporaryMarkers = [];
     var pinIndex = 0;
-    var redColour = "F7574C";
-    var greenColour = "7BCC70";
-    var letterColour = "000000";
+    var redColour = constants.markerColour1;
+    var greenColour = constants.markerColour2;
+    var letterColour = constants.markerColourLetter;
     var infoWindow = new google.maps.InfoWindow();
+
 
     var add = function(map, position, letter) {
         var marker = createMarker(map, position, letter);
@@ -91,39 +94,39 @@ module.exports = (function() {
         console.log(place);
 
         var priceDescriptors = [
-          "free", "inexpensive", "moderate", "expensive", "very expensive"  
+          "free", "inexpensive", "moderate", "expensive", "very expensive"
         ];
 
-        var contentString = "<div class='place-info-box'>" + 
-          "<h4>" + place.name + "</h4>" + 
+        var contentString = "<div class='place-info-box'>" +
+          "<h4>" + place.name + "</h4>" +
           "<h5>" + place.vicinity + "</h5>" +
-          "<table>" + 
-          (place.opening_hours ? 
-            "<tr>" + 
-            "<td><i class='fa fa-clock-o'></i></td>" + 
-            "<td>opening hours: currently " + (place.opening_hours.open_now ? "open" : "closed") + "</td>" + 
-            "</tr>" : "") + 
-          (place.price_level ? 
-            "<tr>" + 
-            "<td><i class='fa fa-gbp'></i></td>" + 
-            "<td>price: " + priceDescriptors[place.price_level] + "</td>" + 
-            "</tr>" : "") + 
-          (place.rating ? 
-            "<tr>" + 
-            "<td><i class='fa fa-star-o'></i></td>" + 
-            "<td>rating: " + place.rating + "</td>" + 
-            "</tr>" : "") + 
-          "<tr>" + 
-          "<td class='add-place-row' colspan='2'>" + 
-          "<button type='button'>Add To Route</button>" + 
-          "</td>" + 
-          "</tr>" + 
-          "<tr><td colspan='2'>&nbsp;</td></tr>" + 
-          "</table>" + 
+          "<table>" +
+          (place.opening_hours ?
+            "<tr>" +
+            "<td><i class='fa fa-clock-o'></i></td>" +
+            "<td>opening hours: currently " + (place.opening_hours.open_now ? "open" : "closed") + "</td>" +
+            "</tr>" : "") +
+          (place.price_level ?
+            "<tr>" +
+            "<td><i class='fa fa-gbp'></i></td>" +
+            "<td>price: " + priceDescriptors[place.price_level] + "</td>" +
+            "</tr>" : "") +
+          (place.rating ?
+            "<tr>" +
+            "<td><i class='fa fa-star-o'></i></td>" +
+            "<td>rating: " + place.rating + "</td>" +
+            "</tr>" : "") +
+          "<tr>" +
+          "<td class='add-place-row' colspan='2'>" +
+          "<button type='button'>Add To Route</button>" +
+          "</td>" +
+          "</tr>" +
+          "<tr><td colspan='2'>&nbsp;</td></tr>" +
+          "</table>" +
           "</div>";
 
         var content = $(contentString);
-        
+
         google.maps.event.addDomListener(content.find("button")[0], 'click', function() {
             add(map, place.geometry.location);
             clearTemporaries();
@@ -132,6 +135,35 @@ module.exports = (function() {
 
         infoWindow.open(map, marker);
         infoWindow.setContent(content[0]);
+    };
+
+    // Used for menu display
+    var buildErrandsInfo = function(results, errandName) {
+        results.forEach(function(place) {
+
+            var lat, lng;
+
+            // Hack, Tom lied to me, the results of the /errand is not same as for the
+            // Google Places API call
+            try {
+                lat = place.geometry.location.lat();
+            } catch (err) {
+                lat = place.geometry.location.lat;
+            }
+
+            try {
+                lng = place.geometry.location.lng();
+            } catch (err) {
+                lng = place.geometry.location.lng;
+            }
+
+            errandsInfo.push({
+                lat: lat,
+                lng: lng,
+                errandName: errandName,
+                placeName: place.name,
+            });
+        });
     };
 
     var remove = function(marker) {
@@ -185,6 +217,8 @@ module.exports = (function() {
         remove: remove,
         clear: clear,
         clearTemporaries: clearTemporaries,
+        buildErrandsInfo: buildErrandsInfo,
+        getErrandsInfo: function() { return errandsInfo; },
         getSortedMarkers: function() { return Object.keys(markers).sort(); },
         getOrigin: function() { return markers[0][0]; },
         getMarkers: function() { return markers; },
