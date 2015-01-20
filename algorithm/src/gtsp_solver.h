@@ -66,7 +66,8 @@ private:
     population* crossover(chromosome* chrom1, chromosome* chrom2);
     population* getBestChromosomes(population* pop);
     void killWorstChromosomes(population* pop);
-    population* getOffspringsThroughCrossoverAndMutation(population* bestFits);
+    population* getOffspringThroughCrossover(population* bestFits);
+    void mutatePopulation(population* pop);
 
 
 };

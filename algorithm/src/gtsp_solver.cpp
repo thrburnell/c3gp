@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <unordered_set>
 #include <ctime>
+#include <cmath>
 #include <vector>
 
 using std::vector;
@@ -166,8 +167,9 @@ chromosome* GtspSolver::solveGtspWithGeneticAlgorithm() {
 
     for (int i = 0; i < 200; i++) {
         population* heroes = getBestChromosomes(pop);
-        population* children = getOffspringsThroughCrossoverAndMutation(heroes);
+        population* children = getOffspringThroughCrossover(heroes);
         killWorstChromosomes(pop);
+        mutatePopulation(pop);
 
         while (!children->empty()) {
             pop->push_back(children->back());
@@ -270,20 +272,110 @@ chromosome* GtspSolver::getBestChromosome(population* pop) {
     }
 
     return bestFitnessChromosome;
-
 }
 
 population* GtspSolver::getBestChromosomes(population* pop) {
-    //TODO
-    return pop;
+    population* new_pop = new population();
+    vector<double> cum_sum;
+    double cumulativeARFitnessValue = 0;
+    const double kReprodPow = 0.375;
+
+    // Finds the *worst* fitness value in the population.
+    double worstFitnessValue = std::numeric_limits<double>::min();
+    for (const auto& it : *pop) {
+        worstFitnessValue = std::max(worstFitnessValue, getFitness(it));
+    }
+
+    // Computes the auxiliary value for each element.
+    for(int j = 0; j < pop->size(); ++j) {
+        double ARFitnessValue = pow(worstFitnessValue - 
+                                    getFitness(pop->at(j)),
+                                    kReprodPow);
+        cumulativeARFitnessValue += ARFitnessValue;
+        cum_sum.push_back(cumulativeARFitnessValue);
+    }
+
+    // Select individuals for reproduction.
+    // Note that the algorithm DOES allow for the same chromosome to
+    // be selected multiple times.
+    // Note: This is suboptimal (such sampling can be done in O(1))
+    // but the populations we work with generally aren't very large.
+    for (int i = 0; i < 30; ++i) {
+        double target = rand() * cumulativeARFitnessValue;
+        int to_add;
+        for(int j = 0; j < pop->size(); ++j) {
+            if(target < cum_sum[j]) {
+                to_add = j;
+                break;
+            }
+        }
+
+        new_pop->push_back(pop->at(to_add));
+    }
+
+    return new_pop;
 }
 
 void GtspSolver::killWorstChromosomes(population* pop) {
-    //TODO
+    const double kDeathPow = 0.375;
+    vector<bool> death_list(pop->size(), false);
+    vector<double> cum_sum;
+    double cumulativeADFitnessValue = 0;
+
+    // Finds the *best* fitness value in the population.
+    double bestFitnessValue = std::numeric_limits<double>::max();
+    for (const auto& it : *pop) {
+        bestFitnessValue = std::min(bestFitnessValue, getFitness(it));
+    }
+
+    // Computes the auxiliary value for each element.
+    for (int j = 0; j < pop->size(); ++j) {
+        double ADFitnessValue = pow(getFitness(pop->at(j)) -
+                                    bestFitnessValue,
+                                    kDeathPow);
+        cumulativeADFitnessValue += ADFitnessValue;
+        cum_sum.push_back(cumulativeADFitnessValue);
+    }
+
+    // Use rejection sampling to determine which to kill
+    for (int num_killed = 0; num_killed < 30;) {
+        double target = rand() * cumulativeADFitnessValue;
+        for(int j = 0; j < pop->size(); ++j) {
+            if(target < cum_sum[j]) {
+                if(!death_list[j]) {
+                    ++num_killed;
+                    death_list[j] = true;
+                }
+                break;
+            }
+        }
+    }
+
+    population* survivors = new population();
+
+    // Kill everything which is destined to die
+    for (int i = 0; i < pop->size(); ++i) {
+        if (!death_list[i]) {
+            survivors->push_back(pop->at(i));
+        }
+    }
+
+    *pop = *survivors;
 }
 
-population* GtspSolver::getOffspringsThroughCrossoverAndMutation(population* bestFits) {
+population* GtspSolver::getOffspringThroughCrossover(population* bestFits) {
+
     //TODO
     return bestFits;
 
+}
+
+void GtspSolver::mutatePopulation(population* pop) {
+    // Mutates each chromosome in the population with probability 0.05
+
+    for(auto& it : *pop) {
+        if(rand() < 0.05) {
+            mutation(it);
+        }
+    }
 }
