@@ -364,10 +364,15 @@ void GtspSolver::killWorstChromosomes(population* pop) {
 }
 
 population* GtspSolver::getOffspringThroughCrossover(population* bestFits) {
+    population* all_offspring = new population();
+    for (int i = 0; i < bestFits->size() / 2; ++i) {
+        population* pair_offspring = crossover(bestFits->at(2 * i),
+                                               bestFits->at(2 * i + 1));
+        all_offspring->push_back(pair_offspring->at(0));
+        all_offspring->push_back(pair_offspring->at(1));
+    }
 
-    //TODO
-    return bestFits;
-
+    return all_offspring;
 }
 
 void GtspSolver::mutatePopulation(population* pop) {
