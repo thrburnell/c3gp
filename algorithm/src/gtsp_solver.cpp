@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 using std::vector;
 
@@ -168,9 +169,9 @@ chromosome* GtspSolver::solveGtspWithGeneticAlgorithm() {
     for (int i = 0; i < 200; i++) {
         population* heroes = getBestChromosomes(pop);
         population* children = getOffspringThroughCrossover(heroes);
-        killWorstChromosomes(pop);
+        // killWorstChromosomes(pop);
         mutatePopulation(pop);
-
+    
         while (!children->empty()) {
             pop->push_back(children->back());
             children->pop_back();
@@ -214,14 +215,70 @@ population* GtspSolver::crossover(chromosome* chrom1, chromosome* chrom2) {
         cut2 = aux;
     }
 
-    // Implementing the OX crossover.
     // Determine the clusters that haven't been visited by stuff in the cut
     vector<bool> path1_group_visited(tbTotalGroups, false);
-    for(int i = cut1; i < cut2; ++i) {
-        path1_group_visited[nodeGroup[i]] = true;
+    for (int i = cut1; i < cut2; ++i) {
+        path1_group_visited[nodeGroup[chrom1->at(i)]] = true;
     }
 
-    return NULL;
+    // Determine the order in which chrom2 visits the groups
+    vector<int> group2_seq;
+    vector<int> chrom2_seq;
+    for (int i = 0; i < chrom2->size(); ++i) {
+        int myGroup = nodeGroup[chrom2->at(i)];
+        if (!path1_group_visited[myGroup]) {
+            group2_seq.push_back(myGroup);
+            chrom2_seq.push_back(chrom2->at(i));
+        }
+    }
+
+    chromosome* offspring1 = new chromosome();
+
+    // For now this is a temporary, simple solution just using the OX.
+    for (int i = 0; i < cut1; ++i) {
+        offspring1->push_back(chrom2_seq[i]);
+    }
+    for (int i = cut1; i < cut2; ++i) {
+        offspring1->push_back(chrom1->at(i));
+    }
+    for (int i = cut1; i < chrom2_seq.size(); ++i) {
+        offspring1->push_back(chrom2_seq[i]);
+    }
+
+    // Determine the clusters that haven't been visited by stuff in the cut
+    vector<bool> path2_group_visited(tbTotalGroups, false);
+    for (int i = cut1; i < cut2; ++i) {
+        path2_group_visited[nodeGroup[chrom2->at(i)]] = true;
+    }
+
+    vector<int> group1_seq;
+    vector<int> chrom1_seq;
+    for (int i = 0; i < chrom1->size(); ++i) {
+        int myGroup = nodeGroup[chrom1->at(i)];
+        if (!path2_group_visited[myGroup]) {
+            group1_seq.push_back(myGroup);
+            chrom1_seq.push_back(chrom1->at(i));
+        }
+    }
+
+    chromosome* offspring2 = new chromosome();
+
+    // For now this is a temporary, simple solution just using the OX.
+    for (int i = 0; i < cut1; ++i) {
+        offspring2->push_back(chrom1_seq[i]);
+    }
+    for (int i = cut1; i < cut2; ++i) {
+        offspring2->push_back(chrom2->at(i));
+    }
+    for (int i = cut1; i < chrom1_seq.size(); ++i) {
+        offspring2->push_back(chrom1_seq[i]);
+    }
+
+    population* children = new population();
+    children->push_back(offspring1);
+    children->push_back(offspring2);
+
+    return children;
 }
 
 population* GtspSolver::getInitialPopulation() {
@@ -245,7 +302,7 @@ population* GtspSolver::getInitialPopulation() {
             }
 
             int randomNode = rand() % totalNodes;
-            if (nodeGroup[randomNode] == true) {
+            if (tbGroupVisited[nodeGroup[randomNode]] == true) {
                 continue;
             }
 
@@ -320,8 +377,9 @@ population* GtspSolver::getBestChromosomes(population* pop) {
     // Note: This is suboptimal (such sampling can be done in O(1))
     // but the populations we work with generally aren't very large.
     for (int i = 0; i < 30; ++i) {
-        double target = rand() * cumulativeARFitnessValue;
-        int to_add;
+        double target = ((double) rand() / RAND_MAX) *
+                        cumulativeARFitnessValue;
+        int to_add = 0;
         for(int j = 0; j < pop->size(); ++j) {
             if(target < cum_sum[j]) {
                 to_add = j;
@@ -357,15 +415,17 @@ void GtspSolver::killWorstChromosomes(population* pop) {
     }
 
     // Use rejection sampling to determine which to kill
+    std::cout << death_list.size() << std::endl;
     for (int num_killed = 0; num_killed < 30;) {
-        double target = rand() * cumulativeADFitnessValue;
+        double target = ((double) rand() / RAND_MAX) * 
+                        cumulativeADFitnessValue;
         for(int j = 0; j < pop->size(); ++j) {
             if(target < cum_sum[j]) {
                 if(!death_list[j]) {
                     ++num_killed;
                     death_list[j] = true;
                 }
-                break;
+                continue;
             }
         }
     }
