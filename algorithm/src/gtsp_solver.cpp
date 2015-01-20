@@ -201,7 +201,26 @@ void GtspSolver::mutation(chromosome* chrom) {
 }
 
 population* GtspSolver::crossover(chromosome* chrom1, chromosome* chrom2) {
-    //TODO
+
+    if(chrom1->size() != chrom2->size()) {
+        throw std::runtime_error("Chromosomes must be of same size");
+    }
+
+    int cut1 = rand() % chrom1->size();
+    int cut2 = rand() % chrom1->size();
+    if (cut1 > cut2) {
+        int aux = cut1;
+        cut1 = cut2;
+        cut2 = aux;
+    }
+
+    // Implementing the OX crossover.
+    // Determine the clusters that haven't been visited by stuff in the cut
+    vector<bool> path1_group_visited(tbTotalGroups, false);
+    for(int i = cut1; i < cut2; ++i) {
+        path1_group_visited[nodeGroup[i]] = true;
+    }
+
     return NULL;
 }
 
