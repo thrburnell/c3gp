@@ -7,7 +7,6 @@
 #include <ctime>
 #include <cmath>
 #include <vector>
-#include <iostream>
 
 using std::vector;
 
@@ -169,7 +168,7 @@ chromosome* GtspSolver::solveGtspWithGeneticAlgorithm() {
     for (int i = 0; i < 200; i++) {
         population* heroes = getBestChromosomes(pop);
         population* children = getOffspringThroughCrossover(heroes);
-        // killWorstChromosomes(pop);
+        killWorstChromosomes(pop);
         mutatePopulation(pop);
     
         while (!children->empty()) {
@@ -415,27 +414,53 @@ void GtspSolver::killWorstChromosomes(population* pop) {
     }
 
     // Use rejection sampling to determine which to kill
-    std::cout << death_list.size() << std::endl;
+    int num_iter_nokill = 0;
+
     for (int num_killed = 0; num_killed < 30;) {
+
+        // The below loop can explode on small problems (if there are
+        // more than 20 solutions tied for best.) We thus implement the
+        // following heuristic to handle that.
+        if (num_iter_nokill > 50) {
+            for (int i = num_killed; i < 30; ++i) {
+                for (int j = 0; j < death_list.size(); ++j) {
+                    if (!death_list[j]) {
+                        death_list[j] = true;
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+
         double target = ((double) rand() / RAND_MAX) * 
                         cumulativeADFitnessValue;
-        for(int j = 0; j < pop->size(); ++j) {
-            if(target < cum_sum[j]) {
-                if(!death_list[j]) {
+        for (int j = 0; j < pop->size(); ++j) {
+            if (target < cum_sum[j]) {
+                if (!death_list[j]) {
                     ++num_killed;
+                    num_iter_nokill = 0;
                     death_list[j] = true;
+                } else {
+                    ++num_iter_nokill;
                 }
-                continue;
+                break;
             }
         }
+
+        // The loop above can fail if all solutions are identical.
+        ++num_iter_nokill;
     }
 
     population* survivors = new population();
 
     // Kill everything which is destined to die
+    int killed = 0;
     for (int i = 0; i < pop->size(); ++i) {
         if (!death_list[i]) {
             survivors->push_back(pop->at(i));
+        } else {
+            ++killed;
         }
     }
 
