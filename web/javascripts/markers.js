@@ -5,6 +5,7 @@ var menu = require('./menu.js');
 module.exports = (function() {
 
     var markers = [];
+    var errandsInfo = {};
     var temporaryMarkers = [];
     var pinIndex = 0;
     var redColour = "F7574C";
@@ -134,6 +135,17 @@ module.exports = (function() {
         infoWindow.setContent(content[0]);
     };
 
+    var buildErrandsInfo = function(results, errand) {
+        results.forEach(function(place) {
+            var key = place.geometry.location.lat + "," +
+                      place.geometry.location.lng;
+            errandsInfo[key] = {
+                errand: errand,
+                placeName: place.name
+            };
+        });
+    };
+
     var remove = function(marker) {
         marker.setMap(null);
         markers.splice(marker.index, 1);
@@ -185,6 +197,8 @@ module.exports = (function() {
         remove: remove,
         clear: clear,
         clearTemporaries: clearTemporaries,
+        buildErrandsInfo: buildErrandsInfo,
+        getErrandsInfo: function() { return errandsInfo; },
         getSortedMarkers: function() { return Object.keys(markers).sort(); },
         getOrigin: function() { return markers[0][0]; },
         getMarkers: function() { return markers; },
